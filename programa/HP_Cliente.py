@@ -1,4 +1,4 @@
-
+'''Classe de Cliente'''
 class Cliente:
     def __init__(self, idCliente, primeiroNome, nomeDoMeio, ultimoNome, contribuinte, CC, email, telefone, dataNascimento, ativo):
         # self.clientes = []
@@ -7,9 +7,13 @@ class Cliente:
         self.primeiroNome = primeiroNome       
         self.nomeDoMeio = nomeDoMeio
         self.ultimoNome = ultimoNome
-        self.contribuinte = consumo
-        self._kms = kms
-        self.__atributo_quase_privado 
+        self.contribuinte = contribuinte
+        self.CC = CC
+        self.email = email
+        self.telefone = telefone
+        self.dataNascimento = dataNascimento
+        self.ativo = ativo
+   
 
     def criar(self):
       
