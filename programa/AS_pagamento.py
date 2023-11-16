@@ -6,3 +6,9 @@ class Pagamentos():
         self.dataPagamentos = dataPagamento
         self.observacoes = observacoes
         self.status = status
+        
+    @property
+    def valorTotal(self):
+        return self.__valorTotal
+    
+    
