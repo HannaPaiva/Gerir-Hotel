@@ -1,4 +1,6 @@
-class Agencia():
+from AT_menu import Menu
+
+class Agencia(Menu):
     def __init__(self, nomeAgencia, contatoGeral, nomeRepresentante,  telefoneRepresentante, comissaoAgencia):
         self.nome = nomeAgencia
         self.contato = contatoGeral
