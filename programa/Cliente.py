@@ -2,20 +2,18 @@
 
 
 class Cliente():
-    
 
-    def Criar_Cliente():
+    def criar():
         pass
 
-    def Ver_Cliente():
+    def pesquisar():
         pass
 
-    def Ver_lista_clientes():
+    def listar():
         pass
 
-    def alterar_Cliente():
+    def alterar():
         pass
 
-
-    def apagar_Cliente():
+    def apagar():
         pass
