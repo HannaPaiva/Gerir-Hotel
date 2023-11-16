@@ -1,9 +1,18 @@
 
 class Cliente:
-    def __init__(self):
-        self.clientes = []
+    def __init__(self, idCliente, primeiroNome, nomeDoMeio, ultimoNome, contribuinte, CC, email, telefone, dataNascimento, ativo):
+        # self.clientes = []
 
-    def criar(self, idCliente, primeiroNome, nomeDoMeio, ultimoNome, contribuinte, CC, email, telefone, dataNascimento, ativo ):
+        self.idCliente = idCliente          
+        self.primeiroNome = primeiroNome       
+        self.nomeDoMeio = nomeDoMeio
+        self.ultimoNome = ultimoNome
+        self.contribuinte = consumo
+        self._kms = kms
+        self.__atributo_quase_privado 
+
+    def criar(self):
+      
         novo_cliente = {"nome": nome, "email": email}
         self.clientes.append(novo_cliente)
         print("Cliente criado com sucesso!")
