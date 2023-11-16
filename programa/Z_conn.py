@@ -1,36 +1,53 @@
-from sqlalchemy import create_engine, MetaData, Table
+from sqlalchemy import create_engine, MetaData, Table, text
+from Z_dbconfig import *
 
-# Configurações de conexão
-user = 'root'
-password = ''  # Se você não definiu uma senha, deixe em branco
-host = 'localhost'
-porta = '3306'  # Porta padrão do MySQL
-bd = 'Hotel'
+# tabela_clientes = Table('cliente', meta, autoload_with=engine)
 
-# Criar a string de conexão
-conn= f"mysql+pymysql://{user}:{password}@{host}:{porta}/{bd}"
+# # Criar uma conexão
+# conexao = engine.connect()
 
-# Criar uma engine de conexão
-engine = create_engine(conn, echo=True)  # Defina echo=True para ver as queries SQL geradas
+# # Realizar uma consulta simples
+# consulta = tabela_clientes.select()
 
-# Criar um objeto MetaData
-meta = MetaData()
+# # Executar a consulta e obter os resultados
+# resultados = conexao.execute(consulta).fetchall()
 
-# Definir a tabela 'clientes'
-tabela_clientes = Table('cliente', meta, autoload_with=engine)
+# # Exibir os resultados
+# for resultado in resultados:
+#     print(resultado)
 
-# Criar uma conexão
-conexao = engine.connect()
+# # Fechar a conexão
+# conexao.close()
 
-# Realizar uma consulta simples
-consulta = tabela_clientes.select()
 
-# Executar a consulta e obter os resultados
-resultados = conexao.execute(consulta).fetchall()
 
-# Exibir os resultados
-for resultado in resultados:
-    print(resultado)
+def SELECT(tabela, sql):
 
-# Fechar a conexão
-conexao.close()
+    tabelas = Table(tabela, meta, autoload_with=engine)
+    conexao = engine.connect()
+    # consulta = tabela.select()
+    query = text(sql)
+
+    resultados = conexao.execute(query).fetchall()
+    for resultado in resultados:
+         print(resultado)
+    conexao.close()
+
+    
+
+      
+def INSERT():
+    pass
+      
+def UPDATE():
+    pass
+      
+def DELETE():
+    pass
+      
+var = input("Insira uma tabela para verificar: ")
+ 
+
+
+SELECT("cliente", "SELECT * FROM cliente")
+

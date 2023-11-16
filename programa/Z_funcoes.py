@@ -10,3 +10,24 @@ def checkDate(date):
             return False
     else:
         return False
+
+
+
+'''Conexões com a Base de Dados'''
+
+    
+def criar(self):
+     pass
+
+def pesquisar(self):
+    pass   
+    
+def info(self):
+    pass
+
+def alterar(self):
+    pass
+
+def apagar(self):
+    pass
+    
