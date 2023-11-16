@@ -1,31 +1,9 @@
-# Crud Clientes
-
-
-# class Cliente():
-
-#     def criar():
-#         pass
-
-#     def pesquisar():
-#         pass
-
-#     def listar():
-#         pass
-
-#     def alterar():
-#         pass
-
-#     def apagar():
-#         pass
-
-
-
 
 class Cliente:
     def __init__(self):
         self.clientes = []
 
-    def criar(self, primeiroNome, nomeDoMeio, ultimoNome, contribuinte, ):
+    def criar(self, idCliente, primeiroNome, nomeDoMeio, ultimoNome, contribuinte, CC, email, telefone, dataNascimento, ativo ):
         novo_cliente = {"nome": nome, "email": email}
         self.clientes.append(novo_cliente)
         print("Cliente criado com sucesso!")
