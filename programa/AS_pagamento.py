@@ -1,4 +1,6 @@
-class Pagamentos():
+from Z_funcoes import *
+from AT_menu import Menu
+class Pagamentos(Menu):
     def __init__(self, valorTotal, metodoPagamento, tarifaReembolsavel, dataPagamento, observacoes, status):
         self.valorTotal = valorTotal
         self.metodoPagamento = metodoPagamento
@@ -49,4 +51,32 @@ class Pagamentos():
     
     @dataPagamento.setter
     def dataPagamento(self, dataPagamento):
-        if 
+        if checkDate(dataPagamento):
+            self.__dataPagamento = dataPagamento
+        else:
+            raise
+        
+    @property
+    def observacoes(self):
+        return self.__observacoes
+    
+    @observacoes.setter
+    def observacoes(self, observacoes):
+        if isinstance(observacoes, str):
+            self.observacoes = observacoes
+        else:
+            raise
+    
+    @property
+    def status(self):
+        return self.status
+    
+    @status.setter
+    def status(self, status):
+        if isinstance(status , int):
+            if status:
+                self.__status = 1
+            else:
+                self.__status = 0
+        else:
+            raise
