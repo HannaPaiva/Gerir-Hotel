@@ -1,4 +1,7 @@
 '''Classe de Cliente'''
+
+from AT_menu import Menu
+
 class Cliente:
     def __init__(self, idCliente, primeiroNome, nomeDoMeio, ultimoNome, contribuinte, CC, email, telefone, dataNascimento, ativo):
         # self.clientes = []
@@ -49,7 +52,7 @@ class Cliente:
 
 
 # Exemplo de uso:
-crud_clientes = ClienteCRUD()
+crud_clientes = Cliente()
 
 crud_clientes.criar("João", "joao@email.com")
 crud_clientes.criar("Maria", "maria@email.com")
