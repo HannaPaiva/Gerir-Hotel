@@ -1,6 +1,6 @@
 config = {
-    "host" : "",
-    "user" : "",
+    "host" : "localhost",
+    "user" : "root",
     "password" : "",
     "db" : ""
 }
