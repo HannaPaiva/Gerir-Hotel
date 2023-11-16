@@ -1,9 +1,8 @@
-import mysql.connector  
-import datetime
+import mysql.connector
 from AT_menu import Menu
-
+from Z_funcoes import *
 class Hospede(Menu):
-    def __init__(self, primeiroNome, nomeDoMeio, ultimoNome, cc, email, telefone, dataNascimento, ativo):
+    def __init__(self, primeiroNome:str, nomeDoMeio:str, ultimoNome:str, cc:str, email:str, telefone:str, dataNascimento:str, ativo:int):
         self.primeiroNome = primeiroNome
         self.nomeDoMeio = nomeDoMeio
         self.ultimoNome = ultimoNome
@@ -83,24 +82,37 @@ class Hospede(Menu):
 
     @dataNascimento.setter
     def dataNascimento(self, dataNascimento):
-        if isinstance(dataNascimento, str):
-            try:
-                dataNascimento = dataNascimento.split("-")
-                datetime.datetime(int(dataNascimento[0]), int(dataNascimento[1]), int(dataNascimento[2]))
-            except ValueError:
-                raise
+        if checkDate(dataNascimento):
+            self.__dataNascimento = dataNascimento
         else:
             raise
     
-    def criar():
-        pass
+    @property
+    def ativo(self):
+        return self.__ativo
     
-    def alterar():
+    @ativo.setter
+    def ativo(self, ativo):
+        if isinstance(ativo, int):
+            if ativo:
+                self.__ativo = 1
+            else:
+                self.__ativo = 0
+        else:
+            raise
+
+    def criar():
         pass
 
     def pesquisar():
         pass
+    
+    def info():
+        pass
 
+    def alterar():
+        pass
+    
     def apagar():
         pass
     
