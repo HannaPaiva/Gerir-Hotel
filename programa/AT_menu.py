@@ -13,7 +13,7 @@ class Menu(ABC):
         pass
     
     @abstractclassmethod
-    def listar(self):
+    def info(self):
         pass
 
     @abstractclassmethod
