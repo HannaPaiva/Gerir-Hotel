@@ -2,13 +2,27 @@ from Z_funcoes import *
 from AT_menu import Menu
 
 class Pagamentos(Menu):
-    def __init__(self, valorTotal, metodoPagamento, tarifaReembolsavel, dataPagamento, observacoes, status):
+    def __init__(self, idPagamentos, valorTotal, metodoPagamento, tarifaReembolsavel, dataPagamento, observacoes, status):
+        self.idPagamentos = idPagamentos
         self.valorTotal = valorTotal
         self.metodoPagamento = metodoPagamento
         self.tarifaReembolsavel = tarifaReembolsavel
         self.dataPagamento = dataPagamento
         self.observacoes = observacoes
         self.status = status
+
+
+    @property
+    def idPagamentos(self):
+        return self.__idPagamentos
+    
+    @idPagamentos.setter
+    def idPagamentos(self, idPagamentos):
+        print("debug: setting idPagamentos")
+        if int(idPagamentos):
+            self.__idPagamentos = idPagamentos
+        else:
+            raise
 
     @property
     def valorTotal(self):

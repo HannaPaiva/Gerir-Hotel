@@ -1,13 +1,27 @@
 from AT_menu import Menu
 
 class Agencia(Menu):
-    def __init__(self, nomeAgencia, contatoGeral, nomeRepresentante,  telefoneRepresentante, comissaoAgencia):
+    def __init__(self, idAgencia, nomeAgencia, contatoGeral, nomeRepresentante,  telefoneRepresentante, comissaoAgencia):
+        self.idAgencia = idAgencia
         self.nome = nomeAgencia
         self.contato = contatoGeral
         self.nomeRepresentante = nomeRepresentante
         self.telefoneRepresentante = telefoneRepresentante
         self.comissaoAgencia = comissaoAgencia
+        self.agencias = []
     
+    
+    @property
+    def idAgencia(self):
+        return self.__idAgencia
+    
+    @idAgencia.setter
+    def idAgencia(self, idAgencia):
+        print("debug: setting idAgencia")
+        if int(idAgencia):
+            self.__idAgencia = idAgencia
+        else:
+            raise
     
     @property
     def nomeAgencia(self):
@@ -65,7 +79,30 @@ class Agencia(Menu):
     def comissaoAgencia(self, comissaoAgencia):
         print("debug: setting comissaoAgencia")
         if float(comissaoAgencia):
-            self.comissaoAgencia = comissaoAgencia
+            self.__comissaoAgencia = comissaoAgencia
         else: 
             raise
-        
+    
+    def criar(self , nomeAgencia, contatoGeral, nomeRepresentante,  telefoneRepresentante, comissaoAgencia ):
+        agencias = {
+            "idAgencia" : len(self.idAgencia) + 1,
+            "nomeAgencia" : nomeAgencia,
+            "contatoGeral" : contatoGeral,
+            "nomeRepresentante" : nomeRepresentante,
+            "telefoneRepresentante" : telefoneRepresentante,
+            "comissaoAgencia" : comissaoAgencia
+        }
+
+    def pesquisar(self):
+        pass
+
+    def listar(self):
+        print("Agencias:")
+        for agencias in self.agencias:
+            print(agencias)
+
+    def alterar():
+        pass
+
+    def apagar():
+        pass
