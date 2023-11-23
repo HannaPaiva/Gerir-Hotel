@@ -33,7 +33,7 @@ def SELECT(tabela, sql):
          print(resultado)
     conexao.close()
 
-    
+
 
       
 def INSERT():
@@ -49,5 +49,8 @@ var = input("Insira uma tabela para verificar: ")
  
 
 
-SELECT("cliente", "SELECT * FROM cliente")
 
+
+if __name__ == "__main__":
+    
+    SELECT("cliente", "SELECT * FROM cliente")
