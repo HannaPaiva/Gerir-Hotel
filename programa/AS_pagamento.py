@@ -1,24 +1,25 @@
 from Z_funcoes import *
 from AT_menu import Menu
+
 class Pagamentos(Menu):
     def __init__(self, valorTotal, metodoPagamento, tarifaReembolsavel, dataPagamento, observacoes, status):
         self.valorTotal = valorTotal
         self.metodoPagamento = metodoPagamento
         self.tarifaReembolsavel = tarifaReembolsavel
-        self.dataPagamentos = dataPagamento
+        self.dataPagamento = dataPagamento
         self.observacoes = observacoes
         self.status = status
-        
+
     @property
     def valorTotal(self):
         return self.__valorTotal
     
     @valorTotal.setter
     def valorTotal(self, valorTotal):
-        if float(valorTotal):
+        if isinstance(valorTotal, (int, float)):
             self.__valorTotal = valorTotal
         else:
-            raise
+            raise ValueError("valorTotal must be a number.")
     
     @property
     def metodoPagamento(self):
@@ -26,10 +27,10 @@ class Pagamentos(Menu):
     
     @metodoPagamento.setter
     def metodoPagamento(self, metodoPagamento):
-        if isinstance(metodoPagamento , str) and len(metodoPagamento) < 45:
+        if isinstance(metodoPagamento, str) and len(metodoPagamento) < 45:
             self.__metodoPagamento = metodoPagamento
         else:
-            raise
+            raise ValueError("metodoPagamento must be a string with length less than 45.")
     
     @property
     def tarifaReembolsavel(self):
@@ -37,13 +38,10 @@ class Pagamentos(Menu):
     
     @tarifaReembolsavel.setter
     def tarifaReembolsavel(self, tarifaReembolsavel):
-        if isinstance(tarifaReembolsavel , int):
-            if tarifaReembolsavel:
-                self.__tarifaReembolsavel = 1
-            else:
-                self.__tarifaReembolsavel = 0
+        if isinstance(tarifaReembolsavel, int):
+            self.__tarifaReembolsavel = 1 if tarifaReembolsavel else 0
         else:
-            raise
+            raise ValueError("tarifaReembolsavel must be an integer.")
         
     @property
     def dataPagamento(self):
@@ -54,7 +52,7 @@ class Pagamentos(Menu):
         if checkDate(dataPagamento):
             self.__dataPagamento = dataPagamento
         else:
-            raise
+            raise ValueError("Invalid date format for dataPagamento.")
         
     @property
     def observacoes(self):
@@ -63,20 +61,17 @@ class Pagamentos(Menu):
     @observacoes.setter
     def observacoes(self, observacoes):
         if isinstance(observacoes, str):
-            self.observacoes = observacoes
+            self.__observacoes = observacoes
         else:
-            raise
+            raise ValueError("observacoes must be a string.")
     
     @property
     def status(self):
-        return self.status
+        return self.__status
     
     @status.setter
     def status(self, status):
-        if isinstance(status , int):
-            if status:
-                self.__status = 1
-            else:
-                self.__status = 0
+        if isinstance(status, int):
+            self.__status = 1 if status else 0
         else:
-            raise
+            raise ValueError("status must be an integer.")
