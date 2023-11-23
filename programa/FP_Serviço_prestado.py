@@ -1,10 +1,25 @@
 import datetime
 from Z_funcoes import *
+from AT_menu import Menu
+from FP_Serviço import Servico
+
 class ServicoPrestado():
-    def __init__(self, detalhes, dataHora):
+    def __init__(self, idServico, detalhes, dataHora):
         self.detalhes = detalhes
         self.dataHora = dataHora
         self.servicosPrestados = []
+
+    @property
+    def idServico(self):
+        return self.__idServico
+    
+    @idServico.setter
+    def idServico(self, idServico):
+        print ("debug: setting id do serviço.")
+        if isinstance(idServico, Servico):
+            self.__idServico = idServico
+        else:
+            raise
     
     @property
     def detalhes(self):

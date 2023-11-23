@@ -63,7 +63,7 @@ class Servico():
             "descricao": descricao,
             "iddepartamento": iddepartamento
         }
-        self.serviços.append (serviço)
+        self.servicos.append (serviço)
         print("Serviço adicionado.")
 
     def pesquisar(self, idservico, nomedoservico, preco, descricao, iddepartamento):
