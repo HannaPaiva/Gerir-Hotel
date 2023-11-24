@@ -18,7 +18,7 @@ def clientes():
  
  
 
-@app.route('/criar_cliente')
+@app.route('/criar-cliente')
 def criar_cliente():
     dados = {
         "primeiroNome": request.form["primeiroNome"],
