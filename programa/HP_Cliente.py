@@ -81,16 +81,43 @@ def atualizar(tabela, campos, dados, primarykey, id):
                 cursor.close()
                 conexao.close()
 
+
+def apagar(tabela, primarykey, id):
+    conexao = conectar()
+    if conexao:
+        try:
+            cursor = conexao.cursor()
+            
+            # Construa a instrução SQL para deletar o registro
+            sql = f"DELETE FROM {tabela} WHERE {primarykey} = {id}"
+            
+            # Execute a instrução SQL com o valor do ID a ser excluído
+            cursor.execute(sql)
+            
+            # Commit para aplicar as alterações no banco de dados
+            conexao.commit()
+            
+        except Exception as e:
+            print(f"Erro ao executar a exclusão: {e}")
+        finally:
+            if conexao.is_connected():
+                cursor.close()
+                conexao.close()
+
+
+
+
 def main():
-    dados_para_inserir = {'aa': 'teste no segundo', 'bb': 'AAAAAAA'}
-    tabela_consulta = 'teste'  # Substitua pelo nome da sua tabela
+    pass
+    # dados_para_inserir = {'aa': 'teste no segundo', 'bb': 'AAAAAAA'}
+    # tabela_consulta = 'teste'  # Substitua pelo nome da sua tabela
 
-    # Insira os dados usando MySQL Connector
-    inserir(tabela_consulta, list(dados_para_inserir.keys()), dados_para_inserir)
+    # # Insira os dados usando MySQL Connector
+    # inserir(tabela_consulta, list(dados_para_inserir.keys()), dados_para_inserir)
 
-    # Liste os dados usando MySQL Connector
-    resultado_mysql = listar(tabela_consulta)
-    print("Listagem usando MySQL Connector:", resultado_mysql)
+    # # Liste os dados usando MySQL Connector
+    # resultado_mysql = listar(tabela_consulta)
+    # print("Listagem usando MySQL Connector:", resultado_mysql)
 
 if __name__ == "__main__":
     main()

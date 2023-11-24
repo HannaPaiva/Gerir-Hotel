@@ -44,8 +44,8 @@
                                             </button>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target="#ModalApagar-{{dado.idCliente}}">
+                                             <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                data-target="#modalApagar-{{dado.idCliente}}">
                                                 <i class="mdi mdi-delete"></i> Apagar
                                             </button>
                                         </td>
@@ -212,9 +212,9 @@
 
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="ModalApagar-{{dado.idlCliente}}" tabindex="-1"
-                                        role="dialog" aria-labelledby="ModalApagarlabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
+                                    <div class="modal fade" id="modalApagar-{{dado.idCliente}}" tabindex="-1"
+                                    role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="ModalApagarLabel">Apagar Dados</h5>
@@ -226,12 +226,17 @@
                                                 <div class="modal-body">
                                                     <h5>Tem certeza que deseja apagar? Essa ação não pode ser cancelada.
                                                     </h5>
+                                                    <h1>aa{{dado.idCliente}}</h1>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
-                                                    <button type="button" class="btn btn-danger"> <i
+                                                        <form action="/apagar-cliente" method="post">
+                                                        <input type="hidden" value="{{dado.idCliente}}" name="idCliente">
+                                                        
+                                                    <button type="submit" class="btn btn-danger"> <i
                                                             class="mdi mdi-delete"></i>Apagar</button>
+                                                        </form>
                                                 </div>
                                             </div>
                                         </div>

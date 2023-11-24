@@ -64,7 +64,13 @@ def editar_cliente():
    
     return redirect(url_for('clientes'))
 
-
+@app.route('/apagar-cliente', methods=['GET', 'POST'])
+def apagar_cliente():
+   dados = {
+        "idCliente": request.form["idCliente"]}
+   
+   apagar("cliente", "idCliente", dados["idCliente"])
+   return redirect(url_for('clientes'))
 
 if __name__ == '__main__':
     app.run(debug=True)
