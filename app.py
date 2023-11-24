@@ -18,7 +18,7 @@ def clientes():
  
  
 
-@app.route('/criar-cliente')
+@app.route('/criar-cliente', methods=['GET', 'POST'])
 def criar_cliente():
     dados = {
         "primeiroNome": request.form["primeiroNome"],
@@ -36,7 +36,7 @@ def criar_cliente():
     }
     inserir("cliente", list(dados.keys()), dados)
 
-    return render_template('/cliente.html')
+  
 
 if __name__ == '__main__':
     app.run(debug=True)

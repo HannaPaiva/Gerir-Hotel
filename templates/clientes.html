@@ -11,11 +11,12 @@
                     <div class="card-body">
                         <h4 class="card-title">Tabela de Clientes</h4>
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-success create-new-button" data-toggle="modal" data-target="#modalCriar">+ Adicionar novo Cliente</button>
+                            <button class="btn btn-success create-new-button" data-toggle="modal"
+                                data-target="#modalCriar">+ Adicionar novo Cliente</button>
                         </div>
                         </p>
                         <div class="table-responsive">
-                           
+
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -37,12 +38,14 @@
                                         <td>{{ dado.dataNascimento }}</td>
                                         <td><label class="badge">{{dado.ativo}}</label></td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idCliente}}">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#modalEditar-{{dado.idCliente}}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
                                             </button>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalApagar-{{dado.idCliente}}">
+                                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                data-target="#ModalApagar-{{dado.idCliente}}">
                                                 <i class="mdi mdi-delete"></i> Apagar
                                             </button>
                                         </td>
@@ -220,9 +223,6 @@
 
 
 
-
-
-
                                     <!-- Modal -->
                                     <div class="modal fade" id="ModalApagar-{{dado.idlCliente}}" tabindex="-1"
                                         role="dialog" aria-labelledby="ModalApagarlabel" aria-hidden="true">
@@ -250,9 +250,6 @@
                                     </div>
 
 
-
-
-
                                     {% endfor %}
 
                                 </tbody>
@@ -265,185 +262,163 @@
 
 
 
-            <div class="modal fade" id="modalCriar" tabindex="-1"
-            role="dialog" aria-labelledby="modalCriarLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalCriarLabel">Criar cliente</h5>
-                        <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <h4 class="card-title"></h4>
-                        <form class="form-sample" method="post" action="/criar-cliente">
-                            <p class="card-description"> informações sobre o cliente a adicionar </p>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Nome</label>
-                                        <div class="col-sm-9" >
-                                            <input type="text" class="form-control" id="primeiroNome" name="primeiroNome"/>
-                                        </div>
-                                       
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group row">
-                                        <label
-                                            class="col-sm-3 col-form-label">Nomes do meio</label>
-                                            <div class="col-sm-9" >
-                                                <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio"/>
+            <div class="modal fade" id="modalCriar" tabindex="-1" role="dialog" aria-labelledby="modalCriarLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalCriarLabel">Criar cliente</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h4 class="card-title"></h4>
+                            <form class="form-sample" method="post" action="/criar-cliente" style="padding: 70px;">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="primeiroNome"
+                                                    name="primeiroNome" placeholder="nome do cliente" />
                                             </div>
-                                    </div>
-                                </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group row">
-                                        <label
-                                            class="col-sm-3 col-form-label">Apelido</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="ultimoNome" name="ultimoNome"
-                                             />
                                         </div>
                                     </div>
-                                </div>
-
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label
-                                            class="col-sm-3 col-form-label">Gênero</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control" name="genero">
-                                                <option value="m">Male</option>
-                                                <option value="f">Female</option>
-                                                <option value="o">outro</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Data de
-                                            nascimento</label>
-                                        <div class="col-sm-9">
-                                            <input class="form-control" type="date" placeholder="dd/mm/yyyy" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label
-                                            class="col-sm-3 col-form-label">Category</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control">
-                                                <option>Category1</option>
-                                                <option>Category2</option>
-                                                <option>Category3</option>
-                                                <option>Category4</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label
-                                            class="col-sm-3 col-form-label">Membership</label>
-                                        <div class="col-sm-4">
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio"
-                                                        class="form-check-input"
-                                                        name="membershipRadios"
-                                                        id="membershipRadios1" value=""
-                                                        checked> Free </label>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 col-form-label">Nomes do meio</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="nomeDoMeio"
+                                                    name="nomeDoMeio" placeholder="nomes do meio do cliente" />
                                             </div>
                                         </div>
-                                        <div class="col-sm-5">
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="radio"
-                                                        class="form-check-input"
-                                                        name="membershipRadios"
-                                                        id="membershipRadios2"
-                                                        value="option2"> Professional
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group ">
+                                            <label class="col-sm-3 col-form-label">Apelido</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="ultimoNome"
+                                                    name="ultimoNome" placeholder="último nome do cliente" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group ">
+                                            <label class="col-sm-3 col-form-label">Gênero</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name="genero">
+                                                    <option value="m">Male</option>
+                                                    <option value="f">Female</option>
+                                                    <option value="o">outro</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group ">
+                                            <label class="col-sm-3 col-form-label">Data de
+                                                nascimento</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                             
+                          
+                                "email": request.form["email"],
+                                "telefone": request.form["telefone"],
+                             
+                   
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group ">
+                                            <label class="col-sm-3 col-form-label">nº Contribuinte</label>
+                                            <div class="col-sm-9">
+                                               <input type="text" class="form-control" name="contribuinte">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group ">
+                                            <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
+                                            <div class="col-sm-9">
+                                               <input type="text" class="form-control" name="CC">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                  
+                                </div>
+                                <p class="card-description"> Contactos </p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Número de telefone
                                                 </label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="telefone" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">email</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" placeholder="exemplo@gmail.com" name="email"/>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <p class="card-description"> Address </p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Address
-                                            1</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">State</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Address
-                                            2</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label
-                                            class="col-sm-3 col-form-label">Postcode</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">City</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" />
+                               
+                                <div class="row">
+                               
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                            <div class="col-sm-4">
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="radio" class="form-check-input"
+                                                            name="ativo" id="ativo1" value="1"
+                                                            checked> Ativo </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-check">
+                                                    <label class="form-check-label">
+                                                        <input type="radio" class="form-check-input"
+                                                            name="ativo" id="ativo2"
+                                                            value="0"> Desativado
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                            </div>
+                        </div>
+
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success">Criar</button>
+                        </div>
                         </form>
-                    </div>
-
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
-        </div>
 
 
 
