@@ -10,8 +10,6 @@ def exibir_menu():
     limpar_tela()
     print("Bem-vindo ao Sistema de Gerenciamento de Hotel")
     print()
-    print("Eis o que pode ser feito:")
-    print()
     print("============================================")
     print()
     print(" 1. Nova Reserva")

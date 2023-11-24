@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.content {
+    padding: 20px;
+}
+
+.theme-switcher {
+    margin-top: 20px;
+}
+
+body[data-theme="light"] {
+    background-color: #fff;
+    font-family: fantasy;
+    color: #333;
+}
+
+body[data-theme="dark"] {
+    background-color: #333;
+    color: #fff;
+}

@@ -1,25 +1,6 @@
 from sqlalchemy import create_engine, MetaData, Table, text
 from Z_dbconfig import *
 
-# tabela_clientes = Table('cliente', meta, autoload_with=engine)
-
-# # Criar uma conexão
-# conexao = engine.connect()
-
-# # Realizar uma consulta simples
-# consulta = tabela_clientes.select()
-
-# # Executar a consulta e obter os resultados
-# resultados = conexao.execute(consulta).fetchall()
-
-# # Exibir os resultados
-# for resultado in resultados:
-#     print(resultado)
-
-# # Fechar a conexão
-# conexao.close()
-
-
 
 def SELECT(tabela, sql):
 
