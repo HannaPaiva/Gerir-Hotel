@@ -1,4 +1,4 @@
-class Servico():
+class Servico(Menu):
     def __init__(self, idServico, nomeDoservico, preco, descricao):
         self.id = idServico
         self.nome = nomeDoservico
@@ -57,13 +57,13 @@ class Servico():
 
     def criar(self, nomedoservico, preco, descricao, iddepartamento):
         serviço = {
-            "iddepartamento": len(self.serviços) + 1,
+            "iddepartamento": len(self.servicos) + 1,
             "nomedoservico": nomedoservico,
             "preco": preco,
             "descricao": descricao,
             "iddepartamento": iddepartamento
         }
-        self.servicos.append (serviço)
+        self.servicos.append (servico)
         print("Serviço adicionado.")
 
     def pesquisar(self, idservico, nomedoservico, preco, descricao, iddepartamento):
@@ -71,11 +71,11 @@ class Servico():
 
     def ler(self):
         print("Serviços:")
-        for serviço in self.serviços:
-            print(serviço)
+        for servico in self.servicos:
+            print(servico)
 
 def main():
-    serviços_crud = Servico()
+    servicos_crud = Servico()
 
     while True:
 
@@ -91,9 +91,9 @@ def main():
             preco = float(input("Insira o preco do serviço "))
             descricao = input("Insira a descricao do serviço ")
             iddepartamento = input("Insira o id do departamento ")
-            serviços_crud.criar_serviço(nomedoservico, preco, descricao, iddepartamento)
+            servicos_crud.criar_servico(nomedoservico, preco, descricao, iddepartamento)
         elif escolha == 3:
-            serviços_crud.ler_serviços() 
+            servicos_crud.ler_servicos() 
         elif escolha == 5:
             break
         else:

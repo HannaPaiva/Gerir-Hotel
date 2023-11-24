@@ -1,4 +1,3 @@
-import datetime
 
 def checkDate(date):
     if isinstance(date, str):

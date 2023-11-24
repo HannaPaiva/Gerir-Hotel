@@ -1,12 +1,12 @@
-import datetime
 from Z_funcoes import *
 from AT_menu import Menu
 from FP_Serviço import Servico
 
-class ServicoPrestado():
+class ServicoPrestado(Menu):
     def __init__(self, idServico, detalhes, dataHora):
         self.detalhes = detalhes
         self.dataHora = dataHora
+        self.idServico = idServico
         self.servicosPrestados = []
 
     @property
