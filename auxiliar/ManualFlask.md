@@ -5,3 +5,5 @@
 python app.py
 
 # Alterar algo:
+
+Criar, dentro do templates, um html novo 
