@@ -36,7 +36,15 @@ def ok():
       
     nome = {"name": "Axel", "age": 10 }
     return render_template('/index.html', mario=nome)
- 
+
+
+@app.route('/servicos')
+def servicos():
+      
+    nome = {"name": "Axel", "age": 10 }
+    return render_template('/servicos.html', mario=nome)
+
+
 
 
 if __name__ == '__main__':

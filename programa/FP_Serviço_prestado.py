@@ -44,3 +44,6 @@ class ServicoPrestado(Menu):
             self.__dataHora = dataHora
         else:
             raise
+
+    def criar(self):
+        
