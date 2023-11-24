@@ -9,7 +9,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tabela de Clientes</h4>
+                        <h4 class="card-title">Tabela Clientes</h4>
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
                                 data-target="#modalCriar">+ Adicionar novo Cliente</button>
@@ -65,36 +65,47 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h4 class="card-title"></h4>
-                                                    <form class="form-sample">
-                                                        <p class="card-description"> informações sobre o cliente </p>
+                                                    <form class="form-sample" method="post" action="/editar-cliente" >
+                                                      
                                                         <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Nome</label>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control"
-                                                                            value="{{ dado.primeiroNome }}" />
+                                                                        <input type="text" class="form-control" id="primeiroNome"
+                                                                            name="primeiroNome" placeholder="nome do cliente" value="{{dado.primeiroNome}}" />
+                                                                    </div>
+                        
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 col-form-label">Nomes do meio</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" id="nomeDoMeio"
+                                                                            name="nomeDoMeio" placeholder="nomes do meio do cliente" value="{{dado.nomeDoMeio}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label
-                                                                        class="col-sm-3 col-form-label">Apelido</label>
+                        
+                                                            <div class="col-md-4">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">Apelido</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control"
-                                                                            value="{{ dado.ultimoNome }}" />
+                                                                        <input type="text" class="form-control" id="ultimoNome"
+                                                                            name="ultimoNome" placeholder="último nome do cliente" value="{{dado.ultimoNome}}"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                        
+                        
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label
-                                                                        class="col-sm-3 col-form-label">Gênero</label>
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">Gênero</label>
                                                                     <div class="col-sm-9">
-                                                                        <select class="form-control">
+                                                                        <select class="form-control" name="genero" value="{{dado.genero}}">
                                                                             <option value="m">Male</option>
                                                                             <option value="f">Female</option>
                                                                             <option value="o">outro</option>
@@ -103,120 +114,97 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <div class="form-group row">
+                                                                <div class="form-group ">
                                                                     <label class="col-sm-3 col-form-label">Data de
                                                                         nascimento</label>
                                                                     <div class="col-sm-9">
-                                                                        <input class="form-control"
-                                                                            placeholder="dd/mm/yyyy" />
+                                                                        <input class="form-control" type="date" name="dataNascimento"
+                                                                            placeholder="dd/mm/yyyy" value="{{dado.dataNascimento}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                        
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label
-                                                                        class="col-sm-3 col-form-label">Category</label>
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">nº Contribuinte</label>
                                                                     <div class="col-sm-9">
-                                                                        <select class="form-control">
-                                                                            <option>Category1</option>
-                                                                            <option>Category2</option>
-                                                                            <option>Category3</option>
-                                                                            <option>Category4</option>
-                                                                        </select>
+                                                                        <input type="text" class="form-control" name="contribuinte" value="{{dado.contribuinte}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="CC" value="{{dado.CC}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                        
+                        
+                        
+                                                        </div>
+                                                        <p class="card-description"> Contactos </p>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label">Número de telefone
+                                                                    </label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="telefone" value="{{dado.telefone}}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">email</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" placeholder="exemplo@gmail.com"
+                                                                            name="email" value="{{dado.email}}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                        
+                                                        <div class="row">
+                        
+                                                            <div class="col-md-6">
                                                                 <div class="form-group row">
-                                                                    <label
-                                                                        class="col-sm-3 col-form-label">Membership</label>
+                                                                    <label class="col-sm-3 col-form-label">Cliente ativo?</label>
                                                                     <div class="col-sm-4">
                                                                         <div class="form-check">
                                                                             <label class="form-check-label">
-                                                                                <input type="radio"
-                                                                                    class="form-check-input"
-                                                                                    name="membershipRadios"
-                                                                                    id="membershipRadios1" value=""
-                                                                                    checked> Free </label>
+                                                                                <input type="radio" class="form-check-input" name="ativo"
+                                                                                    id="ativo" value="1" checked> Ativo </label>
                                                                         </div>
                                                                     </div>
+                                                                    <input type="hidden" name="idCliente" value="{{dado.idCliente}}">
                                                                     <div class="col-sm-5">
                                                                         <div class="form-check">
                                                                             <label class="form-check-label">
-                                                                                <input type="radio"
-                                                                                    class="form-check-input"
-                                                                                    name="membershipRadios"
-                                                                                    id="membershipRadios2"
-                                                                                    value="option2"> Professional
+                                                                                <input type="radio" class="form-check-input" name="ativo"
+                                                                                    id="ativo" value="0"> Desativado
                                                                             </label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <p class="card-description"> Address </p>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Address
-                                                                        1</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">State</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Address
-                                                                        2</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label
-                                                                        class="col-sm-3 col-form-label">Postcode</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">City</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </form>
+                        
                                                 </div>
-
-
-
+                        
+                        
+                        
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-success">Atualizar registo</button>
                                                 </div>
+                                                </form>
+                                                </div>
+
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -274,7 +262,7 @@
                         </div>
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
-                            <form class="form-sample" method="post" action="/criar-cliente" style="padding: 70px;">
+                            <form class="form-sample" method="post" action="/criar-cliente" >
 
                                 <div class="row">
                                     <div class="col-md-4">
@@ -327,24 +315,23 @@
                                             <label class="col-sm-3 col-form-label">Data de
                                                 nascimento</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" />
+                                                <input class="form-control" type="date" name="dataNascimento"
+                                                    placeholder="dd/mm/yyyy" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                             
-                             
-                          
-                                "email": request.form["email"],
-                                "telefone": request.form["telefone"],
-                             
-                   
+
+
+
+             
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group ">
                                             <label class="col-sm-3 col-form-label">nº Contribuinte</label>
                                             <div class="col-sm-9">
-                                               <input type="text" class="form-control" name="contribuinte">
+                                                <input type="text" class="form-control" name="contribuinte">
                                             </div>
                                         </div>
                                     </div>
@@ -352,54 +339,53 @@
                                         <div class="form-group ">
                                             <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
                                             <div class="col-sm-9">
-                                               <input type="text" class="form-control" name="CC">
+                                                <input type="text" class="form-control" name="CC">
                                             </div>
                                         </div>
                                     </div>
 
 
-                                  
+
                                 </div>
                                 <p class="card-description"> Contactos </p>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group row">
+                                        <div class="form-group ">
                                             <label class="col-sm-3 col-form-label">Número de telefone
-                                                </label>
+                                            </label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="telefone" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group row">
+                                        <div class="form-group ">
                                             <label class="col-sm-3 col-form-label">email</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="exemplo@gmail.com" name="email"/>
+                                                <input type="text" class="form-control" placeholder="exemplo@gmail.com"
+                                                    name="email" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                               
+
                                 <div class="row">
-                               
+
                                     <div class="col-md-6">
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Cliente ativo?</label>
                                             <div class="col-sm-4">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input"
-                                                            name="ativo" id="ativo1" value="1"
-                                                            checked> Ativo </label>
+                                                        <input type="radio" class="form-check-input" name="ativo"
+                                                            id="ativo1" value="1" checked> Ativo </label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-5">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input"
-                                                            name="ativo" id="ativo2"
-                                                            value="0"> Desativado
+                                                        <input type="radio" class="form-check-input" name="ativo"
+                                                            id="ativo2" value="0"> Desativado
                                                     </label>
                                                 </div>
                                             </div>
