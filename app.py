@@ -2,7 +2,7 @@ from flask import Flask, render_template
 
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 
-
+from programa.HP_Cliente import *
 
 
 @app.route('/')
@@ -13,8 +13,8 @@ def index():
 @app.route('/clientes')
 def clientes():
       
-    nome = {"name": "Axel", "age": 10 }
-    return render_template('clientes.html', susana=nome)
+    dados = listar("cliente")
+    return render_template('clientes.html', dados=dados)
  
 
 @app.route('/admin/')

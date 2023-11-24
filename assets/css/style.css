@@ -7860,7 +7860,7 @@ kbd {
   padding: 0.2rem 0.4rem;
   font-size: 87.5%;
   color: #fff;
-  background-color: #212529;
+  background-color: #3f464d;
   border-radius: 0.2rem; }
   kbd kbd {
     padding: 0;
@@ -21133,3 +21133,13 @@ div.tagsinput {
   flex-grow: 1; }
 
 /*# sourceMappingURL=maps/style.css.map */
+@import url('https://fonts.googleapis.com/css?family=Agbalumo');
+
+.logo {
+    font-family: 'Agbalumo', sans-serif;
+    font-weight: 500;
+    font-size: 36px !important;
+    color:white !important;
+    text-decoration: none !important;
+
+}
