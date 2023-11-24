@@ -15,13 +15,30 @@ def conectar():
             database=db_name
         )
         if conexao.is_connected():
-            print("Conectado ao banco de dados")
+        
             return conexao
     except Exception as e:
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
 
-# Função para fazer select em uma tabela específica
+def inserir(tabela, campos, dados):
+    conexao = conectar()
+    if conexao:
+        try:
+            cursor = conexao.cursor()
+            campos_str = ', '.join(campos)
+            valores_str = ', '.join(['%s' for _ in campos])
+            sql = f"INSERT INTO {tabela} ({campos_str}) VALUES ({valores_str})"
+            cursor.execute(sql, tuple(dados.values()))
+            conexao.commit()
+        except Exception as e:
+            print(f"Erro ao executar a inserção: {e}")
+        finally:
+            if conexao.is_connected():
+                cursor.close()
+                conexao.close()
+           
+
 def listar(tabela):
     conexao = conectar()
     if conexao:
@@ -36,8 +53,18 @@ def listar(tabela):
             if conexao.is_connected():
                 cursor.close()
                 conexao.close()
-                print("Conexão encerrada")
+        
 
-# Exemplo de uso
-tabela_consulta = 'cliente'
+def main():
+    dados_para_inserir = {'aa': 'teste no segundo', 'bb': 'AAAAAAA'}
+    tabela_consulta = 'teste'  # Substitua pelo nome da sua tabela
 
+    # Insira os dados usando MySQL Connector
+    inserir(tabela_consulta, list(dados_para_inserir.keys()), dados_para_inserir)
+
+    # Liste os dados usando MySQL Connector
+    resultado_mysql = listar(tabela_consulta)
+    print("Listagem usando MySQL Connector:", resultado_mysql)
+
+if __name__ == "__main__":
+    main()

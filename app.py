@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 
@@ -16,28 +16,27 @@ def clientes():
     dados = listar("cliente")
     return render_template('clientes.html', dados=dados)
  
-
-@app.route('/admin/')
-def admin():
-      
-    nome = {"name": "Axel", "age": 10 }
-    return render_template('/admin/index.html', mario=nome)
  
 
-@app.route('/admin/clientes')
-def admin_clientes():
-      
-    nome = {"name": "Axel", "age": 10 }
-    return render_template('/admin/index.html', mario=nome)
- 
+@app.route('/criar_cliente')
+def criar_cliente():
+    dados = {
+        "primeiroNome": request.form["primeiroNome"],
+        "nomeDoMeio": request.form["nomeDoMeio"],
+        "ultimoNome": request.form["ultimoNome"],
+        "contribuinte": request.form["contribuinte"],
+        "CC": request.form["CC"],
+        "email": request.form["email"],
+        "telefone": request.form["telefone"],
+        "dataNascimento": request.form["dataNascimento"],
+        "ativo": request.form["ativo"],
+        "genero": request.form["genero"],
+    
 
-@app.route('/ok')
-def ok():
-      
-    nome = {"name": "Axel", "age": 10 }
-    return render_template('/index.html', mario=nome)
- 
+    }
+    inserir("cliente", list(dados.keys()), dados)
 
+    return render_template('/cliente.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
