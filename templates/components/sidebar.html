@@ -3,13 +3,13 @@
   <!-- partial:partials/_sidebar.html -->
   <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-      <a class="sidebar-brand brand-logo logo" href="{{ url_for('index') }}">ThreeGroup</a>
-      <a class="sidebar-brand brand-logo-mini logo" href="url_for('index') ">TG</a>
+      <a class="sidebar-brand brand-logo logo" href="{{ url_for('rotas_cliente.index') }}">ThreeGroup</a>
+      <a class="sidebar-brand brand-logo-mini logo" href="{{url_for('rotas_cliente.index')}}">TG</a>
     </div>
     <ul class="nav" >
 
       <li class="nav-item menu-items">
-        <a class="nav-link" href="{{ url_for('index') }}">
+        <a class="nav-link" href="{{ url_for('rotas_cliente.index') }}">
           <span class="menu-icon">
             <i class="mdi mdi-speedometer"></i>
           </span>
@@ -18,7 +18,7 @@
       </li>
   
       <li class="nav-item menu-items">
-        <a class="nav-link" href="{{ url_for('clientes') }}">
+        <a class="nav-link" href="{{ url_for('rotas_cliente.listar_clientes') }}">
           <span class="menu-icon">
             <i class="mdi mdi-table-large"></i>
           </span>
