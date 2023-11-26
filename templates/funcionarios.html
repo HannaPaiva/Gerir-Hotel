@@ -9,10 +9,10 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tabela de clientes</h4>
+                        <h4 class="card-title">Tabela de funcionários</h4>
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
-                                data-target="#modalCriar">+ Adicionar novo Cliente</button>
+                                data-target="#modalCriar">+ Adicionar novo Funcionário</button>
                         </div>
                         <div class="table-responsive">
 
@@ -37,21 +37,22 @@
                                         <td>{{ dado.dataNascimento }}</td>
                                         <td><label class="badge">{{dado.ativo}}</label></td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idCliente}}">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idfuncionario}}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
                                             </button>
                                         </td>
                                         <td>
-                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idCliente}}">
+                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idfuncionario}}">
                                                 <i class="mdi mdi-delete"></i> Apagar
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="modalEditar-{{dado.idCliente}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modalEditar-{{dado.idfuncionario}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalEditarLabel">Editar cliente</h5>
+                                                    <h5 class="modal-title" id="modalEditarLabel">Editar funcioná
+                                                        rio</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -59,14 +60,14 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h4 class="card-title"></h4>
-                                                    <form class="form-sample" method="post" action="/editar-cliente" >
+                                                    <form class="form-sample" method="post" action="/editar-funcionario" >
                                                       
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="nome do cliente" value="{{dado.primeiroNome}}" />
+                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="nome do funcionario" value="{{dado.primeiroNome}}" />
                                                                     </div>
                         
                                                                 </div>
@@ -75,7 +76,7 @@
                                                                 <div class="form-group">
                                                                     <label class="col-sm-5 col-form-label">Nomes do meio</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="nomes do meio do cliente" value="{{dado.nomeDoMeio}}" />
+                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="nomes do meio do funcionario" value="{{dado.nomeDoMeio}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -84,7 +85,7 @@
                                                                 <div class="form-group ">
                                                                     <label class="col-sm-3 col-form-label">Apelido</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do cliente" value="{{dado.ultimoNome}}"/>
+                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do funcionario" value="{{dado.ultimoNome}}"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -160,7 +161,7 @@
                         
                                                             <div class="col-md-6">
                                                                 <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                                                    <label class="col-sm-3 col-form-label">funcionario ativo?</label>
                                                                     <div class="col-sm-4">
                                                                         <div class="form-check">
                                                                             <label class="form-check-label">
@@ -168,7 +169,7 @@
                                                                                     id="ativo" value="1" checked> Ativo </label>
                                                                         </div>
                                                                     </div>
-                                                                    <input type="hidden" name="idCliente" value="{{dado.idCliente}}">
+                                                                    <input type="hidden" name="idfuncionario" value="{{dado.idfuncionario}}">
                                                                     <div class="col-sm-5">
                                                                         <div class="form-check">
                                                                             <label class="form-check-label">
@@ -195,7 +196,7 @@
                                     </div>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modalApagar-{{dado.idCliente}}" tabindex="-1"
+                                    <div class="modal fade" id="modalApagar-{{dado.idfuncionario}}" tabindex="-1"
                                     role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -209,13 +210,13 @@
                                                 <div class="modal-body">
                                                     <h5>Tem certeza que deseja apagar? Essa ação não pode ser cancelada.
                                                     </h5>
-                                                    <h1>{{dado.idCliente}}</h1>
+                                                    <h1>{{dado.idfuncionario}}</h1>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
-                                                        <form action="/apagar-cliente" method="post">
-                                                        <input type="hidden" value="{{dado.idCliente}}" name="idCliente">
+                                                        <form action="/apagar-funcionario" method="post">
+                                                        <input type="hidden" value="{{dado.idfuncionario}}" name="idfuncionario">
                                                         
                                                     <button type="submit" class="btn btn-danger"> <i
                                                             class="mdi mdi-delete"></i>Apagar</button>
@@ -241,14 +242,14 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalCriarLabel">Criar cliente</h5>
+                            <h5 class="modal-title" id="modalCriarLabel">Criar funcionario</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
-                            <form class="form-sample" method="post" action="/criar-cliente" >
+                            <form class="form-sample" method="post" action="/criar-funcionario" >
 
                                 <div class="row">
                                     <div class="col-md-4">
@@ -256,7 +257,7 @@
                                             <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="primeiroNome"
-                                                    name="primeiroNome" placeholder="nome do cliente" />
+                                                    name="primeiroNome" placeholder="nome do funcionario" />
                                             </div>
 
                                         </div>
@@ -266,7 +267,7 @@
                                             <label class="col-sm-5 col-form-label">Nomes do meio</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="nomeDoMeio"
-                                                    name="nomeDoMeio" placeholder="nomes do meio do cliente" />
+                                                    name="nomeDoMeio" placeholder="nomes do meio do funcionario" />
                                             </div>
                                         </div>
                                     </div>
@@ -276,7 +277,7 @@
                                             <label class="col-sm-3 col-form-label">Apelido</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="ultimoNome"
-                                                    name="ultimoNome" placeholder="último nome do cliente" />
+                                                    name="ultimoNome" placeholder="último nome do funcionario" />
                                             </div>
                                         </div>
                                     </div>
@@ -352,7 +353,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                            <label class="col-sm-3 col-form-label">funcionario ativo?</label>
                                             <div class="col-sm-4">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
