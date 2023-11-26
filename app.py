@@ -18,10 +18,25 @@ def index():
 
 @app.route('/clientes')
 def clientes():
-      
     dados = listar("cliente")
-    return render_template('clientes.html', dados=dados)
- 
+
+    dados_empty = {
+        "primeiroNome":"",
+        "nomeDoMeio": "",
+        "ultimoNome": "",
+        "contribuinte": "",
+        "CC": "",
+        "email": "",
+        "telefone":"",
+        "dataNascimento": "",
+        "ativo": "",
+        "genero": "",
+    }
+
+    if dados is not None:
+        return render_template('clientes.html', dados=dados)
+    else:
+        return render_template('clientes.html')
 
 @app.route('/criar-cliente', methods=['GET', 'POST'])
 def criar_cliente():
@@ -71,6 +86,32 @@ def apagar_cliente():
    
    apagar("cliente", "idCliente", dados["idCliente"])
    return redirect(url_for('clientes'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
