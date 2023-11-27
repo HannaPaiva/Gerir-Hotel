@@ -72,5 +72,12 @@ def apagar_cliente():
    apagar("cliente", "idCliente", dados["idCliente"])
    return redirect(url_for('clientes'))
 
+@app.route('/servicos')
+def servicos():
+      
+    dados = listar("servicos")
+    return render_template('servicos.html', dados=dados)
+
 if __name__ == '__main__':
     app.run(debug=True)
+

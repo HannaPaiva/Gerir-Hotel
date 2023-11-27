@@ -89,6 +89,7 @@ CREATE TABLE `cliente` (
   `telefone` varchar(45) DEFAULT NULL,
   `dataNascimento` date DEFAULT NULL,
   `ativo` tinyint(4) DEFAULT NULL,
+  `genero` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`idCliente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -99,7 +100,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'maria','luana','rizard','cccc','cc','maria@gmail.com','3434234234',NULL,NULL),(2,'julia','pc','picoito','aaaa',NULL,'julia@outlook.com',NULL,NULL,NULL);
+INSERT INTO `cliente` VALUES (1,'maria','luana','rizard','cccc','cc','maria@gmail.com','3434234234',NULL,NULL,NULL),(2,'julia','pc','picoito','aaaa',NULL,'julia@outlook.com',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -489,6 +490,14 @@ LOCK TABLES `tarifa` WRITE;
 /*!40000 ALTER TABLE `tarifa` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tarifa` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'hotel'
+--
+
+--
+-- Dumping routines for database 'hotel'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -499,4 +508,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-16 10:24:41
+-- Dump completed on 2023-11-25  0:28:35
