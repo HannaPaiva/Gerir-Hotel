@@ -8,18 +8,6 @@ rotas_cliente = Blueprint("rotas_cliente", __name__)
 def listar_clientes():
     dados = listar("cliente")
 
-    dados_empty = {
-        "primeiroNome":"",
-        "nomeDoMeio": "",
-        "ultimoNome": "",
-        "contribuinte": "",
-        "CC": "",
-        "email": "",
-        "telefone":"",
-        "dataNascimento": "",
-        "ativo": "",
-        "genero": "",
-    }
 
     if dados is not None:
         return render_template('clientes.html', dados=dados)
