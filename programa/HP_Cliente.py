@@ -109,15 +109,7 @@ def apagar(tabela, primarykey, id):
 
 def main():
     pass
-    # dados_para_inserir = {'aa': 'teste no segundo', 'bb': 'AAAAAAA'}
-    # tabela_consulta = 'teste'  # Substitua pelo nome da sua tabela
 
-    # # Insira os dados usando MySQL Connector
-    # inserir(tabela_consulta, list(dados_para_inserir.keys()), dados_para_inserir)
-
-    # # Liste os dados usando MySQL Connector
-    # resultado_mysql = listar(tabela_consulta)
-    # print("Listagem usando MySQL Connector:", resultado_mysql)
 
 if __name__ == "__main__":
     main()

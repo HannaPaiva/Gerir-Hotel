@@ -63,9 +63,9 @@
     }
     if ($("#transaction-history").length) {
       var areaData = {
-        labels: ["Paypal", "Stripe","Cash"],
+        labels: ["Quartos totais", "Quartos ocupados","Quartos vagos"],
         datasets: [{
-            data: [55, 25, 20],
+            data: [55, 35, 20],
             backgroundColor: [
               "#111111","#00d25b","#ffab00"
             ]
