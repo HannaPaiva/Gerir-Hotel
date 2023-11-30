@@ -94,7 +94,7 @@
                         
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <div class="form-group ">
                                                                     <label class="col-sm-3 col-form-label">Telefone Representante</label>
                                                                     <div class="col-sm-9">
@@ -103,77 +103,11 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4">
                                                                 <div class="form-group ">
                                                                     <label class="col-sm-3 col-form-label">Comissão</label>
                                                                     <div class="col-sm-9">
-                                                                        <input class="form-control" type="text" name="dataNascimento" placeholder="dd/mm/yyyy" value="{{dado.dataNascimento}}" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                        
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">nº Contribuinte</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="contribuinte" value="{{dado.contribuinte}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="CC" value="{{dado.CC}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                        
-                                                        </div>
-                                                        <p class="card-description"> Contactos </p>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label">Número de telefone
-                                                                    </label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="telefone" value="{{dado.telefone}}" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">email</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" placeholder="exemplo@gmail.com"
-                                                                            name="email" value="{{dado.email}}" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                        
-                                                        <div class="row">
-                        
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">funcionario ativo?</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
-                                                                                    id="ativo" value="1" checked> Ativo </label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <input type="hidden" name="idfuncionario" value="{{dado.idfuncionario}}">
-                                                                    <div class="col-sm-5">
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
-                                                                                    id="ativo" value="0"> Desativado
-                                                                            </label>
-                                                                        </div>
+                                                                        <input class="form-control" type="text" id="comissaoagencia" name="dado.comissaoagencia" placeholder="comissao da agencia" value="{{dado.comissaoagencia}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -238,42 +172,42 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalCriarLabel">Criar funcionario</h5>
+                            <h5 class="modal-title" id="modalCriarLabel">Criar agencia</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
-                            <form class="form-sample" method="post" action="/criar-funcionario" >
+                            <form class="form-sample" method="post" action="/criar-agencia" >
 
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
+                                            <label class="col-sm-3 col-form-label" for="nomeagencia">Nome Agencia</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="primeiroNome"
-                                                    name="primeiroNome" placeholder="nome do funcionario" />
+                                                <input type="text" class="form-control" id="nomeagencia"
+                                                    name="nomeagencia" placeholder="nome da agencia" />
                                             </div>
 
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-5 col-form-label">Nomes do meio</label>
+                                            <label class="col-sm-5 col-form-label">contato geral</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="nomeDoMeio"
-                                                    name="nomeDoMeio" placeholder="nomes do meio do funcionario" />
+                                                <input type="text" class="form-control" id="contatogeral"
+                                                    name="contatogeral" placeholder="contato geral" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Apelido</label>
+                                            <label class="col-sm-3 col-form-label">nome Representante</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="ultimoNome"
-                                                    name="ultimoNome" placeholder="último nome do funcionario" />
+                                                <input type="text" class="form-control" id="nomerepresentante"
+                                                    name="nomerepresentante" placeholder="nome Representante" />
                                             </div>
                                         </div>
                                     </div>
@@ -283,13 +217,9 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Gênero</label>
+                                            <label class="col-sm-3 col-form-label">tel Representante</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" name="genero">
-                                                    <option value="m">Male</option>
-                                                    <option value="f">Female</option>
-                                                    <option value="o">outro</option>
-                                                </select>
+                                                <input type="text" class="form-control" id = "nomerepresentante" name="telefonerepresentante">
                                             </div>
                                         </div>
                                     </div>
