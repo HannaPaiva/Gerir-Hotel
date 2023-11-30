@@ -1,12 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
 from programa.HP_Cliente import *
+from programa.z_database_manager import DatabaseManager
+
+conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
 
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 rotas_cliente = Blueprint("rotas_cliente", __name__)
 
+
 @rotas_cliente.route('/clientes')
 def listar_clientes():
-    dados = listar("cliente")
+    dados = conn.select_data("cliente")
     if dados is not None:
         return render_template('clientes.html', dados=dados)
     else:
@@ -26,13 +30,13 @@ def criar_cliente():
         "ativo": request.form["ativo"],
         "genero": request.form["genero"],
     }
-    inserir("cliente", list(dados.keys()), dados)
+    conn.insert_data("cliente", dados)
     return redirect(url_for('rotas_cliente.listar_clientes'))
 
 @rotas_cliente.route('/editar-cliente', methods=['GET', 'POST'])
 def editar_cliente():
+    idcliente = {"idcliente": request.form["idcliente"]}
     dados = {
-        "idCliente": request.form["idCliente"],
         "primeiroNome": request.form["primeiroNome"],
         "nomeDoMeio": request.form["nomeDoMeio"],
         "ultimoNome": request.form["ultimoNome"],
@@ -44,15 +48,13 @@ def editar_cliente():
         "ativo": request.form["ativo"],
         "genero": request.form["genero"],
     }
-    atualizar("cliente", list(dados.keys()), dados, "idCliente", dados["idCliente"] )
+    conn.update_data("cliente", dados, idcliente)
     return redirect(url_for('rotas_cliente.listar_clientes'))
 
 @rotas_cliente.route('/apagar-cliente', methods=['GET', 'POST'])
 def apagar_cliente():
-    dados = {
-        "idCliente": request.form["idCliente"]
-    }
-    apagar("cliente", "idCliente", dados["idCliente"])
+    idcliente = {"idcliente": request.form["idcliente"]}
+    conn.delete_data("cliente", idcliente)
     return redirect(url_for('rotas_cliente.listar_clientes'))
 
 app.register_blueprint(rotas_cliente)

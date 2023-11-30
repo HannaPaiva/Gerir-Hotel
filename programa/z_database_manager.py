@@ -25,7 +25,7 @@ class DatabaseManager:
             "agenciametodo": ["idagencia", "idmetodo"],
             "cliente": ["idcliente", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "ativo"],
             "departamento": ["iddepartamento", "idchefe", "nomedepartamento", "descricao"],
-            "funcionario": ["idfuncionario", "iddepartamento", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "endereco", "salario", "dataentrada", "datasaida", "ativo"],
+            "funcionario": ["idfuncionario", "iddepartamento", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "endereco", "salario", "dataentrada", "datasaida", "status"],
             "hospede": ["idhospede", "primeironome", "nomedomeio", "ultimonome", "cc", "email", "telefone", "datanascimento", "ativo"],
             "metodoreserva": ["idmetodo", "nomemetodo"],
             "pagamento": ["idpagamento", "valortotal", "metodopagamento", "tarifareembolsavel", "datapagamento", "observacoes", "status", "idreserva"],
@@ -120,7 +120,6 @@ class DatabaseManager:
             query += f"\nLIMIT {limit}"
             query += f"\nOFFSET {limit * (page-1)}"
 
-        print(query)
         try:
             self.cursor.execute(query)
             result = self.cursor.fetchall()
@@ -155,7 +154,7 @@ class DatabaseManager:
             if isinstance(data[key], str):
                 data[key] = f'"{data[key]}"'
             changes.append(f"{key} = {data[key]}")
-        query += "\nSET " + " AND ".join(changes)
+        query += "\nSET " + ", ".join(changes)
         
         conditions = []
         for key in idDict:
@@ -188,6 +187,5 @@ class DatabaseManager:
 
 if __name__ == "__main__":
     conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel")
-    select = conn.select_data("funcionario", ["idfuncionario"])
-    print(select)
+    update = conn.update_data("funcionario", {"key": "value", "key2": "value2"}, {"idfuncionario": 1})
     # del(connection)
