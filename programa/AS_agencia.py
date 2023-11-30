@@ -1,96 +1,96 @@
 from AT_menu import Menu
 
 class Agencia(Menu):
-    def __init__(self, idAgencia, nomeAgencia, contatoGeral, nomeRepresentante,  telefoneRepresentante, comissaoAgencia):
-        self.idAgencia = idAgencia
-        self.nome = nomeAgencia
-        self.contato = contatoGeral
-        self.nomeRepresentante = nomeRepresentante
-        self.telefoneRepresentante = telefoneRepresentante
-        self.comissaoAgencia = comissaoAgencia
+    def __init__(self, idagencia, nomeagencia, contatogeral, nomerepresentante,  telefonerepresentante, comissaoagencia):
+        self.idagencia = idagencia
+        self.nomeagencia = nomeagencia
+        self.contatogeral = contatogeral
+        self.nomerepresentante = nomerepresentante
+        self.telefonerepresentante = telefonerepresentante
+        self.comissaoagencia = comissaoagencia
         self.agencias = []
     
     
     @property
-    def idAgencia(self):
-        return self.__idAgencia
+    def idagencia(self):
+        return self.__idagencia
     
-    @idAgencia.setter
-    def idAgencia(self, idAgencia):
-        print("debug: setting idAgencia")
-        if int(idAgencia):
-            self.__idAgencia = idAgencia
+    @idagencia.setter
+    def idagencia(self, idagencia):
+        print("debug: setting idagencia")
+        if int(idagencia):
+            self.__idagencia = idagencia
         else:
             raise
     
     @property
-    def nomeAgencia(self):
-        return self.__nomeAgencia
+    def nomeagencia(self):
+        return self.__nomeagencia
     
-    @nomeAgencia.setter
-    def nomeAgencia(self, nomeAgencia):
+    @nomeagencia.setter
+    def nomeagencia(self, nomeagencia):
         print("debug: setting name")
-        if len(nomeAgencia) < 45:
-            self.__nomeAgencia = nomeAgencia
+        if len(nomeagencia) < 45:
+            self.__nomeagencia = nomeagencia
         else:
             raise
     
     @property
-    def contatoGeral(self):
-        return self.__contatoGeral
+    def contatogeral(self):
+        return self.__contatogeral
     
-    @contatoGeral.setter
-    def contatoGeral(self, contatoGeral):
+    @contatogeral.setter
+    def contatogeral(self, contatogeral):
         print("debug: setting contato")
-        if int(contatoGeral):
-            self.__contatoGeral = contatoGeral
+        if int(contatogeral):
+            self.__contatogeral = contatogeral
         else:
             raise
     
     @property
-    def nomeRepresentante(self):
-        return self.__nomeRepresentante
+    def nomerepresentante(self):
+        return self.__nomerepresentante
     
-    @nomeRepresentante.setter
-    def nomeRepresentate(self, nomeRepresentante):
+    @nomerepresentante.setter
+    def nomeRepresentate(self, nomerepresentante):
         print("debug: setting nomeRep")
-        if len(nomeRepresentante) < 45:
-            self.__nomeRepresentante = nomeRepresentante
+        if len(nomerepresentante) < 45:
+            self.__nomerepresentante = nomerepresentante
         else:
             raise
     
     @property
-    def telefoneRepresentante(self):
-        return self.__telefoneRepresentante
+    def telefonerepresentante(self):
+        return self.__telefonerepresentante
     
-    @telefoneRepresentante.setter
-    def telefoneRepresentante(self, telefoneRepresentante):
+    @telefonerepresentante.setter
+    def telefonerepresentante(self, telefonerepresentante):
         print("debug:setting telRepr")
-        if int(telefoneRepresentante):
-            self.__telefoneRepresentante = telefoneRepresentante
+        if int(telefonerepresentante):
+            self.__telefonerepresentante = telefonerepresentante
         else:
             raise
     
     @property
-    def comissaoAgencia(self):
-        return self.__comissaoAgencia
+    def comissaoagencia(self):
+        return self.__comissaoagencia
     
-    @comissaoAgencia.setter
-    def comissaoAgencia(self, comissaoAgencia):
-        print("debug: setting comissaoAgencia")
-        if float(comissaoAgencia):
-            self.__comissaoAgencia = comissaoAgencia
+    @comissaoagencia.setter
+    def comissaoagencia(self, comissaoagencia):
+        print("debug: setting comissaoagencia")
+        if float(comissaoagencia):
+            self.__comissaoagencia = comissaoagencia
         else: 
             raise
     
-    def criar(self , nomeAgencia, contatoGeral, nomeRepresentante,  telefoneRepresentante, comissaoAgencia ):
+    def criar(self , idagencia, nomeagencia, contatogeral, nomerepresentante,  telefonerepresentante, comissaoagencia ):
         agencias = {
-            "idAgencia" : len(self.idAgencia) + 1,
-            "nomeAgencia" : nomeAgencia,
-            "contatoGeral" : contatoGeral,
-            "nomeRepresentante" : nomeRepresentante,
-            "telefoneRepresentante" : telefoneRepresentante,
-            "comissaoAgencia" : comissaoAgencia
+            "idagencia" : len(self.idagencia) + 1,
+            "nomeagencia" : nomeagencia,
+            "contatogeral" : contatogeral,
+            "nomerepresentante" : nomerepresentante,
+            "telefonerepresentante" : telefonerepresentante,
+            "comissaoagencia" : comissaoagencia
         }
 
     def pesquisar(self):
