@@ -9,7 +9,7 @@ class DatabaseManager:
                                                 password=password,
                                                 database=database,
                                                 port=port)
-            self.cursor = self.conn.cursor()
+            self.cursor = self.conn.cursor(dictionary=True)
             print(f"LOG {datetime.datetime.now()}: Conexão à base de dados bem sucedida!")
             self.conn.close()
         except:
@@ -18,14 +18,14 @@ class DatabaseManager:
     
     @staticmethod
     def get_columns(table):
-        table_lower = table.lower()
+        table = table.lower()
 
         columns = {
             "agencia": ["idagencia", "nomeagencia", "contatogeral", "nomerepresentate", "telefonerepresentante", "comissaoagenda"],
             "agenciametodo": ["idagencia", "idmetodo"],
             "cliente": ["idcliente", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "ativo"],
             "departamento": ["iddepartamento", "idchefe", "nomedepartamento", "descricao"],
-            "funcionario": ["idfuncionario", "iddepartamento", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "endereco", "salario", "dataentrada", "datasaida", "status"],
+            "funcionario": ["idfuncionario", "iddepartamento", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "endereco", "salario", "dataentrada", "datasaida", "ativo"],
             "hospede": ["idhospede", "primeironome", "nomedomeio", "ultimonome", "cc", "email", "telefone", "datanascimento", "ativo"],
             "metodoreserva": ["idmetodo", "nomemetodo"],
             "pagamento": ["idpagamento", "valortotal", "metodopagamento", "tarifareembolsavel", "datapagamento", "observacoes", "status", "idreserva"],
@@ -38,7 +38,7 @@ class DatabaseManager:
             "servicoprestado": ["idreserva", "idservico", "detalhes", "datahora", "idfuncionario", "iddepartamento"],
             "tarifa": ["idtarifa", "datainicio", "datafim", "preconoiteadulto", "preconoitecrianca", "tipologia"]
         }
-        return columns.get(table_lower, [])
+        return columns.get(table, [])
 
     def insert_data(self, table:str, data:dict):
         self.conn.connect()
@@ -119,7 +119,8 @@ class DatabaseManager:
             # PAGE
             query += f"\nLIMIT {limit}"
             query += f"\nOFFSET {limit * (page-1)}"
-   
+
+        print(query)
         try:
             self.cursor.execute(query)
             result = self.cursor.fetchall()
@@ -186,5 +187,7 @@ class DatabaseManager:
             raise
 
 if __name__ == "__main__":
-    connection = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel")
-    del(connection)
+    conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel")
+    select = conn.select_data("funcionario", ["idfuncionario"])
+    print(select)
+    # del(connection)
