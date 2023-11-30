@@ -3,7 +3,9 @@ from rotas_clientes import rotas_cliente
 from rotas_funcionarios import rotas_funcionario
 from rotas_departamentos import rotas_departamento
 from programa.Z_funcoes import *
+from programa.z_database_manager import DatabaseManager
 
+conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 
 app.register_blueprint(rotas_cliente)
