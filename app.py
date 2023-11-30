@@ -1,76 +1,64 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template
+from rotas_clientes import rotas_cliente
+from rotas_funcionarios import rotas_funcionario
+from rotas_departamentos import rotas_departamento
+from programa.Z_funcoes import *
 
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 
-from programa.HP_Cliente import *
+app.register_blueprint(rotas_cliente)
+app.register_blueprint(rotas_funcionario)
+app.register_blueprint(rotas_departamento)
+
+# main_routes
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
 
+    totalClientes = selecionar('''SELECT COUNT(idCliente) AS totalClientes FROM cliente; ''')
 
-# -------------------------------------------------------------------------------
+    mediaIdades = selecionar(''' SELECT round(AVG(DATEDIFF(CURDATE(), dataNascimento) / 365)) AS mediaIdades
+FROM cliente
+WHERE dataNascimento IS NOT NULL;
+''')
 
-# HANNA: Clientes, departamento, funcionario, tarifa
+    totalQuartos = selecionar("SELECT COUNT(numQuarto) as totalQuartos from Quarto")
 
-# -------------------------------------------------------------------------------
+    porcentagemQuartosOcupados = selecionar('''SELECT
+  round((SUM(estaDisponivel) / COUNT(*))) * 100 AS totalQuartosOcupados
+FROM
+  quarto;''')
+    ocupacao = selecionar('''SELECT
+  COUNT(*) AS total_quartos,
+  SUM(estaDisponivel) AS quartos_disponiveis,
+  (COUNT(*) - SUM(estaDisponivel)) AS quartos_ocupados,
+  (SUM(estaDisponivel) / COUNT(*)) * 100 AS ocupacao
+FROM
+  quarto;
 
-@app.route('/clientes')
-def clientes():
-      
-    dados = listar("cliente")
-    return render_template('clientes.html', dados=dados)
+''')
  
-
-@app.route('/criar-cliente', methods=['GET', 'POST'])
-def criar_cliente():
-    dados = {
-        "primeiroNome": request.form["primeiroNome"],
-        "nomeDoMeio": request.form["nomeDoMeio"],
-        "ultimoNome": request.form["ultimoNome"],
-        "contribuinte": request.form["contribuinte"],
-        "CC": request.form["CC"],
-        "email": request.form["email"],
-        "telefone": request.form["telefone"],
-        "dataNascimento": request.form["dataNascimento"],
-        "ativo": request.form["ativo"],
-        "genero": request.form["genero"],
     
-
-    }
-    inserir("cliente", list(dados.keys()), dados)
-    return redirect(url_for('clientes.html'))
-
- 
-@app.route('/editar-cliente', methods=['GET', 'POST'])
-def editar_cliente():
     dados = {
-        "idCliente": request.form["idCliente"],
-        "primeiroNome": request.form["primeiroNome"],
-        "nomeDoMeio": request.form["nomeDoMeio"],
-        "ultimoNome": request.form["ultimoNome"],
-        "contribuinte": request.form["contribuinte"],
-        "CC": request.form["CC"],
-        "email": request.form["email"],
-        "telefone": request.form["telefone"],
-        "dataNascimento": request.form["dataNascimento"],
-        "ativo": request.form["ativo"],
-        "genero": request.form["genero"],
-    
-
+        "totalClientes": totalClientes[0]["totalClientes"],
+        "mediaIdades": mediaIdades[0]["mediaIdades"],
+        "totalQuartos": totalQuartos[0]["totalQuartos"],
+        "totalQuartosOcupados": porcentagemQuartosOcupados[0]["totalQuartosOcupados"]
     }
-    atualizar("cliente", list(dados.keys()), dados, "idCliente", dados["idCliente"] )
-   
-    return redirect(url_for('clientes'))
 
-@app.route('/apagar-cliente', methods=['GET', 'POST'])
-def apagar_cliente():
-   dados = {
-        "idCliente": request.form["idCliente"]}
-   
-   apagar("cliente", "idCliente", dados["idCliente"])
-   return redirect(url_for('clientes'))
+    return render_template('index.html', dados=dados)
 
-if __name__ == '__main__':
+
+
+
+
+@app.route('/teste')
+def teste():
+
+    
+    return render_template('teste.html')
+
+
+if __name__ == "__main__":
     app.run(debug=True)
