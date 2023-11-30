@@ -18,7 +18,7 @@ class DatabaseManager:
     
     @staticmethod
     def get_columns(table):
-        table_lower = table.lower()
+        table = table.lower()
 
         columns = {
             "agencia": ["idagencia", "nomeagencia", "contatogeral", "nomerepresentate", "telefonerepresentante", "comissaoagenda"],
@@ -38,7 +38,7 @@ class DatabaseManager:
             "servicoprestado": ["idreserva", "idservico", "detalhes", "datahora", "idfuncionario", "iddepartamento"],
             "tarifa": ["idtarifa", "datainicio", "datafim", "preconoiteadulto", "preconoitecrianca", "tipologia"]
         }
-        return columns.get(table_lower, [])
+        return columns.get(table, [])
 
     def insert_data(self, table:str, data:dict):
         self.conn.connect()
