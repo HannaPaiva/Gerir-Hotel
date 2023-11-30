@@ -108,8 +108,8 @@ def apagar(tabela, primarykey, id):
 
 
 def main():
-    pass
-
+    a = listar("funcionario")
+    print(a)
 
 if __name__ == "__main__":
     main()

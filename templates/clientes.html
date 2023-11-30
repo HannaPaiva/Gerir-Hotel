@@ -156,7 +156,7 @@
                                                             </div>
                                                         </div>
                         
-                                                        <div class="row">
+                                                        <!-- <div class="row">
                         
                                                             <div class="col-md-6">
                                                                 <div class="form-group row">
@@ -181,6 +181,28 @@
                                                             </div>
                                                         </div>
                                                 </div>
+                         -->
+
+                         <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="1" {{ 'checked' if dado.ativo else '' }}> Ativo
+                                        </label>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="idCliente" value="{{dado.idCliente}}">
+                                <div class="col-sm-5">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="0" {{ 'checked' if not dado.ativo else '' }}> Desativado
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -302,7 +324,7 @@
                                                 nascimento</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="date" name="dataNascimento"
-                                                    placeholder="dd/mm/yyyy" />
+                                                    placeholder="dd/mm/yyyy" value="{{dataNascimento}}" />
                                             </div>
                                         </div>
                                     </div>
