@@ -7,8 +7,6 @@ rotas_cliente = Blueprint("rotas_cliente", __name__)
 @rotas_cliente.route('/clientes')
 def listar_clientes():
     dados = listar("cliente")
-
-
     if dados is not None:
         return render_template('clientes.html', dados=dados)
     else:

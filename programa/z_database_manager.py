@@ -9,7 +9,7 @@ class DatabaseManager:
                                                 password=password,
                                                 database=database,
                                                 port=port)
-            self.cursor = self.conn.cursor()
+            self.cursor = self.conn.cursor(dictionary=True)
             print(f"LOG {datetime.datetime.now()}: Conexão à base de dados bem sucedida!")
             self.conn.close()
         except:
@@ -25,7 +25,7 @@ class DatabaseManager:
             "agenciametodo": ["idagencia", "idmetodo"],
             "cliente": ["idcliente", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "ativo"],
             "departamento": ["iddepartamento", "idchefe", "nomedepartamento", "descricao"],
-            "funcionario": ["idfuncionario", "iddepartamento", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "endereco", "salario", "dataentrada", "datasaida", "status"],
+            "funcionario": ["idfuncionario", "iddepartamento", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "endereco", "salario", "dataentrada", "datasaida", "ativo"],
             "hospede": ["idhospede", "primeironome", "nomedomeio", "ultimonome", "cc", "email", "telefone", "datanascimento", "ativo"],
             "metodoreserva": ["idmetodo", "nomemetodo"],
             "pagamento": ["idpagamento", "valortotal", "metodopagamento", "tarifareembolsavel", "datapagamento", "observacoes", "status", "idreserva"],
@@ -119,7 +119,8 @@ class DatabaseManager:
             # PAGE
             query += f"\nLIMIT {limit}"
             query += f"\nOFFSET {limit * (page-1)}"
-   
+
+        print(query)
         try:
             self.cursor.execute(query)
             result = self.cursor.fetchall()
@@ -186,5 +187,7 @@ class DatabaseManager:
             raise
 
 if __name__ == "__main__":
-    connection = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel")
-    del(connection)
+    conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel")
+    select = conn.select_data("funcionario", ["idfuncionario"])
+    print(select)
+    # del(connection)

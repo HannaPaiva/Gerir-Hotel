@@ -1,0 +1,45 @@
+{% include 'components/head.html' %}
+{% include 'components/sidebar.html' %}
+{% include 'components/navbar.html' %}
+
+<div class="main-panel">
+   
+        
+  
+  <form action="processar_formulario.php" method="post">
+    <label>
+        <input type="checkbox" name="frutas[]" value="maca"> Maçã
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" name="frutas[]" value="banana"> Banana
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" name="frutas[]" value="laranja"> Laranja
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" name="frutas[]" value="uva"> Uva
+    </label>
+    <br>
+    <!-- Adicione mais checkboxes conforme necessário -->
+
+    <br>
+    <input type="submit" value="Enviar">
+</form>
+    
+      
+     
+    <!-- content-wrapper ends -->
+    <!-- partial:partials/_footer.html -->
+    <footer class="footer">
+      <div class="d-sm-flex justify-content-center justify-content-sm-between">
+        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
+        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com</span>
+      </div>
+    </footer>
+    <!-- partial -->
+  </div>
+  
+{% include 'components/footer.html' %}
