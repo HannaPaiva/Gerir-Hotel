@@ -15,6 +15,8 @@ app.register_blueprint(rotas_departamento)
 # main_routes
 
 
+
+
 @app.route('/')
 def index():
 
