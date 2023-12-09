@@ -61,17 +61,13 @@ def atualizar(tabela, campos, dados, primarykey, id):
     if conexao:
         try:
             cursor = conexao.cursor()
-            
-            # Construa a parte SET da instrução SQL
+
             set_clause = ', '.join([f"{campo} = %s" for campo in campos])
             
-            # Construa a instrução SQL completa
             sql = f"UPDATE {tabela} SET {set_clause} WHERE {primarykey} = {id}"
             
-            # Execute a instrução SQL com os valores dos dados e a condição
             cursor.execute(sql, tuple(dados.values()))
             
-            # Commit para aplicar as alterações no banco de dados
             conexao.commit()
             
         except Exception as e:

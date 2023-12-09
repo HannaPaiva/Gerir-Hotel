@@ -53,11 +53,11 @@ FROM
 
 
 
-@app.route('/teste')
-def teste():
+@app.route('/pesquisar')
+def pesquisar():
 
     
-    return render_template('teste.html')
+      return render_template('pesquisar.html')
 
 
 if __name__ == "__main__":
