@@ -53,6 +53,8 @@ def editar_cliente():
     conn.update_data("cliente", dados, idcliente)
     return redirect(url_for('rotas_cliente.listar_clientes'))
 
+
+
 @rotas_cliente.route('/apagar-cliente', methods=['GET', 'POST'])
 def apagar_cliente():
     idcliente = {"idcliente": request.form["idcliente"]}
@@ -61,28 +63,18 @@ def apagar_cliente():
 
 
 
-
-
- 
 @rotas_cliente.route('/pesquisar-cliente', methods=['GET', 'POST'])
 def pesquisar_cliente():
-    res = 0
     param = request.form["param"]
     # colls = request.form["colls"]
-    res =  conn.select_data(table="cliente", search= param)
-    print(res)
-    return res
+    dados =  conn.select_data(table="cliente", search= param)
+
+    return render_template('pesquisa.html', dados = dados)
 
 
 
-@rotas_cliente.route('/pesqui')
-def pesquisar():
-   dados =  pesquisar_cliente()
-   if dados is not None:
-        return render_template('pesquisar.html', dados=dados)
-   else:
-        return render_template('pesquisar.html')
-     
+
+
 
 
 app.register_blueprint(rotas_cliente)
