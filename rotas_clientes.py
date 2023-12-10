@@ -1,9 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
 from programa.HP_Cliente import *
 from programa.z_database_manager import DatabaseManager
-
 conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
-
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 rotas_cliente = Blueprint("rotas_cliente", __name__)
 
@@ -11,10 +9,14 @@ rotas_cliente = Blueprint("rotas_cliente", __name__)
 @rotas_cliente.route('/clientes')
 def listar_clientes():
     dados = conn.select_data("cliente")
+    action = "pesquisar-cliente"
     if dados is not None:
-        return render_template('clientes.html', dados=dados)
+        return render_template('clientes.html', dados=dados, action = action)
     else:
         return render_template('clientes.html')
+    
+
+    
 
 @rotas_cliente.route('/criar-cliente', methods=['GET', 'POST'])
 def criar_cliente():
@@ -56,15 +58,33 @@ def apagar_cliente():
     idcliente = {"idcliente": request.form["idcliente"]}
     conn.delete_data("cliente", idcliente)
     return redirect(url_for('rotas_cliente.listar_clientes'))
+
+
+
+
+
  
 @rotas_cliente.route('/pesquisar-cliente', methods=['GET', 'POST'])
 def pesquisar_cliente():
+    res = 0
     param = request.form["param"]
     # colls = request.form["colls"]
     res =  conn.select_data(table="cliente", search= param)
     print(res)
-    
-app.register_blueprint(rotas_cliente)
+    return res
 
+
+
+@rotas_cliente.route('/pesqui')
+def pesquisar():
+   dados =  pesquisar_cliente()
+   if dados is not None:
+        return render_template('pesquisar.html', dados=dados)
+   else:
+        return render_template('pesquisar.html')
+     
+
+
+app.register_blueprint(rotas_cliente)
 if __name__ == '__main__':
     app.run(debug=True)

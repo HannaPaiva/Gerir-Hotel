@@ -2,10 +2,6 @@
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
@@ -13,10 +9,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Tabela de clientes</h4>
+                        {% include 'components/barra_pesquisa.html' %}
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
                                 data-target="#modalCriar">+ Adicionar novo Cliente</button>
                         </div>
+                        
                         <div class="table-responsive ">
 
                             <table class="table" id="tabelaExemplo">
@@ -41,12 +39,12 @@
                                         <td><label class="badge">{{dado.ativo}}</label></td>
                                         <td>
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idcliente}}">
-                                                <i class="mdi mdi-grease-pencil"></i> 
+                                                <i class="mdi mdi-grease-pencil"></i> Editar
                                             </button>
                                         </td>
                                         <td>
                                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idcliente}}">
-                                                <i class="mdi mdi-delete"></i> 
+                                                <i class="mdi mdi-delete"></i> Apagar
                                             </button>
                                         </td>
                                     </tr>
