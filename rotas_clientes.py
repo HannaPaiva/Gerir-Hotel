@@ -56,7 +56,14 @@ def apagar_cliente():
     idcliente = {"idcliente": request.form["idcliente"]}
     conn.delete_data("cliente", idcliente)
     return redirect(url_for('rotas_cliente.listar_clientes'))
-
+ 
+@rotas_cliente.route('/pesquisar-cliente', methods=['GET', 'POST'])
+def pesquisar_cliente():
+    param = request.form["param"]
+    # colls = request.form["colls"]
+    res =  conn.select_data(table="cliente", search= param)
+    print(res)
+    
 app.register_blueprint(rotas_cliente)
 
 if __name__ == '__main__':

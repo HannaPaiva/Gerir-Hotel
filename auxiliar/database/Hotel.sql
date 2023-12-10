@@ -32,6 +32,9 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
+-- A despejar estrutura da base de dados para xys_store
+CREATE DATABASE IF NOT EXISTS `xys_store` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
+USE `xys_store`;
 -- -----------------------------------------------------
 -- Table `hotel`.`metodoreserva`
 -- -----------------------------------------------------

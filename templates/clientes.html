@@ -2,7 +2,10 @@
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
@@ -14,9 +17,9 @@
                             <button class="btn btn-success create-new-button" data-toggle="modal"
                                 data-target="#modalCriar">+ Adicionar novo Cliente</button>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive ">
 
-                            <table class="table">
+                            <table class="table" id="tabelaExemplo">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
@@ -38,12 +41,12 @@
                                         <td><label class="badge">{{dado.ativo}}</label></td>
                                         <td>
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idcliente}}">
-                                                <i class="mdi mdi-grease-pencil"></i> Editar
+                                                <i class="mdi mdi-grease-pencil"></i> 
                                             </button>
                                         </td>
                                         <td>
                                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idcliente}}">
-                                                <i class="mdi mdi-delete"></i> Apagar
+                                                <i class="mdi mdi-delete"></i> 
                                             </button>
                                         </td>
                                     </tr>
@@ -405,6 +408,55 @@
                     </div>
                 </div>
             </div>
+            <script>
+//     jQuery(document).ready(function() {
+//   jQuery('#data').DataTable({
+//       "paging": true,
+//       "lengthChange": true,
+//       "searching": true,
+//       "ordering": true,
+//       "info": true,
+//       "autoWidth": false,
+//       "language": {
+//         "lengthMenu": "Exibir _MENU_ registros por página",
+//         "zeroRecords": "Nenhum registro encontrado",
+//         "info": "Mostrando página _PAGE_ de _PAGES_",
+//         "infoEmpty": "Nenhum registro disponível",
+//         "infoFiltered": "(filtrado de _MAX_ registros no total)",
+//         "search": "Pesquisar:",
+//         "paginate": {
+//           "first": "Primeiro",
+//           "last": "Último",
+//           "next": "Próximo",
+//           "previous": "Anterior"
+//         }
+//       }
+//     });
+//   });^
 
+jQuery(document).ready(function () {
+    jQuery('#tabelaExemplo').DataTable({
+
+        "columns": [
+            "Nome",  
+            "Contribuinte",  
+            "Cartão de Cidadão",
+            "Data de nascimento",
+            "Ativo",
+            "Apagar",
+
+        ],
+                "paging": true,         // Ativar paginação
+                "lengthMenu": [5, 10, 20],  // Opções de quantidade de registros por página
+                "pageLength": 5,        // Quantidade de registros por página padrão
+                "ordering": true,       // Permitir ordenação
+                "info": true,           // Exibir informações sobre a tabela (por exemplo, "Exibindo 1 a 10 de 20 registros")
+                "searching": true,      // Permitir pesquisa
+                "autoWidth": false,     // Desativar ajuste automático da largura das colunas
+                // Adicione mais opções conforme necessário
+            });
+        });
+    </script>
+         
 
             {% include 'components/footer.html' %}

@@ -1,4 +1,38 @@
 input[type="text"]{
+ 
+  background-color: aliceblue;
+  color: black;
+}
+
+input[type="text"]:focus {
+  background-color: #212529;
+  color: aliceblue;
+}
+
+
+select{
+  background-color: aliceblue;
+  color: black;
+}
+
+select{
+  background-color: aliceblue;
+  color: black;
+}
+
+select:focus {
+  background-color: aliceblue;
+  color: black;
+}
+
+
+
+datepicker{
+  background-color: aliceblue;
+  color: black;
+}
+
+select:focus {
   background-color: aliceblue;
   color: black;
 }
