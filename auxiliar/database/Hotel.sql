@@ -15,20 +15,15 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- A despejar estrutura da base de dados para hotel
-CREATE DATABASE IF NOT EXISTS `hotel` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
-USE `hotel`;
-
--- A despejar estrutura para tabela hotel.agencia
-CREATE TABLE IF NOT EXISTS `agencia` (
-  `idAgencia` int(11) NOT NULL AUTO_INCREMENT,
-  `nomeAgencia` varchar(45) DEFAULT NULL,
-  `contatoGeral` varchar(45) DEFAULT NULL,
-  `nomeRepresentante` varchar(45) DEFAULT NULL,
-  `telefoneRepresentante` varchar(45) DEFAULT NULL,
-  `comissaoAgencia` double DEFAULT NULL,
-  PRIMARY KEY (`idAgencia`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+-- -----------------------------------------------------
+-- Table `hotel`.`metodoreserva`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`metodoreserva` (
+  `idMetodo` INT(11) NOT NULL,
+  `nomeMetodo` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`idMetodo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 -- A despejar dados para tabela hotel.agencia: ~0 rows (aproximadamente)
 

@@ -18,6 +18,16 @@
       </li>
   
       <li class="nav-item menu-items">
+        <a class="nav-link" href="{{ url_for('pesquisar') }}">
+          <span class="menu-icon">
+            <i class = "mdi mdi-magnify"></i>
+          </span>
+          <span class="menu-title">Pesquisar</span>
+        </a>
+      </li>
+  
+
+      <li class="nav-item menu-items">
         <a class="nav-link" href="{{ url_for('rotas_cliente.listar_clientes') }}">
           <span class="menu-icon">
             <i class="mdi mdi-table-large"></i>
@@ -95,8 +105,6 @@
 
 
 
-
-
       
       <li class="nav-item menu-items">
         <a class="nav-link" href="pages/charts/chartjs.html">
@@ -107,7 +115,14 @@
         </a>
       </li>
  
-      
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{{ url_for('rotas_departamento.listar_departamentos') }}">
+          <span class="menu-icon">
+            <i class="mdi mdi-table-large"></i>
+          </span>
+          <span class="menu-title">Pagamentos</span>
+        </a>
+      </li>
  
     </ul>
   </nav>

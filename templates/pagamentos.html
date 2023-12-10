@@ -2,22 +2,21 @@
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
+
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tabela de clientes</h4>
-                        {% include 'components/barra_pesquisa.html' %}
+                        <h4 class="card-title">Tabela de pagamentos</h4>
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
-                                data-target="#modalCriar">+ Adicionar novo Cliente</button>
+                                data-target="#modalCriar">+ Adicionar novo pagamentos</button>
                         </div>
-                        
-                        <div class="table-responsive ">
+                        <div class="table-responsive">
 
-                            <table class="table" id="tabelaExemplo">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
@@ -32,27 +31,28 @@
                                     {% for dado in dados %}
 
                                     <tr>
-                                        <td>{{ dado.primeironome }}</td>
+                                        <td>{{ dado.valorTotal }}</td>
                                         <td>{{ dado.contribuinte }} </td>
-                                        <td>{{ dado.cc }}</td>
-                                        <td>{{ dado.datanascimento }}</td>
+                                        <td>{{ dado.CC }}</td>
+                                        <td>{{ dado.dataNascimento }}</td>
                                         <td><label class="badge">{{dado.ativo}}</label></td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idcliente}}">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idpagamento}}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
                                             </button>
                                         </td>
                                         <td>
-                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idcliente}}">
+                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idpagamento}}">
                                                 <i class="mdi mdi-delete"></i> Apagar
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="modalEditar-{{dado.idcliente}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modalEditar-{{dado.idpagamento}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalEditarLabel">Editar cliente</h5>
+                                                    <h5 class="modal-title" id="modalEditarLabel">Editar funcioná
+                                                        rio</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -60,14 +60,14 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h4 class="card-title"></h4>
-                                                    <form class="form-sample" method="post" action="/editar-cliente" >
+                                                    <form class="form-sample" method="post" action="/editar-pagamento" >
                                                       
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
                                                                     <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="nome do cliente" value="{{dado.primeironome}}" />
+                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="nome do pagamento" value="{{dado.primeiroNome}}" />
                                                                     </div>
                         
                                                                 </div>
@@ -76,7 +76,7 @@
                                                                 <div class="form-group">
                                                                     <label class="col-sm-5 col-form-label">Nomes do meio</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="nomes do meio do cliente" value="{{dado.nomedomeio}}" />
+                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="nomes do meio do pagamento" value="{{dado.nomeDoMeio}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -85,7 +85,7 @@
                                                                 <div class="form-group ">
                                                                     <label class="col-sm-3 col-form-label">Apelido</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do cliente" value="{{dado.ultimonome}}"/>
+                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do pagamento" value="{{dado.ultimoNome}}"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -110,7 +110,7 @@
                                                                     <label class="col-sm-3 col-form-label">Data de
                                                                         nascimento</label>
                                                                     <div class="col-sm-9">
-                                                                        <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" value="{{dado.datanascimento}}" />
+                                                                        <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" value="{{dado.dataNascimento}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -129,7 +129,7 @@
                                                                 <div class="form-group ">
                                                                     <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="CC" value="{{dado.cc}}">
+                                                                        <input type="text" class="form-control" name="CC" value="{{dado.CC}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -157,11 +157,11 @@
                                                             </div>
                                                         </div>
                         
-                                                        <!-- <div class="row">
+                                                        <div class="row">
                         
                                                             <div class="col-md-6">
                                                                 <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                                                    <label class="col-sm-3 col-form-label">pagamento ativo?</label>
                                                                     <div class="col-sm-4">
                                                                         <div class="form-check">
                                                                             <label class="form-check-label">
@@ -169,7 +169,7 @@
                                                                                     id="ativo" value="1" checked> Ativo </label>
                                                                         </div>
                                                                     </div>
-                                                                    <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
+                                                                    <input type="hidden" name="idpagamento" value="{{dado.idpagamento}}">
                                                                     <div class="col-sm-5">
                                                                         <div class="form-check">
                                                                             <label class="form-check-label">
@@ -182,28 +182,6 @@
                                                             </div>
                                                         </div>
                                                 </div>
-                         -->
-
-                         <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Cliente ativo?</label>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="1" {{ 'checked' if dado.ativo else '' }}> Ativo
-                                        </label>
-                                    </div>
-                                </div>
-                                <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
-                                <div class="col-sm-5">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="0" {{ 'checked' if not dado.ativo else '' }}> Desativado
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -218,7 +196,7 @@
                                     </div>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modalApagar-{{dado.idcliente}}" tabindex="-1"
+                                    <div class="modal fade" id="modalApagar-{{dado.idpagamento}}" tabindex="-1"
                                     role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -232,13 +210,12 @@
                                                 <div class="modal-body">
                                                     <h5>Tem certeza que deseja apagar? Essa ação não pode ser cancelada.
                                                     </h5>
-                                                
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
-                                                        <form action="/apagar-cliente" method="post">
-                                                        <input type="hidden" value="{{dado.idcliente}}" name="idcliente">
+                                                        <form action="/apagar-pagamento" method="post">
+                                                        <input type="hidden" value="{{dado.idpagamento}}" name="idpagamento">
                                                         
                                                     <button type="submit" class="btn btn-danger"> <i
                                                             class="mdi mdi-delete"></i>Apagar</button>
@@ -264,14 +241,14 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalCriarLabel">Criar cliente</h5>
+                            <h5 class="modal-title" id="modalCriarLabel">Criar pagamento</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
-                            <form class="form-sample" method="post" action="/criar-cliente" >
+                            <form class="form-sample" method="post" action="/criar-pagamento" >
 
                                 <div class="row">
                                     <div class="col-md-4">
@@ -279,7 +256,7 @@
                                             <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="primeiroNome"
-                                                    name="primeiroNome" placeholder="nome do cliente" />
+                                                    name="primeiroNome" placeholder="nome do pagamento" />
                                             </div>
 
                                         </div>
@@ -289,7 +266,7 @@
                                             <label class="col-sm-5 col-form-label">Nomes do meio</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="nomeDoMeio"
-                                                    name="nomeDoMeio" placeholder="nomes do meio do cliente" />
+                                                    name="nomeDoMeio" placeholder="nomes do meio do pagamento" />
                                             </div>
                                         </div>
                                     </div>
@@ -299,7 +276,7 @@
                                             <label class="col-sm-3 col-form-label">Apelido</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="ultimoNome"
-                                                    name="ultimoNome" placeholder="último nome do cliente" />
+                                                    name="ultimoNome" placeholder="último nome do pagamento" />
                                             </div>
                                         </div>
                                     </div>
@@ -325,7 +302,7 @@
                                                 nascimento</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" type="date" name="dataNascimento"
-                                                    placeholder="dd/mm/yyyy" value="{{dataNascimento}}" />
+                                                    placeholder="dd/mm/yyyy" />
                                             </div>
                                         </div>
                                     </div>
@@ -375,7 +352,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                            <label class="col-sm-3 col-form-label">pagamento ativo?</label>
                                             <div class="col-sm-4">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
@@ -406,55 +383,6 @@
                     </div>
                 </div>
             </div>
-            <script>
-//     jQuery(document).ready(function() {
-//   jQuery('#data').DataTable({
-//       "paging": true,
-//       "lengthChange": true,
-//       "searching": true,
-//       "ordering": true,
-//       "info": true,
-//       "autoWidth": false,
-//       "language": {
-//         "lengthMenu": "Exibir _MENU_ registros por página",
-//         "zeroRecords": "Nenhum registro encontrado",
-//         "info": "Mostrando página _PAGE_ de _PAGES_",
-//         "infoEmpty": "Nenhum registro disponível",
-//         "infoFiltered": "(filtrado de _MAX_ registros no total)",
-//         "search": "Pesquisar:",
-//         "paginate": {
-//           "first": "Primeiro",
-//           "last": "Último",
-//           "next": "Próximo",
-//           "previous": "Anterior"
-//         }
-//       }
-//     });
-//   });^
 
-jQuery(document).ready(function () {
-    jQuery('#tabelaExemplo').DataTable({
-
-        "columns": [
-            "Nome",  
-            "Contribuinte",  
-            "Cartão de Cidadão",
-            "Data de nascimento",
-            "Ativo",
-            "Apagar",
-
-        ],
-                "paging": true,         // Ativar paginação
-                "lengthMenu": [5, 10, 20],  // Opções de quantidade de registros por página
-                "pageLength": 5,        // Quantidade de registros por página padrão
-                "ordering": true,       // Permitir ordenação
-                "info": true,           // Exibir informações sobre a tabela (por exemplo, "Exibindo 1 a 10 de 20 registros")
-                "searching": true,      // Permitir pesquisa
-                "autoWidth": false,     // Desativar ajuste automático da largura das colunas
-                // Adicione mais opções conforme necessário
-            });
-        });
-    </script>
-         
 
             {% include 'components/footer.html' %}

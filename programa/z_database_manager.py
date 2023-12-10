@@ -103,7 +103,7 @@ class DatabaseManager:
             conditions = []
             if searchColumn == "":
                 for column in columnsList:
-                    conditions.append(f'{table}.{column} LIKE "{search}"')
+                    conditions.append(f'{column} LIKE "{search}"')
             else:
                 conditions.append(f'{table}.{searchColumn} LIKE "{search}"')            
             where += " OR ".join(conditions)
