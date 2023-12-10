@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
-from programa.HP_Cliente import *
+from programa.AS_agencia import *
 from programa.z_database_manager import DatabaseManager
 
 conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
 
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
-rotas_agencia = Blueprint("rotas_cliente", __name__)
+rotas_agencia = Blueprint("rotas_agencia", __name__)
 
 
 @rotas_agencia.route('/agencias')
@@ -31,7 +31,7 @@ def criar_agencia():
 
 @rotas_agencia.route('/editar-agencia', methods=['GET', 'POST'])
 def editar_agencia():
-    idcliente = {"idagencia": request.form["idagencia"]}
+    idagencia = {"idagencia": request.form["idagencia"]}
     dados = {
         "idagencia": request.form["idagencia"],
         "nomeagencia": request.form["nomeagencia"],
