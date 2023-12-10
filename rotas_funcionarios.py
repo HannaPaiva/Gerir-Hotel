@@ -1,14 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
 from programa.HP_Cliente import *
-
 from programa.z_database_manager import DatabaseManager
-
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 rotas_funcionario = Blueprint("rotas_funcionario", __name__)
+conn= DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel")
 
 @rotas_funcionario.route('/funcionarios')
 def listar_funcionarios():
-    conn= DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel")
     # dados = listar("funcionario")
     dados = conn.select_data("funcionario")
     print(dados)
@@ -19,6 +17,7 @@ def listar_funcionarios():
 
 @rotas_funcionario.route('/criar-funcionario', methods=['GET', 'POST'])
 def criar_funcionario():
+    
     dados = {
         "primeiroNome": request.form["primeiroNome"],
         "nomeDoMeio": request.form["nomeDoMeio"],
@@ -31,7 +30,7 @@ def criar_funcionario():
         "ativo": request.form["ativo"],
         "genero": request.form["genero"],
     }
-    inserir("funcionario", list(dados.keys()), dados)
+    conn.insert_data("funcionario", dados)
     return redirect(url_for('rotas_funcionario.listar_funcionarios'))
 
 @rotas_funcionario.route('/editar-funcionario', methods=['GET', 'POST'])

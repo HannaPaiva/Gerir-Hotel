@@ -2,7 +2,10 @@
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
@@ -14,9 +17,9 @@
                             <button class="btn btn-success create-new-button" data-toggle="modal"
                                 data-target="#modalCriar">+ Adicionar novo Cliente</button>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive ">
 
-                            <table class="table">
+                            <table class="table" id="tabelaExemplo">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
@@ -31,23 +34,23 @@
                                     {% for dado in dados %}
 
                                     <tr>
-                                        <td>{{ dado.primeiroNome }}</td>
+                                        <td>{{ dado.primeironome }}</td>
                                         <td>{{ dado.contribuinte }} </td>
-                                        <td>{{ dado.CC }}</td>
-                                        <td>{{ dado.dataNascimento }}</td>
+                                        <td>{{ dado.cc }}</td>
+                                        <td>{{ dado.datanascimento }}</td>
                                         <td><label class="badge">{{dado.ativo}}</label></td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idCliente}}">
-                                                <i class="mdi mdi-grease-pencil"></i> Editar
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idcliente}}">
+                                                <i class="mdi mdi-grease-pencil"></i> 
                                             </button>
                                         </td>
                                         <td>
-                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idCliente}}">
-                                                <i class="mdi mdi-delete"></i> Apagar
+                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idcliente}}">
+                                                <i class="mdi mdi-delete"></i> 
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="modalEditar-{{dado.idCliente}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modalEditar-{{dado.idcliente}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -66,7 +69,7 @@
                                                                 <div class="form-group">
                                                                     <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="nome do cliente" value="{{dado.primeiroNome}}" />
+                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="nome do cliente" value="{{dado.primeironome}}" />
                                                                     </div>
                         
                                                                 </div>
@@ -75,7 +78,7 @@
                                                                 <div class="form-group">
                                                                     <label class="col-sm-5 col-form-label">Nomes do meio</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="nomes do meio do cliente" value="{{dado.nomeDoMeio}}" />
+                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="nomes do meio do cliente" value="{{dado.nomedomeio}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -84,7 +87,7 @@
                                                                 <div class="form-group ">
                                                                     <label class="col-sm-3 col-form-label">Apelido</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do cliente" value="{{dado.ultimoNome}}"/>
+                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do cliente" value="{{dado.ultimonome}}"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -109,7 +112,7 @@
                                                                     <label class="col-sm-3 col-form-label">Data de
                                                                         nascimento</label>
                                                                     <div class="col-sm-9">
-                                                                        <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" value="{{dado.dataNascimento}}" />
+                                                                        <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" value="{{dado.datanascimento}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -128,7 +131,7 @@
                                                                 <div class="form-group ">
                                                                     <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="CC" value="{{dado.CC}}">
+                                                                        <input type="text" class="form-control" name="CC" value="{{dado.cc}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -168,7 +171,7 @@
                                                                                     id="ativo" value="1" checked> Ativo </label>
                                                                         </div>
                                                                     </div>
-                                                                    <input type="hidden" name="idCliente" value="{{dado.idCliente}}">
+                                                                    <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
                                                                     <div class="col-sm-5">
                                                                         <div class="form-check">
                                                                             <label class="form-check-label">
@@ -193,7 +196,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <input type="hidden" name="idCliente" value="{{dado.idCliente}}">
+                                <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
                                 <div class="col-sm-5">
                                     <div class="form-check">
                                         <label class="form-check-label">
@@ -217,7 +220,7 @@
                                     </div>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modalApagar-{{dado.idCliente}}" tabindex="-1"
+                                    <div class="modal fade" id="modalApagar-{{dado.idcliente}}" tabindex="-1"
                                     role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -237,7 +240,7 @@
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
                                                         <form action="/apagar-cliente" method="post">
-                                                        <input type="hidden" value="{{dado.idCliente}}" name="idCliente">
+                                                        <input type="hidden" value="{{dado.idcliente}}" name="idcliente">
                                                         
                                                     <button type="submit" class="btn btn-danger"> <i
                                                             class="mdi mdi-delete"></i>Apagar</button>
@@ -405,6 +408,55 @@
                     </div>
                 </div>
             </div>
+            <script>
+//     jQuery(document).ready(function() {
+//   jQuery('#data').DataTable({
+//       "paging": true,
+//       "lengthChange": true,
+//       "searching": true,
+//       "ordering": true,
+//       "info": true,
+//       "autoWidth": false,
+//       "language": {
+//         "lengthMenu": "Exibir _MENU_ registros por página",
+//         "zeroRecords": "Nenhum registro encontrado",
+//         "info": "Mostrando página _PAGE_ de _PAGES_",
+//         "infoEmpty": "Nenhum registro disponível",
+//         "infoFiltered": "(filtrado de _MAX_ registros no total)",
+//         "search": "Pesquisar:",
+//         "paginate": {
+//           "first": "Primeiro",
+//           "last": "Último",
+//           "next": "Próximo",
+//           "previous": "Anterior"
+//         }
+//       }
+//     });
+//   });^
 
+jQuery(document).ready(function () {
+    jQuery('#tabelaExemplo').DataTable({
+
+        "columns": [
+            "Nome",  
+            "Contribuinte",  
+            "Cartão de Cidadão",
+            "Data de nascimento",
+            "Ativo",
+            "Apagar",
+
+        ],
+                "paging": true,         // Ativar paginação
+                "lengthMenu": [5, 10, 20],  // Opções de quantidade de registros por página
+                "pageLength": 5,        // Quantidade de registros por página padrão
+                "ordering": true,       // Permitir ordenação
+                "info": true,           // Exibir informações sobre a tabela (por exemplo, "Exibindo 1 a 10 de 20 registros")
+                "searching": true,      // Permitir pesquisa
+                "autoWidth": false,     // Desativar ajuste automático da largura das colunas
+                // Adicione mais opções conforme necessário
+            });
+        });
+    </script>
+         
 
             {% include 'components/footer.html' %}

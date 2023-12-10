@@ -1,75 +1,334 @@
--- --------------------------------------------------------
--- Anfitrião:                    127.0.0.1
--- Versão do servidor:           10.4.28-MariaDB - mariadb.org binary distribution
--- SO do servidor:               Win64
--- HeidiSQL Versão:              12.5.0.6677
--- --------------------------------------------------------
+-- MySQL Workbench Forward Engineering
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema hotel
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema hotel
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `hotel` DEFAULT CHARACTER SET utf8 ;
+USE `hotel` ;
+
+-- -----------------------------------------------------
+-- Table `hotel`.`agencia`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`agencia` (
+  `idAgencia` INT(11) NOT NULL AUTO_INCREMENT,
+  `nomeAgencia` VARCHAR(45) NULL DEFAULT NULL,
+  `contatoGeral` VARCHAR(45) NULL DEFAULT NULL,
+  `nomeRepresentante` VARCHAR(45) NULL DEFAULT NULL,
+  `telefoneRepresentante` VARCHAR(45) NULL DEFAULT NULL,
+  `comissaoAgencia` DOUBLE NULL DEFAULT NULL,
+  PRIMARY KEY (`idAgencia`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- A despejar estrutura da base de dados para xys_store
 CREATE DATABASE IF NOT EXISTS `xys_store` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
 USE `xys_store`;
+-- -----------------------------------------------------
+-- Table `hotel`.`metodoreserva`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`metodoreserva` (
+  `idMetodo` INT(11) NOT NULL,
+  `nomeMetodo` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`idMetodo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
--- A despejar estrutura para tabela xys_store.customers
-CREATE TABLE IF NOT EXISTS `customers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(60) DEFAULT NULL,
-  `last_name` varchar(45) DEFAULT NULL,
-  `date_of_birth` date DEFAULT NULL,
-  `address` varchar(300) DEFAULT NULL,
-  `identity_card` varchar(45) DEFAULT NULL,
-  `date_of_creation` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela xys_store.customers: ~2 rows (aproximadamente)
-INSERT INTO `customers` (`id`, `name`, `last_name`, `date_of_birth`, `address`, `identity_card`, `date_of_creation`) VALUES
-	(1, 'Maria', 'Santos', '2000-02-20', 'rua bla bla bla', 'aaaaaaaa', '2023-12-20'),
-	(2, 'Luan', 'do Carmo', '2003-12-02', 'wwwwwwwww', 'aaaaaaaa', '2023-12-02');
+-- -----------------------------------------------------
+-- Table `hotel`.`agenciametodo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`agenciametodo` (
+  `Agencia_idAgencia` INT(11) NOT NULL,
+  `MetodoReserva_idMetodo` INT(11) NOT NULL,
+  PRIMARY KEY (`Agencia_idAgencia`, `MetodoReserva_idMetodo`),
+  INDEX `fk_Agencia_has_MetodoReserva_MetodoReserva1_idx` (`MetodoReserva_idMetodo` ASC) VISIBLE,
+  INDEX `fk_Agencia_has_MetodoReserva_Agencia1_idx` (`Agencia_idAgencia` ASC) VISIBLE,
+  CONSTRAINT `fk_Agencia_has_MetodoReserva_Agencia1`
+    FOREIGN KEY (`Agencia_idAgencia`)
+    REFERENCES `hotel`.`agencia` (`idAgencia`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Agencia_has_MetodoReserva_MetodoReserva1`
+    FOREIGN KEY (`MetodoReserva_idMetodo`)
+    REFERENCES `hotel`.`metodoreserva` (`idMetodo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
--- A despejar estrutura para tabela xys_store.orders
-CREATE TABLE IF NOT EXISTS `orders` (
-  `id_customer` int(11) NOT NULL,
-  `id_product` int(11) NOT NULL,
-  `details` varchar(45) DEFAULT NULL,
-  `carrier` varchar(45) DEFAULT NULL,
-  `purchase_date` date DEFAULT NULL,
-  `full_price` double DEFAULT NULL,
-  PRIMARY KEY (`id_customer`,`id_product`),
-  KEY `fk_customers_has_products_products1_idx` (`id_product`),
-  KEY `fk_customers_has_products_customers_idx` (`id_customer`),
-  CONSTRAINT `fk_customers_has_products_customers` FOREIGN KEY (`id_customer`) REFERENCES `customers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_customers_has_products_products1` FOREIGN KEY (`id_product`) REFERENCES `products` (`id_product`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela xys_store.orders: ~0 rows (aproximadamente)
+-- -----------------------------------------------------
+-- Table `hotel`.`cliente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`cliente` (
+  `idCliente` INT(11) NOT NULL AUTO_INCREMENT,
+  `primeiroNome` VARCHAR(60) NOT NULL,
+  `nomeDoMeio` VARCHAR(60) NULL DEFAULT NULL,
+  `ultimoNome` VARCHAR(45) NOT NULL,
+  `contribuinte` VARCHAR(45) NULL DEFAULT NULL,
+  `CC` VARCHAR(45) NULL DEFAULT NULL,
+  `email` VARCHAR(45) NULL DEFAULT NULL,
+  `telefone` VARCHAR(45) NULL DEFAULT NULL,
+  `dataNascimento` DATE NULL DEFAULT NULL,
+  `ativo` TINYINT(4) NULL DEFAULT NULL,
+  `genero` VARCHAR(15) NULL DEFAULT NULL,
+  PRIMARY KEY (`idCliente`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 14
+DEFAULT CHARACTER SET = utf8;
 
--- A despejar estrutura para tabela xys_store.products
-CREATE TABLE IF NOT EXISTS `products` (
-  `id_product` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(60) DEFAULT NULL,
-  `price` double DEFAULT NULL,
-  `supplier` varchar(45) DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  PRIMARY KEY (`id_product`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela xys_store.products: ~2 rows (aproximadamente)
-INSERT INTO `products` (`id_product`, `name`, `price`, `supplier`, `description`) VALUES
-	(1, 'casaco', 10, 'SHEIN', 'casaco preto de bolinhas'),
-	(2, 'sapato', 40, 'NIKE', 'Sapato top confia');
+-- -----------------------------------------------------
+-- Table `hotel`.`departamento`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`departamento` (
+  `idDepartamento` INT(11) NOT NULL,
+  `idChefe` INT(11) NULL DEFAULT NULL,
+  `nomeDepartamento` VARCHAR(45) NULL DEFAULT NULL,
+  `descricao` TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`idDepartamento`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+
+-- -----------------------------------------------------
+-- Table `hotel`.`funcionario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`funcionario` (
+  `idFuncionario` INT(11) NOT NULL AUTO_INCREMENT,
+  `idDepartamento` INT(11) NOT NULL,
+  `primeiroNome` VARCHAR(60) NOT NULL,
+  `nomeDoMeio` VARCHAR(60) NULL DEFAULT NULL,
+  `ultimoNome` VARCHAR(45) NOT NULL,
+  `contribuinte` VARCHAR(45) NULL DEFAULT NULL,
+  `CC` VARCHAR(45) NULL DEFAULT NULL,
+  `email` VARCHAR(45) NULL DEFAULT NULL,
+  `telefone` VARCHAR(45) NULL DEFAULT NULL,
+  `dataNascimento` DATE NULL DEFAULT NULL,
+  `endereco` VARCHAR(150) NULL DEFAULT NULL,
+  `salario` DOUBLE NULL DEFAULT NULL,
+  `dataEntrada` TIMESTAMP NULL DEFAULT NULL,
+  `dataSaida` TIMESTAMP NULL DEFAULT NULL,
+  `status` TINYINT(4) NULL DEFAULT NULL,
+  PRIMARY KEY (`idFuncionario`, `idDepartamento`),
+  INDEX `fk_Funcionario_Departamento1_idx` (`idDepartamento` ASC) VISIBLE,
+  CONSTRAINT `fk_Funcionario_Departamento1`
+    FOREIGN KEY (`idDepartamento`)
+    REFERENCES `hotel`.`departamento` (`idDepartamento`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `hotel`.`hospede`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`hospede` (
+  `idHospede` INT(11) NOT NULL AUTO_INCREMENT,
+  `primeiroNome` VARCHAR(60) NOT NULL,
+  `nomeDoMeio` VARCHAR(60) NULL DEFAULT NULL,
+  `ultimoNome` VARCHAR(45) NOT NULL,
+  `CC` VARCHAR(45) NULL DEFAULT NULL,
+  `email` VARCHAR(45) NULL DEFAULT NULL,
+  `telefone` VARCHAR(45) NULL DEFAULT NULL,
+  `dataNascimento` DATE NULL DEFAULT NULL,
+  `ativo` TINYINT(4) NULL DEFAULT NULL,
+  PRIMARY KEY (`idHospede`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `hotel`.`reserva`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`reserva` (
+  `idReserva` INT(11) NOT NULL AUTO_INCREMENT,
+  `idCliente` INT(11) NOT NULL,
+  `dataEntrada` DATE NULL DEFAULT NULL,
+  `dataSaida` DATE NULL DEFAULT NULL,
+  `numAdultos` TINYINT(4) NULL DEFAULT NULL,
+  `numCriancas` TINYINT(4) NULL DEFAULT NULL,
+  `numBebes` TINYINT(4) NULL DEFAULT NULL,
+  `observacoes` TEXT NULL DEFAULT NULL,
+  `tipologiaContratada` VARCHAR(45) NULL DEFAULT NULL,
+  `Agencia_has_MetodoReserva_Agencia_idAgencia` INT(11) NOT NULL,
+  `Agencia_has_MetodoReserva_MetodoReserva_idMetodo` INT(11) NOT NULL,
+  PRIMARY KEY (`idReserva`),
+  INDEX `fk_Reserva_Cliente1_idx` (`idCliente` ASC) VISIBLE,
+  INDEX `fk_Reserva_Agencia_has_MetodoReserva1_idx` (`Agencia_has_MetodoReserva_Agencia_idAgencia` ASC, `Agencia_has_MetodoReserva_MetodoReserva_idMetodo` ASC) VISIBLE,
+  CONSTRAINT `fk_Reserva_Agencia_has_MetodoReserva1`
+    FOREIGN KEY (`Agencia_has_MetodoReserva_Agencia_idAgencia` , `Agencia_has_MetodoReserva_MetodoReserva_idMetodo`)
+    REFERENCES `hotel`.`agenciametodo` (`Agencia_idAgencia` , `MetodoReserva_idMetodo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Reserva_Cliente1`
+    FOREIGN KEY (`idCliente`)
+    REFERENCES `hotel`.`cliente` (`idCliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `hotel`.`pagamento`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`pagamento` (
+  `idPagamento` INT(11) NOT NULL,
+  `valorTotal` DOUBLE NULL DEFAULT NULL,
+  `metodoPagamento` VARCHAR(45) NULL DEFAULT NULL,
+  `tarifaReembolsavel` TINYINT(4) NULL DEFAULT NULL,
+  `dataPagamento` TIMESTAMP NULL DEFAULT NULL,
+  `observacoes` TEXT NULL DEFAULT NULL,
+  `status` ENUM('pago', 'não pago') NULL DEFAULT NULL,
+  `idReserva` INT(11) NOT NULL,
+  PRIMARY KEY (`idPagamento`),
+  INDEX `fk_Pagamento_Reserva1_idx` (`idReserva` ASC) VISIBLE,
+  CONSTRAINT `fk_Pagamento_Reserva1`
+    FOREIGN KEY (`idReserva`)
+    REFERENCES `hotel`.`reserva` (`idReserva`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `hotel`.`quarto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`quarto` (
+  `idQuarto` INT(11) NOT NULL,
+  `numQuarto` VARCHAR(10) NULL DEFAULT NULL,
+  `descricao` VARCHAR(45) NULL DEFAULT NULL,
+  `andar` TINYINT(4) NULL DEFAULT NULL,
+  `tipologia` VARCHAR(45) NULL DEFAULT NULL,
+  `qtdCamaCasal` VARCHAR(45) NULL DEFAULT NULL,
+  `qtdCamaSolteiro` VARCHAR(45) NULL DEFAULT NULL,
+  `ativo` TINYINT(4) NULL DEFAULT NULL,
+  `estaDisponivel` TINYINT(4) NULL DEFAULT NULL,
+  PRIMARY KEY (`idQuarto`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `hotel`.`reservaquarto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`reservaquarto` (
+  `idQuarto` INT(11) NOT NULL,
+  `data` DATE NOT NULL,
+  `idReserva` INT(11) NULL,
+  `precoAdulto` DOUBLE NOT NULL,
+  `precoCrianca` DOUBLE NOT NULL,
+  `precoBebe` DOUBLE NOT NULL,
+  PRIMARY KEY (`idQuarto`, `data`),
+  INDEX `fk_Quarto_has_Reserva_Reserva1_idx` (`idReserva` ASC) VISIBLE,
+  INDEX `fk_Quarto_has_Reserva_Quarto_idx` (`idQuarto` ASC) VISIBLE,
+  CONSTRAINT `fk_Quarto_has_Reserva_Quarto`
+    FOREIGN KEY (`idQuarto`)
+    REFERENCES `hotel`.`quarto` (`idQuarto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Quarto_has_Reserva_Reserva1`
+    FOREIGN KEY (`idReserva`)
+    REFERENCES `hotel`.`reserva` (`idReserva`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `hotel`.`reservahospede`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`reservahospede` (
+  `ReservaQuarto_idQuarto` INT(11) NOT NULL,
+  `ReservaQuarto_idReserva` INT(11) NOT NULL,
+  `Hospede_idHospede` INT(11) NOT NULL,
+  PRIMARY KEY (`ReservaQuarto_idQuarto`, `ReservaQuarto_idReserva`, `Hospede_idHospede`),
+  INDEX `fk_ReservaQuarto_has_Hospede_Hospede1_idx` (`Hospede_idHospede` ASC) VISIBLE,
+  INDEX `fk_ReservaQuarto_has_Hospede_ReservaQuarto1_idx` (`ReservaQuarto_idQuarto` ASC, `ReservaQuarto_idReserva` ASC) VISIBLE,
+  CONSTRAINT `fk_ReservaQuarto_has_Hospede_Hospede1`
+    FOREIGN KEY (`Hospede_idHospede`)
+    REFERENCES `hotel`.`hospede` (`idHospede`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ReservaQuarto_has_Hospede_ReservaQuarto1`
+    FOREIGN KEY (`ReservaQuarto_idQuarto` , `ReservaQuarto_idReserva`)
+    REFERENCES `hotel`.`reservaquarto` (`idQuarto` , `idReserva`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `hotel`.`servico`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`servico` (
+  `idServico` INT(11) NOT NULL AUTO_INCREMENT,
+  `nomeServico` VARCHAR(45) NULL DEFAULT NULL,
+  `preco` DOUBLE NULL DEFAULT NULL,
+  `descricao` TEXT NULL DEFAULT NULL,
+  `idDepartamento` INT(11) NOT NULL,
+  PRIMARY KEY (`idServico`),
+  INDEX `fk_Servico_Departamento1_idx` (`idDepartamento` ASC) VISIBLE,
+  CONSTRAINT `fk_Servico_Departamento1`
+    FOREIGN KEY (`idDepartamento`)
+    REFERENCES `hotel`.`departamento` (`idDepartamento`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `hotel`.`servicoprestado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hotel`.`servicoprestado` (
+  `idReserva` INT(11) NOT NULL,
+  `idServico` INT(11) NOT NULL,
+  `detalhes` TEXT NULL DEFAULT NULL,
+  `dataHora` DATETIME NULL DEFAULT NULL,
+  `Funcionario_idFuncionario` INT(11) NOT NULL,
+  `Funcionario_idDepartamento` INT(11) NOT NULL,
+  PRIMARY KEY (`idReserva`, `idServico`),
+  INDEX `fk_Reserva_has_Servico_Servico1_idx` (`idServico` ASC) VISIBLE,
+  INDEX `fk_Reserva_has_Servico_Reserva1_idx` (`idReserva` ASC) VISIBLE,
+  INDEX `fk_ServicoPrestado_Funcionario1_idx` (`Funcionario_idFuncionario` ASC, `Funcionario_idDepartamento` ASC) VISIBLE,
+  CONSTRAINT `fk_Reserva_has_Servico_Reserva1`
+    FOREIGN KEY (`idReserva`)
+    REFERENCES `hotel`.`reserva` (`idReserva`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Reserva_has_Servico_Servico1`
+    FOREIGN KEY (`idServico`)
+    REFERENCES `hotel`.`servico` (`idServico`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ServicoPrestado_Funcionario1`
+    FOREIGN KEY (`Funcionario_idFuncionario` , `Funcionario_idDepartamento`)
+    REFERENCES `hotel`.`funcionario` (`idFuncionario` , `idDepartamento`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

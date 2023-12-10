@@ -1,45 +1,59 @@
+
 {% include 'components/head.html' %}
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
-<div class="main-panel">
-   
-        
-  
-  <form action="processar_formulario.php" method="post">
-    <label>
-        <input type="checkbox" name="frutas[]" value="maca"> Maçã
-    </label>
-    <br>
-    <label>
-        <input type="checkbox" name="frutas[]" value="banana"> Banana
-    </label>
-    <br>
-    <label>
-        <input type="checkbox" name="frutas[]" value="laranja"> Laranja
-    </label>
-    <br>
-    <label>
-        <input type="checkbox" name="frutas[]" value="uva"> Uva
-    </label>
-    <br>
-    <!-- Adicione mais checkboxes conforme necessário -->
 
-    <br>
-    <input type="submit" value="Enviar">
-</form>
+<div class="main-panel">
+
+
+
+    <!-- Inclua o jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Inclua a biblioteca DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+
+
+    <table id="tabelaExemplo" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>João</td>
+                <td>joao@example.com</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Maria</td>
+                <td>maria@example.com</td>
+            </tr>
+            <!-- Adicione mais linhas conforme necessário -->
+        </tbody>
+    </table>
     
-      
-     
-    <!-- content-wrapper ends -->
-    <!-- partial:partials/_footer.html -->
-    <footer class="footer">
-      <div class="d-sm-flex justify-content-center justify-content-sm-between">
-        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
-        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com</span>
-      </div>
-    </footer>
-    <!-- partial -->
-  </div>
-  
+    <script>
+        $(document).ready(function () {
+            $('#tabelaExemplo').DataTable({
+                "paging": true,         // Ativar paginação
+                "lengthMenu": [5, 10, 20],  // Opções de quantidade de registros por página
+                "pageLength": 5,        // Quantidade de registros por página padrão
+                "ordering": true,       // Permitir ordenação
+                "info": true,           // Exibir informações sobre a tabela (por exemplo, "Exibindo 1 a 10 de 20 registros")
+                "searching": true,      // Permitir pesquisa
+                "autoWidth": false,     // Desativar ajuste automático da largura das colunas
+                // Adicione mais opções conforme necessário
+            });
+        });
+    </script>
+</body>
+</html>
 {% include 'components/footer.html' %}
