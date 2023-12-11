@@ -2,6 +2,12 @@
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
+dados = {
+    "idChefe": request.form["idChefe"],
+    "nomeDepartamento": request.form["nomeDepartamento"],
+    "descricao": request.form["descricao"],
+}
+
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
