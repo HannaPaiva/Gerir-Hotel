@@ -40,12 +40,12 @@ def editar_agencia():
         "telefonerepresentante": request.form["telefonerepresentante"],
         "comissaoagencia": request.form["comissaoagencia"],
     }
-    conn.insert_data("agencia", dados)
+    conn.update_data("cliente", dados, idagencia)
     return redirect(url_for('rotas_agencia.listar_agencias'))
 
 @rotas_agencia.route('/apagar-agencia', methods=['GET', 'POST'])
 def apagar_agencia():
-    idagencia = {"idagencia": request.form["idcagencia"]}
+    idagencia = {"idagencia": request.form["idagencia"]}
     conn.delete_data("agencia", idagencia)
     return redirect(url_for('rotas_agencia.listar_agencia'))
  
