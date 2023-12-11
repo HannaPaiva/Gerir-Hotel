@@ -46,4 +46,4 @@ class ServicoPrestado(Menu):
             raise
 
     def criar(self):
-        
+        pass
