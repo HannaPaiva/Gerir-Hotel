@@ -28,7 +28,7 @@ def criar_funcionario():
         "email": request.form["email"],
         "telefone": request.form["telefone"],
         "dataNascimento": request.form["dataNascimento"],
-        "ativo": request.form["ativo"],
+        "status": request.form["status"],
         "genero": request.form["genero"],
     }
     conn.insert_data("funcionario", dados)
@@ -65,11 +65,26 @@ def apagar_funcionario():
 @rotas_funcionario.route('/pesquisar-funcionario', methods=['GET', 'POST'])
 def pesquisar_funcionario():
     param = request.form["param"]
-    # colls = request.form["colls"]
-    dados =  conn.select_data(table="funcionario", search= param)
 
-    return render_template('pesquisa.html', dados = dados)
+    dados = conn.select_data(table="funcionario", search= param)
 
+    if dados:
+         return render_template('pesquisa.html', dados = dados)
+    else:
+        return render_template('pesquisa.html', dados = [{"response":"Não encontrado" }])
+
+
+
+@rotas_funcionario.route('/teste')
+def teste():
+   
+    dados =  conn.select_data(table="funcionario", search= "hanna")
+
+    print("dados") 
+    if dados:
+     return render_template('pesquisa.html', dados = dados)
+    else:
+     return render_template('pesquisa.html', dados = [{"response":"Não encontrado" }])
 
 
 

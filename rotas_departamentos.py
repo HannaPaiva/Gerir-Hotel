@@ -55,7 +55,10 @@ def pesquisar_departamento():
     # colls = request.form["colls"]
     dados =  conn.select_data(table="departamento", search= param)
 
-    return render_template('pesquisa.html', dados = dados)
+    if dados:
+     return render_template('pesquisa.html', dados = dados)
+    else:
+     return render_template('pesquisa.html', dados = [{"response":"Não encontrado" }])
 
 
 
