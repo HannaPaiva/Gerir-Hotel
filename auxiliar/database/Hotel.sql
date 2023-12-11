@@ -2,7 +2,7 @@
 -- Anfitrião:                    127.0.0.1
 -- Versão do servidor:           10.4.28-MariaDB - mariadb.org binary distribution
 -- SO do servidor:               Win64
--- HeidiSQL Versão:              12.5.0.6677
+-- HeidiSQL Versão:              12.6.0.6765
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -15,27 +15,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- -----------------------------------------------------
--- Table `hotel`.`metodoreserva`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `hotel`.`metodoreserva` (
-  `idMetodo` INT(11) NOT NULL,
-  `nomeMetodo` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`idMetodo`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+-- A despejar estrutura da base de dados para hotel
+CREATE DATABASE IF NOT EXISTS `hotel` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
+USE `hotel`;
+
+-- A despejar estrutura para tabela hotel.agencia
+CREATE TABLE IF NOT EXISTS `agencia` (
+  `idAgencia` int(11) NOT NULL AUTO_INCREMENT,
+  `nomeAgencia` varchar(45) DEFAULT NULL,
+  `contatoGeral` varchar(45) DEFAULT NULL,
+  `nomeRepresentante` varchar(45) DEFAULT NULL,
+  `telefoneRepresentante` varchar(45) DEFAULT NULL,
+  `comissaoAgencia` double DEFAULT NULL,
+  PRIMARY KEY (`idAgencia`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- A despejar dados para tabela hotel.agencia: ~0 rows (aproximadamente)
 
 -- A despejar estrutura para tabela hotel.agenciametodo
 CREATE TABLE IF NOT EXISTS `agenciametodo` (
-  `idAgencia` int(11) NOT NULL,
-  `idMetodo` int(11) NOT NULL,
-  PRIMARY KEY (`idAgencia`,`idMetodo`) USING BTREE,
-  KEY `fk_Agencia_has_MetodoReserva_MetodoReserva1_idx` (`idMetodo`) USING BTREE,
-  KEY `fk_Agencia_has_MetodoReserva_Agencia1_idx` (`idAgencia`) USING BTREE,
-  CONSTRAINT `fk_Agencia_has_MetodoReserva_Agencia1` FOREIGN KEY (`idAgencia`) REFERENCES `agencia` (`idAgencia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Agencia_has_MetodoReserva_MetodoReserva1` FOREIGN KEY (`idMetodo`) REFERENCES `metodoreserva` (`idMetodo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `Agencia_idAgencia` int(11) NOT NULL,
+  `MetodoReserva_idMetodo` int(11) NOT NULL,
+  PRIMARY KEY (`Agencia_idAgencia`,`MetodoReserva_idMetodo`),
+  KEY `fk_Agencia_has_MetodoReserva_MetodoReserva1_idx` (`MetodoReserva_idMetodo`),
+  KEY `fk_Agencia_has_MetodoReserva_Agencia1_idx` (`Agencia_idAgencia`),
+  CONSTRAINT `fk_Agencia_has_MetodoReserva_Agencia1` FOREIGN KEY (`Agencia_idAgencia`) REFERENCES `agencia` (`idAgencia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Agencia_has_MetodoReserva_MetodoReserva1` FOREIGN KEY (`MetodoReserva_idMetodo`) REFERENCES `metodoreserva` (`idMetodo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- A despejar dados para tabela hotel.agenciametodo: ~0 rows (aproximadamente)
@@ -52,16 +57,17 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `telefone` varchar(45) DEFAULT NULL,
   `dataNascimento` date DEFAULT NULL,
   `ativo` tinyint(4) DEFAULT NULL,
-  `genero` enum('m','f','o') DEFAULT NULL,
+  `genero` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`idCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.cliente: ~4 rows (aproximadamente)
+-- A despejar dados para tabela hotel.cliente: ~5 rows (aproximadamente)
 INSERT INTO `cliente` (`idCliente`, `primeiroNome`, `nomeDoMeio`, `ultimoNome`, `contribuinte`, `CC`, `email`, `telefone`, `dataNascimento`, `ativo`, `genero`) VALUES
 	(1, 'Maria', 'Amada', 'Carmo', 'cccc', 'cc', 'maria@gmail.com', '3434234234', '2003-07-05', 1, 'm'),
 	(2, 'juliaa', 'pc do', 'picoito', 'aaaa', 'None', 'julia@outlook.com', 'None', '0000-00-00', 1, 'm'),
 	(6, 'afonso', 'marques', 'moedas', '12243423', '3423434', 'dsfsdfs', 'sdfsdf', '2003-09-08', 1, NULL),
-	(11, 'mariaaaaaaaaaa', 'luana', 'rizard', 'cccc', 'cc', 'maria@gmail.com', '3434234234', '0000-00-00', 1, 'm');
+	(11, 'mariaaaaaaaaaa', 'luana', 'rizard', 'cccc', 'cc', 'maria@gmail.com', '3434234234', '0000-00-00', 1, 'm'),
+	(13, 'fran', '', '', '', '', '', '', '0000-00-00', 1, 'm');
 
 -- A despejar estrutura para tabela hotel.departamento
 CREATE TABLE IF NOT EXISTS `departamento` (
@@ -82,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
   `idDepartamento` int(11) NOT NULL,
   `primeiroNome` varchar(60) NOT NULL,
   `nomeDoMeio` varchar(60) DEFAULT NULL,
-  `UltimoNome` varchar(45) NOT NULL,
+  `ultimoNome` varchar(45) NOT NULL,
   `contribuinte` varchar(45) DEFAULT NULL,
   `CC` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
@@ -99,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- A despejar dados para tabela hotel.funcionario: ~1 rows (aproximadamente)
-INSERT INTO `funcionario` (`idFuncionario`, `idDepartamento`, `primeiroNome`, `nomeDoMeio`, `UltimoNome`, `contribuinte`, `CC`, `email`, `telefone`, `dataNascimento`, `endereco`, `salario`, `dataEntrada`, `dataSaida`, `status`) VALUES
+INSERT INTO `funcionario` (`idFuncionario`, `idDepartamento`, `primeiroNome`, `nomeDoMeio`, `ultimoNome`, `contribuinte`, `CC`, `email`, `telefone`, `dataNascimento`, `endereco`, `salario`, `dataEntrada`, `dataSaida`, `status`) VALUES
 	(1, 1, 'Hanna ', 'Beatriz', 'Paiva', 'cccc', 'aaaa', 'ssss', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- A despejar estrutura para tabela hotel.hospede
@@ -107,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `hospede` (
   `idHospede` int(11) NOT NULL AUTO_INCREMENT,
   `primeiroNome` varchar(60) NOT NULL,
   `nomeDoMeio` varchar(60) DEFAULT NULL,
-  `UltimoNome` varchar(45) NOT NULL,
+  `ultimoNome` varchar(45) NOT NULL,
   `CC` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `telefone` varchar(45) DEFAULT NULL,
@@ -160,7 +166,8 @@ CREATE TABLE IF NOT EXISTS `preco` (
 
 -- A despejar estrutura para tabela hotel.quarto
 CREATE TABLE IF NOT EXISTS `quarto` (
-  `numQuarto` int(11) NOT NULL,
+  `idQuarto` int(11) NOT NULL,
+  `numQuarto` varchar(10) DEFAULT NULL,
   `descricao` varchar(45) DEFAULT NULL,
   `andar` tinyint(4) DEFAULT NULL,
   `tipologia` varchar(45) DEFAULT NULL,
@@ -168,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `quarto` (
   `qtdCamaSolteiro` varchar(45) DEFAULT NULL,
   `ativo` tinyint(4) DEFAULT NULL,
   `estaDisponivel` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`numQuarto`)
+  PRIMARY KEY (`idQuarto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- A despejar dados para tabela hotel.quarto: ~0 rows (aproximadamente)
@@ -184,11 +191,12 @@ CREATE TABLE IF NOT EXISTS `reserva` (
   `numBebes` tinyint(4) DEFAULT NULL,
   `observacoes` text DEFAULT NULL,
   `tipologiaContratada` varchar(45) DEFAULT NULL,
-  `idAgencia` int(11) NOT NULL,
-  `idMetodo` int(11) NOT NULL,
+  `Agencia_has_MetodoReserva_Agencia_idAgencia` int(11) NOT NULL,
+  `Agencia_has_MetodoReserva_MetodoReserva_idMetodo` int(11) NOT NULL,
   PRIMARY KEY (`idReserva`),
   KEY `fk_Reserva_Cliente1_idx` (`idCliente`),
-  KEY `fk_Reserva_Agencia_has_MetodoReserva1_idx` (`idAgencia`,`idMetodo`) USING BTREE,
+  KEY `fk_Reserva_Agencia_has_MetodoReserva1_idx` (`Agencia_has_MetodoReserva_Agencia_idAgencia`,`Agencia_has_MetodoReserva_MetodoReserva_idMetodo`),
+  CONSTRAINT `fk_Reserva_Agencia_has_MetodoReserva1` FOREIGN KEY (`Agencia_has_MetodoReserva_Agencia_idAgencia`, `Agencia_has_MetodoReserva_MetodoReserva_idMetodo`) REFERENCES `agenciametodo` (`Agencia_idAgencia`, `MetodoReserva_idMetodo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Reserva_Cliente1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -196,13 +204,14 @@ CREATE TABLE IF NOT EXISTS `reserva` (
 
 -- A despejar estrutura para tabela hotel.reservahospede
 CREATE TABLE IF NOT EXISTS `reservahospede` (
-  `idQuarto` int(11) NOT NULL,
-  `idReserva` int(11) NOT NULL,
-  `idHospede` int(11) NOT NULL,
-  PRIMARY KEY (`idQuarto`,`idReserva`,`idHospede`) USING BTREE,
-  KEY `fk_ReservaQuarto_has_Hospede_Hospede1_idx` (`idHospede`) USING BTREE,
-  KEY `fk_ReservaQuarto_has_Hospede_ReservaQuarto1_idx` (`idQuarto`,`idReserva`) USING BTREE,
-  CONSTRAINT `fk_ReservaQuarto_has_Hospede_Hospede1` FOREIGN KEY (`idHospede`) REFERENCES `hospede` (`idHospede`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `ReservaQuarto_idQuarto` int(11) NOT NULL,
+  `ReservaQuarto_idReserva` int(11) NOT NULL,
+  `Hospede_idHospede` int(11) NOT NULL,
+  PRIMARY KEY (`ReservaQuarto_idQuarto`,`ReservaQuarto_idReserva`,`Hospede_idHospede`),
+  KEY `fk_ReservaQuarto_has_Hospede_Hospede1_idx` (`Hospede_idHospede`),
+  KEY `fk_ReservaQuarto_has_Hospede_ReservaQuarto1_idx` (`ReservaQuarto_idQuarto`,`ReservaQuarto_idReserva`),
+  CONSTRAINT `fk_ReservaQuarto_has_Hospede_Hospede1` FOREIGN KEY (`Hospede_idHospede`) REFERENCES `hospede` (`idHospede`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ReservaQuarto_has_Hospede_ReservaQuarto1` FOREIGN KEY (`ReservaQuarto_idQuarto`, `ReservaQuarto_idReserva`) REFERENCES `reservaquarto` (`idQuarto`, `idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- A despejar dados para tabela hotel.reservahospede: ~0 rows (aproximadamente)
@@ -211,10 +220,11 @@ CREATE TABLE IF NOT EXISTS `reservahospede` (
 CREATE TABLE IF NOT EXISTS `reservaquarto` (
   `idQuarto` int(11) NOT NULL,
   `idReserva` int(11) NOT NULL,
+  `observacoes` text DEFAULT NULL,
   PRIMARY KEY (`idQuarto`,`idReserva`),
   KEY `fk_Quarto_has_Reserva_Reserva1_idx` (`idReserva`),
   KEY `fk_Quarto_has_Reserva_Quarto_idx` (`idQuarto`),
-  CONSTRAINT `fk_Quarto_has_Reserva_Quarto` FOREIGN KEY (`idQuarto`) REFERENCES `quarto` (`numQuarto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Quarto_has_Reserva_Quarto` FOREIGN KEY (`idQuarto`) REFERENCES `quarto` (`idQuarto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Quarto_has_Reserva_Reserva1` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -240,15 +250,15 @@ CREATE TABLE IF NOT EXISTS `servicoprestado` (
   `idServico` int(11) NOT NULL,
   `detalhes` text DEFAULT NULL,
   `dataHora` datetime DEFAULT NULL,
-  `idFuncionario` int(11) NOT NULL,
-  `idDepartamento` int(11) NOT NULL,
+  `Funcionario_idFuncionario` int(11) NOT NULL,
+  `Funcionario_idDepartamento` int(11) NOT NULL,
   PRIMARY KEY (`idReserva`,`idServico`),
   KEY `fk_Reserva_has_Servico_Servico1_idx` (`idServico`),
   KEY `fk_Reserva_has_Servico_Reserva1_idx` (`idReserva`),
-  KEY `fk_ServicoPrestado_Funcionario1_idx` (`idFuncionario`,`idDepartamento`) USING BTREE,
+  KEY `fk_ServicoPrestado_Funcionario1_idx` (`Funcionario_idFuncionario`,`Funcionario_idDepartamento`),
   CONSTRAINT `fk_Reserva_has_Servico_Reserva1` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Reserva_has_Servico_Servico1` FOREIGN KEY (`idServico`) REFERENCES `servico` (`idServico`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ServicoPrestado_Funcionario1` FOREIGN KEY (`idFuncionario`, `idDepartamento`) REFERENCES `funcionario` (`idFuncionario`, `idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_ServicoPrestado_Funcionario1` FOREIGN KEY (`Funcionario_idFuncionario`, `Funcionario_idDepartamento`) REFERENCES `funcionario` (`idFuncionario`, `idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- A despejar dados para tabela hotel.servicoprestado: ~0 rows (aproximadamente)
