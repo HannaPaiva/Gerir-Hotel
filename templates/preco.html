@@ -2,58 +2,53 @@
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
-
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tabela de agências</h4>
+                        <h4 class="card-title">Tabela de Preços</h4>
+                        {% include 'components/barra_pesquisa.html' %}
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
-                                data-target="#modalCriar">+ Adicionar nova Agência</button>
+                                data-target="#modalCriar">+ Adicionar novo Preço</button>
                         </div>
+                        
                         <div class="table-responsive">
 
-                            <table class="table">
+                            <table class="table" id="tabelaExemplo">
                                 <thead>
                                     <tr>
-                                        <th>Nome</th>
-                                        <th>Contato</th>
-                                        <th>Nome Representante</th>
-                                        <th>Telefone Representante</th>
-                                        <th>Comissão</th>
+                                        <th>ID Tarifa</th>
+                                        <th>ID Reserva</th>
+                                        <th>Preço Manual</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    {% for dado in dados %}
+                                    {% for preco in precos %}
 
                                     <tr>
-                                        <td>{{ dado.nomeagencia }}</td>
-                                        <td>{{ dado.contatogeral }} </td>
-                                        <td>{{ dado.nomerepresentante }}</td>
-                                        <td>{{ dado.telefonerepresentante }}</td>
-                                        <td>{{ dado.comissaoagencia }}</td>
-                                        <td><label class="badge">{{dado.ativo}}</label></td>
+                                        <td>{{ preco.id_tarifa }}</td>
+                                        <td>{{ preco.id_reserva }} </td>
+                                        <td>{{ preco.preco_manual }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idfuncionario}}">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{ preco.id_tarifa }}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
                                             </button>
                                         </td>
                                         <td>
-                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idfuncionario}}">
+                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{ preco.id_tarifa }}">
                                                 <i class="mdi mdi-delete"></i> Apagar
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="modalEditar-{{dado.idfuncionario}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modalEditar-{{ preco.id_tarifa }}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalEditarLabel">Editar agên
-                                                        cia</h5>
+                                                    <h5 class="modal-title" id="modalEditarLabel">Editar Preço</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -61,57 +56,38 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h4 class="card-title"></h4>
-                                                    <form class="form-sample" method="post" action="/editar-agencia" >
+                                                    <form class="form-sample" method="post" action="/editar-preco" >
                                                       
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label" for="nomeagencia">Nome</label>
+                                                                    <label class="col-sm-3 col-form-label" for="id_tarifa">ID Tarifa</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="nomeagencia" name="nomeagencia" placeholder="nome da agencia" value="{{dado.nomeagencia}}" />
+                                                                        <input type="text" class="form-control" id="id_tarifa" name="id_tarifa" placeholder="ID Tarifa" value="{{ preco.id_tarifa }}" />
                                                                     </div>
                         
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label class="col-sm-5 col-form-label">Contato Geral</label>
+                                                                    <label class="col-sm-5 col-form-label" for="id_reserva">ID Reserva</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="contatogeral" name="contatogeral" placeholder="contato geral" value="{{dado.contatogeral}}" />
+                                                                        <input type="text" class="form-control" id="id_reserva" name="id_reserva" placeholder="ID Reserva" value="{{ preco.id_reserva }}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
                         
                                                             <div class="col-md-4">
                                                                 <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Nome Representante</label>
+                                                                    <label class="col-sm-3 col-form-label" for="preco_manual">Preço Manual</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="nomerepresentante" name="nomerepresentante" placeholder="nome do Representante" value="{{dado.nomerepresentante}}"/>
+                                                                        <input type="text" class="form-control" id="preco_manual" name="preco_manual" placeholder="Preço Manual" value="{{ preco.preco_manual }}"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                        
                         
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Telefone Representante</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="telefonerepresentante" name="telefonerepresentante" value="{{dado.telefonerepresentante}}">
-                                                                    </input>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Comissão</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input class="form-control" type="text" id="comissaoagencia" name="dado.comissaoagencia" placeholder="comissao da agencia" value="{{dado.comissaoagencia}}" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                        
                                                 </div>
                         
                                                 <div class="modal-footer">
@@ -120,14 +96,12 @@
                                                 </div>
                                                 </form>
                                                 </div>
-
-                                               
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modalApagar-{{dado.idagencia}}" tabindex="-1"
+                                    <div class="modal fade" id="modalApagar-{{ preco.id_tarifa }}" tabindex="-1"
                                     role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -141,12 +115,13 @@
                                                 <div class="modal-body">
                                                     <h5>Tem certeza que deseja apagar? Essa ação não pode ser cancelada.
                                                     </h5>
+                                                
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
-                                                        <form action="/apagar-agencia" method="post">
-                                                        <input type="hidden" value="{{dado.idagencia}}" name="idagencia">
+                                                        <form action="/apagar-preco" method="post">
+                                                        <input type="hidden" value="{{ preco.id_tarifa }}" name="id_tarifa">
                                                         
                                                     <button type="submit" class="btn btn-danger"> <i
                                                             class="mdi mdi-delete"></i>Apagar</button>
@@ -172,78 +147,84 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalCriarLabel">Criar agencia</h5>
+                            <h5 class="modal-title" id="modalCriarLabel">Criar Preço</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
-                            <form class="form-sample" method="post" action="/criar-agencia" >
+                            <form class="form-sample" method="post" action="/criar-preco" >
 
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-3 col-form-label" for="nomeagencia">Nome Agencia</label>
+                                            <label class="col-sm-3 col-form-label" for="id_tarifa">ID Tarifa</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="nomeagencia"
-                                                    name="nomeagencia" placeholder="nome da agencia" />
+                                                <input type="text" class="form-control" id="id_tarifa"
+                                                    name="id_tarifa" placeholder="ID Tarifa" />
                                             </div>
 
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-5 col-form-label">contato geral</label>
+                                            <label class="col-sm-5 col-form-label" for="id_reserva">ID Reserva</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="contatogeral"
-                                                    name="contatogeral" placeholder="contato geral" />
+                                                <input type="text" class="form-control" id="id_reserva"
+                                                    name="id_reserva" placeholder="ID Reserva" />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nome Representante</label>
+                                            <label class="col-sm-3 col-form-label" for="preco_manual">Preço Manual</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="nomerepresentante"
-                                                    name="nomerepresentante" placeholder="nome Representante" />
+                                                <input type="text" class="form-control" id="preco_manual"
+                                                    name="preco_manual" placeholder="Preço Manual" />
                                             </div>
                                         </div>
                                     </div>
 
 
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">tel Representante</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id = "nomerepresentante" name="telefonerepresentante">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">comissao </label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" type="text" name="comissaoagencia"/>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Criar</button>
                                 </div>
-
+                            </form>
                         </div>
-
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Criar</button>
-                        </div>
-                        </form>
                     </div>
                 </div>
             </div>
-
+            <script>
+                jQuery(document).ready(function () {
+                    jQuery('#tabelaExemplo').DataTable({
+                        "paging": true,
+                        "lengthChange": true,
+                        "searching": true,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": false,
+                        "language": {
+                            "lengthMenu": "Exibir _MENU_ registros por página",
+                            "zeroRecords": "Nenhum registro encontrado",
+                            "info": "Mostrando página _PAGE_ de _PAGES_",
+                            "infoEmpty": "Nenhum registro disponível",
+                            "infoFiltered": "(filtrado de _MAX_ registros no total)",
+                            "search": "Pesquisar:",
+                            "paginate": {
+                                "first": "Primeiro",
+                                "last": "Último",
+                                "next": "Próximo",
+                                "previous": "Anterior"
+                            }
+                        }
+                    });
+                });
+            </script>
+         
 
             {% include 'components/footer.html' %}

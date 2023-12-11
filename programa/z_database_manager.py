@@ -21,7 +21,7 @@ class DatabaseManager:
         table = table.lower()
 
         columns = {
-            "agencia": ["idagencia", "nomeagencia", "contatogeral", "nomerepresentate", "telefonerepresentante", "comissaoagenda"],
+            "agencia": ["idagencia", "nomeagencia", "contatogeral", "nomerepresentante", "telefonerepresentante", "comissaoagencia"],
             "agenciametodo": ["idagencia", "idmetodo"],
             "cliente": ["idcliente", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "ativo"],
             "departamento": ["iddepartamento", "idchefe", "nomedepartamento", "descricao"],

@@ -1,0 +1,40 @@
+{% include 'components/head.html' %}
+{% include 'components/sidebar.html' %}
+{% include 'components/navbar.html' %}
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+        <h2>Resultado da pesquisa: </h2>
+        
+        <div class="table-responsive">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        {% for chave in dados[0].keys() %}
+                            <th>{{ chave }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for linha in dados %}
+                        <tr>
+                            {% for valor in linha.values() %}
+                                <td>{{ valor }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+        </div>
+</div>
+</div>
+</div>
+      
+        
