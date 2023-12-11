@@ -1,6 +1,5 @@
-from AT_menu import Menu
 
-class Agencia(Menu):
+class Agencia():
     def __init__(self, idagencia, nomeagencia, contatogeral, nomerepresentante,  telefonerepresentante, comissaoagencia):
         self.idagencia = idagencia
         self.nomeagencia = nomeagencia
@@ -52,7 +51,7 @@ class Agencia(Menu):
         return self.__nomerepresentante
     
     @nomerepresentante.setter
-    def nomeRepresentate(self, nomerepresentante):
+    def nomeRepresentante(self, nomerepresentante):
         print("debug: setting nomeRep")
         if len(nomerepresentante) < 45:
             self.__nomerepresentante = nomerepresentante
