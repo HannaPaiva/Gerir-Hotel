@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `departamento` (
   PRIMARY KEY (`idDepartamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.departamento: ~1 rows (aproximadamente)
+-- A despejar dados para tabela hotel.departamento: ~0 rows (aproximadamente)
 INSERT INTO `departamento` (`idDepartamento`, `idChefe`, `nomeDepartamento`, `descricao`) VALUES
 	(1, 1, 'Receção', 'sauhsiudsad');
 
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
   CONSTRAINT `fk_Funcionario_Departamento1` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.funcionario: ~1 rows (aproximadamente)
+-- A despejar dados para tabela hotel.funcionario: ~0 rows (aproximadamente)
 INSERT INTO `funcionario` (`idFuncionario`, `idDepartamento`, `primeiroNome`, `nomeDoMeio`, `ultimoNome`, `contribuinte`, `CC`, `email`, `telefone`, `dataNascimento`, `endereco`, `salario`, `dataEntrada`, `dataSaida`, `status`) VALUES
 	(1, 1, 'Hanna ', 'Beatriz', 'Paiva', 'cccc', 'aaaa', 'ssss', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
@@ -152,10 +152,11 @@ CREATE TABLE IF NOT EXISTS `pagamento` (
 
 -- A despejar estrutura para tabela hotel.preco
 CREATE TABLE IF NOT EXISTS `preco` (
+  `idPreco` int(11) NOT NULL AUTO_INCREMENT,
   `idTarifa` int(11) NOT NULL,
   `idReserva` int(11) NOT NULL,
   `precoManual` double DEFAULT NULL,
-  PRIMARY KEY (`idTarifa`,`idReserva`),
+  PRIMARY KEY (`idPreco`) USING BTREE,
   KEY `fk_Tarifa_has_Reserva_Reserva1_idx` (`idReserva`),
   KEY `fk_Tarifa_has_Reserva_Tarifa1_idx` (`idTarifa`),
   CONSTRAINT `fk_Tarifa_has_Reserva_Reserva1` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -178,7 +179,9 @@ CREATE TABLE IF NOT EXISTS `quarto` (
   PRIMARY KEY (`idQuarto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.quarto: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.quarto: ~1 rows (aproximadamente)
+INSERT INTO `quarto` (`idQuarto`, `numQuarto`, `descricao`, `andar`, `tipologia`, `qtdCamaCasal`, `qtdCamaSolteiro`, `ativo`, `estaDisponivel`) VALUES
+	(20, '1', 'grande', 2, 'grande', '2', '1', 1, 1);
 
 -- A despejar estrutura para tabela hotel.reserva
 CREATE TABLE IF NOT EXISTS `reserva` (

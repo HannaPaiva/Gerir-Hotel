@@ -3,6 +3,7 @@ from rotas_clientes import rotas_cliente
 from rotas_agencias import rotas_agencia
 from rotas_funcionarios import rotas_funcionario
 from rotas_departamentos import rotas_departamento
+from rotas_servico import rotas_servico
 from programa.Z_funcoes import *
 from programa.z_database_manager import DatabaseManager
 
@@ -14,6 +15,7 @@ app.register_blueprint(rotas_cliente)
 app.register_blueprint(rotas_funcionario)
 app.register_blueprint(rotas_departamento)
 app.register_blueprint(rotas_agencia)
+app.register_blueprint(rotas_servico)
 
 @app.route('/')
 def index():
