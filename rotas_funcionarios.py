@@ -7,11 +7,11 @@ conn= DatabaseManager(host="127.0.0.1", user="root", password="", database="hote
 
 @rotas_funcionario.route('/funcionarios')
 def listar_funcionarios():
-    # dados = listar("funcionario")
+    action = "pesquisar-funcionario"
     dados = conn.select_data("funcionario")
     print(dados)
     if dados is not None:
-        return render_template('funcionarios.html', dados=dados)
+        return render_template('funcionarios.html', dados=dados, action = action)
     else:
         return render_template('funcionarios.html')
 
@@ -19,8 +19,8 @@ def listar_funcionarios():
 def criar_funcionario():
     
     dados = {
-        "primeiroNome": request.form["primeiroNome"],
-        "nomeDoMeio": request.form["nomeDoMeio"],
+        "primeironome": request.form["primeironome"],
+        "nomedomeio": request.form["nomedomeio"],
         "ultimoNome": request.form["ultimoNome"],
         "contribuinte": request.form["contribuinte"],
         "CC": request.form["CC"],
@@ -58,6 +58,17 @@ def apagar_funcionario():
     }
     apagar("funcionario", "idfuncionario", dados["idfuncionario"])
     return redirect(url_for('rotas_funcionario.listar_funcionarios'))
+
+@rotas_funcionario.route('/pesquisar-funcionario', methods=['GET', 'POST'])
+def pesquisar_cliente():
+    param = request.form["param"]
+    # colls = request.form["colls"]
+    dados =  conn.select_data(table="funcionario", search= param)
+
+    return render_template('pesquisa.html', dados = dados)
+
+
+
 
 app.register_blueprint(rotas_funcionario)
 
