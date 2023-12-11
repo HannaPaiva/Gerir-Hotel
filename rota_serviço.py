@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
-from programa.HP_Cliente import *
+from programa.HP_servico import *
 from programa.z_database_manager import DatabaseManager
 
 conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
@@ -30,12 +30,12 @@ def criar_servico():
         "ativo": request.form["ativo"],
         "genero": request.form["genero"],
     }
-    conn.insert_data("cliente", dados)
-    return redirect(url_for('rotas_cliente.listar_clientes'))
+    conn.insert_data("servico", dados)
+    return redirect(url_for('rotas_servico.listar_servicos'))
 
 @rotas_servico.route('/editar-servico', methods=['GET', 'POST'])
-def editar_cliente():
-    idcliente = {"idcliente": request.form["idcliente"]}
+def editar_servico():
+    idservico = {"idservico": request.form["idservico"]}
     dados = {
         "primeiroNome": request.form["primeiroNome"],
         "nomeDoMeio": request.form["nomeDoMeio"],
@@ -48,6 +48,17 @@ def editar_cliente():
         "ativo": request.form["ativo"],
         "genero": request.form["genero"],
     }
-    conn.update_data("cliente", dados, idcliente)
-    return redirect(url_for('rotas_cliente.listar_clientes'))
+    conn.update_data("servico", dados, idservico)
+    return redirect(url_for('rotas_servico.listar_servicos'))
 
+@rotas_servico.route('/pesquisar-servico', methods=['GET', 'POST'])
+def pesquisar_servico():
+    param = request.form["param"]
+    # colls = request.form["colls"]
+    dados =  conn.select_data(table="servico", search= param)
+
+    return render_template('pesquisa.html', dados = dados)
+
+app.register_blueprint(rotas_servico)
+if __name__ == '__main__':
+    app.run(debug=True)
