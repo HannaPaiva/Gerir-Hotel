@@ -16,7 +16,9 @@ app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 app.register_blueprint(rotas_cliente)
 app.register_blueprint(rotas_funcionario)
 app.register_blueprint(rotas_departamento)
+app.register_blueprint(rotas_servico)
 app.register_blueprint(rotas_agencia)
+app.register_blueprint(rotas_tarifa)
 
 @app.route('/')
 def index():

@@ -59,15 +59,16 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `ativo` tinyint(4) DEFAULT NULL,
   `genero` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`idCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.cliente: ~5 rows (aproximadamente)
+-- A despejar dados para tabela hotel.cliente: ~6 rows (aproximadamente)
 INSERT INTO `cliente` (`idCliente`, `primeiroNome`, `nomeDoMeio`, `ultimoNome`, `contribuinte`, `CC`, `email`, `telefone`, `dataNascimento`, `ativo`, `genero`) VALUES
 	(1, 'Maria', 'Amada', 'Carmo', 'cccc', 'cc', 'maria@gmail.com', '3434234234', '2003-07-05', 1, 'm'),
 	(2, 'juliaa', 'pc do', 'picoito', 'aaaa', 'None', 'julia@outlook.com', 'None', '0000-00-00', 1, 'm'),
 	(6, 'afonso', 'marques', 'moedas', '12243423', '3423434', 'dsfsdfs', 'sdfsdf', '2003-09-08', 1, NULL),
 	(11, 'mariaaaaaaaaaa', 'luana', 'rizard', 'cccc', 'cc', 'maria@gmail.com', '3434234234', '0000-00-00', 1, 'm'),
-	(13, 'fran', '', '', '', '', '', '', '0000-00-00', 1, 'm');
+	(13, 'fran', '', '', '', '', '', '', '0000-00-00', 1, 'm'),
+	(14, 'Miguel', 'Joaquim', 'Freitas', '123538473', 'hbf74hf747f', 'miguelasd@gmail.com', '67583940', '2010-06-16', 1, 'm');
 
 -- A despejar estrutura para tabela hotel.departamento
 CREATE TABLE IF NOT EXISTS `departamento` (
@@ -78,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `departamento` (
   PRIMARY KEY (`idDepartamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.departamento: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.departamento: ~1 rows (aproximadamente)
 INSERT INTO `departamento` (`idDepartamento`, `idChefe`, `nomeDepartamento`, `descricao`) VALUES
 	(1, 1, 'Receção', 'sauhsiudsad');
 
@@ -104,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
   CONSTRAINT `fk_Funcionario_Departamento1` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.funcionario: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.funcionario: ~1 rows (aproximadamente)
 INSERT INTO `funcionario` (`idFuncionario`, `idDepartamento`, `primeiroNome`, `nomeDoMeio`, `ultimoNome`, `contribuinte`, `CC`, `email`, `telefone`, `dataNascimento`, `endereco`, `salario`, `dataEntrada`, `dataSaida`, `status`) VALUES
 	(1, 1, 'Hanna ', 'Beatriz', 'Paiva', 'cccc', 'aaaa', 'ssss', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
