@@ -1,8 +1,11 @@
 from flask import Flask, render_template
+
 from rotas_clientes import rotas_cliente
-from rotas_agencias import rotas_agencia
 from rotas_funcionarios import rotas_funcionario
 from rotas_departamentos import rotas_departamento
+from rotas_servico import rotas_servico
+from rotas_tarifas import rotas_tarifa
+from rotas_agencias import rotas_agencia
 from programa.Z_funcoes import *
 from programa.z_database_manager import DatabaseManager
 
@@ -13,7 +16,9 @@ app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 app.register_blueprint(rotas_cliente)
 app.register_blueprint(rotas_funcionario)
 app.register_blueprint(rotas_departamento)
+app.register_blueprint(rotas_servico)
 app.register_blueprint(rotas_agencia)
+app.register_blueprint(rotas_tarifa)
 
 @app.route('/')
 def index():
@@ -41,7 +46,7 @@ FROM
         "totalClientes": totalClientes[0]["totalClientes"],
         "mediaIdades": mediaIdades[0]["mediaIdades"],
         "totalQuartos": totalQuartos[0]["totalQuartos"],
-        "ocupacao": round(ocupacao[0]["ocupacao"], 2)
+        "ocupacao":round(ocupacao[0]["ocupacao"], 2) if ocupacao and ocupacao[0] and ocupacao[0].get("ocupacao") is not None else "Sem dados"
     }
 
     return render_template('index.html', dados=dados)

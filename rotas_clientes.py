@@ -69,7 +69,11 @@ def pesquisar_cliente():
     # colls = request.form["colls"]
     dados =  conn.select_data(table="cliente", search= param)
 
-    return render_template('pesquisa.html', dados = dados)
+    print("dados") 
+    if dados:
+     return render_template('pesquisa.html', dados = dados)
+    else:
+     return render_template('pesquisa.html', dados = [{"response":"Não encontrado" }])
 
 
 
