@@ -48,7 +48,7 @@
 
 
       <li class="nav-item menu-items">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ url_for('rotas_servico.listar_servicos') }}">
           <span class="menu-icon">
             <i class="mdi mdi-table-large"></i>
           </span>
@@ -67,7 +67,7 @@
 
       
       <li class="nav-item menu-items">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ url_for('rotas_quarto.listar_quartos') }}">
           <span class="menu-icon">
             <i class="mdi mdi-table-large"></i>
           </span>
@@ -76,7 +76,7 @@
       </li>
 
       <li class="nav-item menu-items">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ url_for('rotas_reserva.listar_reservas') }}">
           <span class="menu-icon">
             <i class="mdi mdi-table-large"></i>
           </span>
@@ -85,7 +85,7 @@
       </li>
 
       <li class="nav-item menu-items">
-        <a class="nav-link" href="pages/charts/chartjs.html">
+        <a class="nav-link" href="">
           <span class="menu-icon">
             <i class="mdi mdi-chart-bar"></i>
           </span>
@@ -94,14 +94,6 @@
       </li>
 
       
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="pages/charts/chartjs.html">
-          <span class="menu-icon">
-            <i class="mdi mdi-chart-bar"></i>
-          </span>
-          <span class="menu-title">Charts</span>
-        </a>
-      </li>
  
       <li class="nav-item menu-items">
         <a class="nav-link" href="{{ url_for('rotas_departamento.listar_departamentos') }}">

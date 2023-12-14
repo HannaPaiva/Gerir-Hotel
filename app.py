@@ -3,9 +3,17 @@ from flask import Flask, render_template
 from rotas_clientes import rotas_cliente
 from rotas_funcionarios import rotas_funcionario
 from rotas_departamentos import rotas_departamento
+
+from rotas_quartos import rotas_quarto
 from rotas_servico import rotas_servico
 from rotas_tarifas import rotas_tarifa
+
 from rotas_agencias import rotas_agencia
+from rotas_pagamentos import rotas_pagamento
+
+from rotas_reservas import rotas_reserva
+
+
 from programa.Z_funcoes import *
 from programa.z_database_manager import DatabaseManager
 
@@ -16,9 +24,15 @@ app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 app.register_blueprint(rotas_cliente)
 app.register_blueprint(rotas_funcionario)
 app.register_blueprint(rotas_departamento)
+
+app.register_blueprint(rotas_quarto)
 app.register_blueprint(rotas_servico)
 app.register_blueprint(rotas_agencia)
+
+app.register_blueprint(rotas_reserva)
 app.register_blueprint(rotas_tarifa)
+app.register_blueprint(rotas_pagamento)
+
 
 @app.route('/')
 def index():

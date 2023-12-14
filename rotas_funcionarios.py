@@ -1,3 +1,5 @@
+#ok
+
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
 from programa.z_database_manager import DatabaseManager
 conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)

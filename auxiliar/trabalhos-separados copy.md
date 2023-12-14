@@ -12,7 +12,6 @@ hospede
 
 
 #Afonso
-Preço 
 Pagamento
 Agência
 
@@ -25,8 +24,6 @@ Reserva
 
 
 ##trabalho conjunto
-
-
 
 
 MENU PRINCIPAL 

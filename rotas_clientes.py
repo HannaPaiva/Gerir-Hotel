@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
-from programa.HP_Cliente import *
+
 from programa.z_database_manager import DatabaseManager
 conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 rotas_cliente = Blueprint("rotas_cliente", __name__)
+
 
 
 @rotas_cliente.route('/clientes')
@@ -16,7 +17,6 @@ def listar_clientes():
         return render_template('clientes.html')
     
 
-    
 
 @rotas_cliente.route('/criar-cliente', methods=['GET', 'POST'])
 def criar_cliente():
