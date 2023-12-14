@@ -36,7 +36,7 @@ class DatabaseManager:
             "reservaquarto": ["idquarto", "idreserva", "observacoes"],
             "servico": ["idservico", "nomeservico", "preco", "descricao", "iddepartamento"],
             "servicoprestado": ["idreserva", "idservico", "detalhes", "datahora", "idfuncionario", "iddepartamento"],
-            "tarifa": ["idtarifa", "data","preconoiteadulto", "preconoitecrianca", "idquarto"]
+            "tarifa": ["idtarifa", "data","preconoiteadulto", "preconoitecrianca", "numquarto"]
         }
         return columns.get(table, [])
 

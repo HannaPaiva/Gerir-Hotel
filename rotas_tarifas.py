@@ -20,16 +20,11 @@ def listar_tarifas():
 @rotas_tarifa.route('/criar-tarifa', methods=['GET', 'POST'])
 def criar_tarifa():
     dados = {
-        "primeiroNome": request.form["primeiroNome"],
-        "nomeDoMeio": request.form["nomeDoMeio"],
-        "ultimoNome": request.form["ultimoNome"],
-        "contribuinte": request.form["contribuinte"],
-        "CC": request.form["CC"],
-        "email": request.form["email"],
-        "telefone": request.form["telefone"],
-        "dataNascimento": request.form["dataNascimento"],
-        "ativo": request.form["ativo"],
-        "genero": request.form["genero"],
+        "data": request.form["data"],
+        "preconoiteadulto": request.form["preconoiteadulto"],
+        "preonoitecrianca": request.form["preonoitecrianca"],
+        "tipologia": request.form["tipologia"],
+      
     }
     conn.insert_data("tarifa", dados)
     return redirect(url_for('rotas_tarifa.listar_tarifas'))
