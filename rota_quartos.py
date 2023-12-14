@@ -19,6 +19,7 @@ def listar_quarto():
 @rotas_quarto.route('/criar-quarto', methods=['GET', 'POST'])
 def criar_quarto():
     dados = {
+        "numquarto": request.form["numquarto"],
         "descricao": request.form["descricao"],
         "andar": request.form["andar"],
         "tipologia": request.form["tipologia"],

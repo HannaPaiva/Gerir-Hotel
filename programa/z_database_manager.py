@@ -23,20 +23,20 @@ class DatabaseManager:
         columns = {
             "agencia": ["idagencia", "nomeagencia", "contatogeral", "nomerepresentante", "telefonerepresentante", "comissaoagencia"],
             "agenciametodo": ["idagencia", "idmetodo"],
-            "cliente": ["idcliente", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "ativo"],
+            "cliente": ["idcliente", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "ativo", "genero"],
             "departamento": ["iddepartamento", "idchefe", "nomedepartamento", "descricao"],
+            "diaria": ["idtarifa", "idreserva"],
             "funcionario": ["idfuncionario", "iddepartamento", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "endereco", "salario", "dataentrada", "datasaida", "status"],
             "hospede": ["idhospede", "primeironome", "nomedomeio", "ultimonome", "cc", "email", "telefone", "datanascimento", "ativo"],
             "metodoreserva": ["idmetodo", "nomemetodo"],
-            "pagamento": ["idpagamento", "valortotal", "metodopagamento", "tarifareembolsavel", "datapagamento", "observacoes", "status", "idreserva"],
-            "preco": ["idtarifa", "idreserva", "precomanual"],
-            "quarto": ["idquarto", "numquarto", "descricao", "andar", "tipologia", "qtdcamacasal", "qtdcamasolteiro", "ativo", "estadisponivel"],
-            "reserva": ["idreserva", "idcliente", "dataentrada", "datasaida", "numadultos", "numcriancas", "numbebes", "observacoes", "tipologiacontratada", "idagencia", "idmetodo"],
-            "reservahospede": ["idquarto", "idreserva", "idhospede"],
-            "reservaquarto": ["idquarto", "idreserva", "observacoes"],
-            "servico": ["idServico", "nomeServico", "preco", "descricao", "idDepartamento"],
-            "servicoprestado": ["idreserva", "idservico", "detalhes", "datahora", "idfuncionario", "iddepartamento"],
-            "tarifa": ["idtarifa", "data","preconoiteadulto", "preconoitecrianca", "numquarto"]
+            "pagamento": ["idpagamento", "idreserva", "valortotal", "metodopagamento", "tarifareembolsavel", "datapagamento", "observacoes", "status"],
+            "quarto": ["numquarto", "descricao", "andar", "tipologia", "qtdcamacasal", "qtdcamasolteiro", "ativo", "estadisponivel"],
+            "reserva": ["idreserva", "idcliente",  "idagencia", "idmetodo", "dataentrada", "datasaida", "numadultos", "numcriancas", "numbebes", "observacoes", "tipologiacontratada"],
+            "reservahospede": ["numquarto", "idreserva", "idhospede"],
+            "reservaquarto": ["idreservaquarto", "numquarto", "idreserva", "observacoes"],
+            "servico": ["idservico", "iddepartamento", "nomeservico", "preco", "descricao"],
+            "servicoprestado": ["idservicoprestado", "idservico", "idreservaquarto", "idfuncionario", "detalhes", "datahora"],
+            "tarifa": ["idtarifa", "numquarto", "datainicio", "datafim", "preconoiteadulto", "preconoitecrianca"]
         }
         return columns.get(table, [])
 
