@@ -9,7 +9,7 @@ rotas_quarto = Blueprint("rotas_quarto", __name__)
 
 
 @rotas_quarto.route('/quartos')
-def listar_quarto():
+def listar_quartos():
     dados = conn.select_data("quartos")
     if dados is not None:
         return render_template('quartos.html', dados=dados)
@@ -43,6 +43,8 @@ def editar_cliente():
         "ativo": request.form["ativo"],
         "estadisponivel": request.form["estadisponivel"],
     }
+
+    
     conn.update_data("quarto", dados, numquarto)
     return redirect(url_for('rotas_cliente.listar_clientes'))
 
