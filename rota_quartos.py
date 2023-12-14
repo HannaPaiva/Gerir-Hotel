@@ -8,13 +8,13 @@ app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 rotas_quarto = Blueprint("rotas_quarto", __name__)
 
 
-@rotas_quarto.route('/quarto')
+@rotas_quarto.route('/quartos')
 def listar_quarto():
-    dados = conn.select_data("quarto")
+    dados = conn.select_data("quartos")
     if dados is not None:
-        return render_template('quarto.html', dados=dados)
+        return render_template('quartos.html', dados=dados)
     else:
-        return render_template('quarto.html')
+        return render_template('quartos.html')
 
 @rotas_quarto.route('/criar-quarto', methods=['GET', 'POST'])
 def criar_quarto():
