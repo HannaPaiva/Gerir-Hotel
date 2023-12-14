@@ -8,46 +8,43 @@ rotas_servico = Blueprint("rotas_servico", __name__)
 
 
 @rotas_servico.route('/servico')
-def listar_servico():
+def listar_servicos():
     dados = conn.select_data("servico")
     if dados is not None:
         return render_template('servico.html', dados=dados)
     else:
         return render_template('servico.html')
 
-@rotas_servico.route('/criar-servico', methods=['GET', 'POST'])
+@rotas_servico.route('/criar-servico', methods=['GET','POST'])
 def criar_servico():
     dados = {
-        "primeiroNome": request.form["primeiroNome"],
-        "nomeDoMeio": request.form["nomeDoMeio"],
-        "ultimoNome": request.form["ultimoNome"],
-        "contribuinte": request.form["contribuinte"],
-        "CC": request.form["CC"],
-        "email": request.form["email"],
-        "telefone": request.form["telefone"],
-        "dataNascimento": request.form["dataNascimento"],
-        "ativo": request.form["ativo"],
-        "genero": request.form["genero"],
+        "nomeServico": request.form.get("nomeServico"),
+        "preco": request.form.get("preco"),
+        "descricao": request.form.get("descricao"),
+        "idDepartamento": request.form.get("idDepartamento")
     }
     conn.insert_data("servico", dados)
     return redirect(url_for('rotas_servico.listar_servicos'))
 
-@rotas_servico.route('/editar-servico', methods=['GET', 'POST'])
+
+@rotas_servico.route('/editar-servico', methods=['POST'])
 def editar_servico():
-    idservico = {"idservico": request.form["idservico"]}
+    idServico = {"idServico": request.form.get("idServico")}
     dados = {
-        "primeiroNome": request.form["primeiroNome"],
-        "nomeDoMeio": request.form["nomeDoMeio"],
-        "ultimoNome": request.form["ultimoNome"],
-        "contribuinte": request.form["contribuinte"],
-        "CC": request.form["CC"],
-        "email": request.form["email"],
-        "telefone": request.form["telefone"],
-        "dataNascimento": request.form["dataNascimento"],
-        "ativo": request.form["ativo"],
-        "genero": request.form["genero"],
+        "nomeServico": request.form.get("nomeServico"),
+        "preco": request.form.get("preco"),
+        "descricao": request.form.get("descricao"),
+        "idDepartamento": request.form.get("idDepartamento")
     }
-    conn.update_data("servico", dados, idservico)
+    conn.update_data("servico", dados, idServico)
+    return redirect(url_for('rotas_servico.listar_servicos'))
+
+
+
+@rotas_servico.route('/apagar-servico', methods=['GET', 'POST'])
+def apagar_servico():
+    idServico = {"idServico": request.form["idServico"]}
+    conn.delete_data("servico", idServico)
     return redirect(url_for('rotas_servico.listar_servicos'))
 
 @rotas_servico.route('/pesquisar-servico', methods=['GET', 'POST'])
