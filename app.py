@@ -3,9 +3,10 @@ from flask import Flask, render_template
 from rotas_clientes import rotas_cliente
 from rotas_funcionarios import rotas_funcionario
 from rotas_departamentos import rotas_departamento
-from rotas_servico import rotas_servico
+from rotas_servicos import rotas_servico
 from rotas_tarifas import rotas_tarifa
 from rotas_agencias import rotas_agencia
+from rotas_reservas import rotas_reserva
 from programa.Z_funcoes import *
 from programa.z_database_manager import DatabaseManager
 
@@ -19,6 +20,7 @@ app.register_blueprint(rotas_departamento)
 app.register_blueprint(rotas_servico)
 app.register_blueprint(rotas_agencia)
 app.register_blueprint(rotas_tarifa)
+app.register_blueprint(rotas_reserva)
 
 @app.route('/')
 def index():

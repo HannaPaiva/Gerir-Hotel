@@ -7,7 +7,7 @@ app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 rotas_servico = Blueprint("rotas_servico", __name__)
 
 
-@rotas_servico.route('/servico')
+@rotas_servico.route('/servicos')
 def listar_servicos():
     dados = conn.select_data("servico")
     if dados is not None:
