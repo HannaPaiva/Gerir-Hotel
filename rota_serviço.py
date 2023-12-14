@@ -51,3 +51,4 @@ def editar_cliente():
     conn.update_data("cliente", dados, idcliente)
     return redirect(url_for('rotas_cliente.listar_clientes'))
 
+    
