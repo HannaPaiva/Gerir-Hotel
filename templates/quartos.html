@@ -10,11 +10,11 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tabela de clientes</h4>
+                        <h4 class="card-title">Tabela de quartos</h4>
                         {% include 'components/barra_pesquisa.html' %}
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
-                                data-target="#modalCriar">+ Adicionar novo Cliente</button>
+                                data-target="#modalCriar">+ Adicionar novo Quarto</button>
                         </div>
                         
                         <div class="table-responsive ">
@@ -22,11 +22,14 @@
                             <table class="table" id="tabelaExemplo">
                                 <thead>
                                     <tr>
-                                        <th>Nome</th>
-                                        <th>Contribuinte</th>
-                                        <th>Cartão de Cidadão</th>
-                                        <th>data de nascimento</th>
+                                        <th>Número</th>
+                                        <th>Descrição</th>
+                                        <th>Andar</th>
+                                        <th>Tipologia</th>
+                                        <th>Camas de Casal</th>
+                                        <th>Camas de Solteiro</th>
                                         <th>Ativo</th>
+                                        <th>Disponível</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -34,27 +37,31 @@
                                     {% for dado in dados %}
 
                                     <tr>
-                                        <td>{{ dado.primeironome }}</td>
-                                        <td>{{ dado.contribuinte }} </td>
-                                        <td>{{ dado.cc }}</td>
-                                        <td>{{ dado.datanascimento }}</td>
+                                        <td>{{ dado.numero }}</td>
+                                        <td>{{ dado.descricao }}</td>
+                                        <td>{{ dado.andar }} </td>
+                                        <td>{{ dado.tipologia }} </td>
+                                        <td>{{ dado.andar }} </td>
+                                        <td>{{ dado.qtdcamacasal }}</td>
+                                        <td>{{ dado.qtdcamasolteiro }}</td>
                                         <td><label class="badge">{{dado.ativo}}</label></td>
+                                        <td><label class="badge">{{dado.estadisponivel}}</label></td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idcliente}}">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.numquarto}}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
                                             </button>
                                         </td>
                                         <td>
-                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idcliente}}">
+                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.numquarto}}">
                                                 <i class="mdi mdi-delete"></i> Apagar
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="modalEditar-{{dado.idcliente}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modalEditar-{{dado.numquarto}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalEditarLabel">Editar cliente</h5>
+                                                    <h5 class="modal-title" id="modalEditarLabel">Editar Quarto</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -62,32 +69,32 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h4 class="card-title"></h4>
-                                                    <form class="form-sample" method="post" action="/editar-cliente" >
+                                                    <form class="form-sample" method="post" action="/editar-quarto" >
                                                       
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
+                                                                    <label class="col-sm-3 col-form-label" for="numquarto">Número</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="nome do cliente" value="{{dado.primeironome}}" />
+                                                                        <input type="text" class="form-control" id="numquarto" name="numquarto" placeholder="número do quarto" value="{{dado.numquarto}}" />
                                                                     </div>
                         
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label class="col-sm-5 col-form-label">Nomes do meio</label>
+                                                                    <label class="col-sm-5 col-form-label">Descrição</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="nomes do meio do cliente" value="{{dado.nomedomeio}}" />
+                                                                        <input type="text" class="form-control" id="descricao" name="descricao" placeholder="descrição" value="{{dado.descricao}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
                         
                                                             <div class="col-md-4">
                                                                 <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Apelido</label>
+                                                                    <label class="col-sm-3 col-form-label">Andar</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do cliente" value="{{dado.ultimonome}}"/>
+                                                                        <input type="text" class="form-control" id="andar" name="andar" placeholder="andar do quarto" value="{{dado.andar}}"/>
                                                                     </div>
                                                                 </div>
                                                             </div>

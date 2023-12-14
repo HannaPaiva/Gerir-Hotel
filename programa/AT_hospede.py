@@ -1,120 +1,67 @@
-import mysql.connector
-from AT_menu import Menu
-from Z_funcoes import *
-class Hospede(Menu):
-    def __init__(self, primeiroNome:str, nomeDoMeio:str, ultimoNome:str, cc:str, email:str, telefone:str, dataNascimento:str, ativo:int):
-        self.primeiroNome = primeiroNome
-        self.nomeDoMeio = nomeDoMeio
-        self.ultimoNome = ultimoNome
-        self.cc = cc
-        self.email = email
-        self.telefone = telefone
-        self.dataNascimento = dataNascimento
-        self.ativo = ativo
+from flask import Flask, render_template, request, redirect, url_for, Blueprint
+from programa.z_database_manager import DatabaseManager
+conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
+app = Flask(__name__, static_folder='assets', static_url_path='/assets')
+rotas_hospede = Blueprint("rotas_hospede", __name__)
 
-    @property
-    def primeiroNome(self):
-        return self.__primeiroNome
 
-    @primeiroNome.setter
-    def primeiroNome(self, primeiroNome):
-        if isinstance(primeiroNome, str) and len(primeiroNome) <= 60:
-            self.__primeiroNome = primeiroNome
-
-    @property
-    def nomeDoMeio(self):
-        return self.__nomeDoMeio
-
-    @nomeDoMeio.setter
-    def nomeDoMeio(self, nomeDoMeio):
-        if isinstance(nomeDoMeio, str) and len(nomeDoMeio) <= 60:
-            self.__nomeDoMeio = nomeDoMeio
-        else:
-            raise
-
-    @property
-    def ultimoNome(self):
-        return self.__ultimoNome
-
-    @ultimoNome.setter
-    def ultimoNome(self, ultimoNome):
-        if isinstance(ultimoNome, str) and len(ultimoNome) <= 45:
-            self.__ultimoNome = ultimoNome
-        else:
-            raise
-
-    @property
-    def cc(self):
-        return self.__cc
-
-    @cc.setter
-    def cc(self, cc):
-        if isinstance(cc, str) and len(cc) <= 45:
-            self.__cc = cc
-        else:
-            raise
-
-    @property
-    def email(self):
-        return self.__email
-
-    @email.setter
-    def email(self, email):
-        if isinstance(email, str) and len(email) <= 45 and "@" in email:
-            self.__email = email
-        else:
-            raise
-        
-    @property
-    def telefone(self):
-        return self.__telefone
-
-    @telefone.setter
-    def telefone(self, telefone):
-        if isinstance(telefone, str) and len(telefone) <= 45:
-            self.__telefone = telefone  
-        else:
-            raise
-
-    @property
-    def dataNascimento(self):
-        return self.__dataNascimento
-
-    @dataNascimento.setter
-    def dataNascimento(self, dataNascimento):
-        if checkDate(dataNascimento):
-            self.__dataNascimento = dataNascimento
-        else:
-            raise
+@rotas_hospede.route('/hospedes')
+def listar_hospedes():
+    dados = conn.select_data("hospede")
+    action = "pesquisar-hospede"
+    if dados is not None:
+        return render_template('hospedes.html', dados=dados, action = action)
+    else:
+        return render_template('hospedes.html')
     
-    @property
-    def ativo(self):
-        return self.__ativo
-    
-    @ativo.setter
-    def ativo(self, ativo):
-        if isinstance(ativo, int):
-            if ativo:
-                self.__ativo = 1
-            else:
-                self.__ativo = 0
-        else:
-            raise
+@rotas_hospede.route('/criar-hospede', methods=['GET', 'POST'])
+def criar_hospede():
+    dados = {
+        "primeironome": request.form["primeironome"],
+        "nomedomeio": request.form["nomedomeio"],
+        "ultimonome": request.form["ultimonome"],
+        "cc": request.form["cc"],
+        "email": request.form["email"],
+        "telefone": request.form["telefone"],
+        "datanascimento": request.form["datanascimento"],
+        "ativo": request.form["ativo"]
+    }
+    conn.insert_data("hospede", dados)
+    return redirect(url_for('rotas_hospede.listar_hospedes'))
 
-    def criar():
-        pass
+@rotas_hospede.route('/editar-hospede', methods=['GET', 'POST'])
+def editar_hospede():
+    idhospede = {"idhospede": request.form["idhospede"]}
+    dados = {
+        "primeironome": request.form["primeironome"],
+        "nomedomeio": request.form["nomedomeio"],
+        "ultimonome": request.form["ultimonome"],
+        "cc": request.form["cc"],
+        "email": request.form["email"],
+        "telefone": request.form["telefone"],
+        "datanascimento": request.form["datanascimento"],
+        "ativo": request.form["ativo"]
+    }
+    conn.update_data("hospede", dados, idhospede)
+    return redirect(url_for('rotas_hospede.listar_hospedes'))
 
-    def pesquisar():
-        pass
-    
-    def info():
-        pass
+@rotas_hospede.route('/apagar-hospede', methods=['GET', 'POST'])
+def apagar_hospede():
+    idhospede = {"idhospede": request.form["idhospede"]}
+    conn.delete_data("hospede", idhospede)
+    return redirect(url_for('rotas_hospede.listar_hospedes'))
 
-    def alterar():
-        pass
-    
-    def apagar():
-        pass
-    
-if __name__ == "__main__":
-    newHospede = Hospede()
+@rotas_hospede.route('/pesquisar-hospede', methods=['GET', 'POST'])
+def pesquisar_hospede():
+    param = request.form["param"]
+    dados =  conn.select_data(table="hospede", search= param)
+
+    print("dados") 
+    if dados:
+        return render_template('pesquisa.html', dados = dados)
+    else:
+        return render_template('pesquisa.html', dados = [{"response":"Não encontrado" }])
+
+app.register_blueprint(rotas_hospede)
+if __name__ == '__main__':
+    app.run(debug=True)
