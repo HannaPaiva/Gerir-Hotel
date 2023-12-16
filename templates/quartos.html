@@ -37,7 +37,7 @@
                                     {% for dado in dados %}
 
                                     <tr>
-                                        <td>{{ dado.numero }}</td>
+                                        <td>{{ dado.numquarto }}</td>
                                         <td>{{ dado.descricao }}</td>
                                         <td>{{ dado.andar }} </td>
                                         <td>{{ dado.tipologia }} </td>
@@ -98,52 +98,58 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                        
-                        
                                                         </div>
+                                                        
                                                         <div class="row">
-                                                            
+                                                            <div class="row">
+
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 col-form-label" for="tipologia">Tipologia</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="tipologia" name="tipologia" placeholder="tipologia " value="{{dado.tipologia}}" />
+                                                                        </div>
+                            
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-5 col-form-label">Camas Casal</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="qtdcamacasal" name="qtdcamacasal" placeholder="quantidade de camas de casal" value="{{dado.qtdcamacasal}}" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-5 col-form-label">Camas Solteiro</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control" id="qtdcamasolteiro" name="qtdcamasolteiro" placeholder="quantidade de camas de solteiro" value="{{dado.qtdcamasolteiro}}" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                         </div>
                         
                                                         <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">Ativo</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="ativo" value="{{dado.ativo}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">nº Contribuinte</label>
+                                                                    <label class="col-sm-3 col-form-label">Está disponível</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="contribuinte" value="{{dado.contribuinte}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="CC" value="{{dado.cc}}">
+                                                                        <input type="text" class="form-control" name="estadisponivel" value="{{dado.estadisponivel}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
                         
-                                                        </div>
-                                                        <p class="card-description"> Contactos </p>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label">Número de telefone
-                                                                    </label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="telefone" value="{{dado.telefone}}" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">email</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" placeholder="exemplo@gmail.com"
-                                                                            name="email" value="{{dado.email}}" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
                         
                                                         <!-- <div class="row">
@@ -175,7 +181,7 @@
 
                          <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                <label class="col-sm-3 col-form-label">Quarto ativo?</label>
                                 <div class="col-sm-4">
                                     <div class="form-check">
                                         <label class="form-check-label">
@@ -183,11 +189,31 @@
                                         </label>
                                     </div>
                                 </div>
-                                <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
+                                <input type="hidden" name="idcliente" value="{{dado.numquarto}}">
                                 <div class="col-sm-5">
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input type="radio" class="form-check-input" name="ativo" id="ativo" value="0" {{ 'checked' if not dado.ativo else '' }}> Desativado
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Está disponível?</label>
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="estadisponivel" id="estadisponivel" value="1" {{ 'checked' if dado.estadisponivel else '' }}> Disponível
+                                        </label>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="idcliente" value="{{dado.numquarto}}">
+                                <div class="col-sm-5">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="estadisponivel" id="estadisponivel" value="0" {{ 'checked' if not dado.estadisponivel else '' }}> Indisponível
                                         </label>
                                     </div>
                                 </div>
@@ -446,4 +472,4 @@ jQuery(document).ready(function () {
     </script>
          
 
-            {% include 'components/footer.html' %}
+            {% include 'components/footer.
