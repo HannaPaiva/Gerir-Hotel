@@ -112,6 +112,7 @@
                                                                             <select class="form-control" name="iddepartamento" required>
                             
                                                                           <option value=""></option> 
+                                                                          <option value="{{iddepartamento}}"></option>
                                                                                 {% for departamentos in departamento %}
                             
                                                                                   <option value="{{ departamentos['iddepartamento'] }}">{{ departamentos['nomedepartamento'] }}</option>

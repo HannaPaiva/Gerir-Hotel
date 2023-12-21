@@ -53,6 +53,23 @@ def listar(tabela):
             if conexao.is_connected():
                 cursor.close()
                 conexao.close()
+
+
+
+def free_select(query):
+    conexao = conectar()
+    if conexao:
+        try:
+            cursor = conexao.cursor(dictionary=True)
+            cursor.execute(query)
+            resultado = cursor.fetchall()
+            return resultado
+        except Exception as e:
+            print(f"Erro ao executar a consulta: {e}")
+        finally:
+            if conexao.is_connected():
+                cursor.close()
+                conexao.close()
         
         
         
