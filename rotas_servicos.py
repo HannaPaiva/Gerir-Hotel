@@ -11,9 +11,9 @@ rotas_servico = Blueprint("rotas_servico", __name__)
 def listar_servicos():
     dados = conn.select_data("servico")
     if dados is not None:
-        return render_template('servico.html', dados=dados)
+        return render_template('servicos.html', dados=dados)
     else:
-        return render_template('servico.html')
+        return render_template('servicos.html')
 
 @rotas_servico.route('/criar-servico', methods=['GET','POST'])
 def criar_servico():

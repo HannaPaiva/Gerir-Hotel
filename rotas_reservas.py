@@ -20,45 +20,45 @@ def listar_reservas():
 @rotas_reserva.route('/criar-reserva', methods=['GET', 'POST'])
 def criar_reserva():
     dados = {
-        "idcliente": request.form["idcliente"],
-        "dataentrada": request.form["dataentrada"],
-        "datasaida": request.form["datasaida"],
-        "numadultos": request.form["numadultos"],
-        "numcriancas": request.form["numcriancas"],
-        "numbebes": request.form["numbebes"],
-        "observacoes": request.form["observacoes"],
-        "tipologiacontratada": request.form["tipologiacontratada"],
-        "Agencia_has_MetodoReserva_Agencia_idAgencia": request.form["Agencia_has_MetodoReserva_Agencia_idAgencia"],
-        "Agencia_has_MetodoReserva_MetodoReserva_idMetodo": request.form["Agencia_has_MetodoReserva_MetodoReserva_idMetodo"],
+        "idCliente": request.form["idCliente"],
+        "dataEntrada": request.form["dataEntrada"],
+        "dataSaida": request.form["dataSaida"],
+        "numAdultos": request.form["numAdultos"],
+        "numCriancas": request.form["numCriancas"],
+        "numBebes": request.form["numBebes"],
+        "Observacoes": request.form["Observacoes"],
+        "tipologiaContratada": request.form["tipologiaContratada"],
+        "idAgencia": request.form["idAgencia"],
+        "idMetodo": request.form["idMetodo"],
     }
     conn.insert_data("reserva", dados)
     return redirect(url_for('rotas_reserva.listar_reservas'))
 
 @rotas_reserva.route('/editar-reserva', methods=['GET', 'POST'])
 def editar_reserva():
-    idreserva = {"idreserva": request.form["idreserva"]}
+    idReserva = {"idReserva": request.form["idReserva"]}
     dados = {
-        "idcliente": request.form["idcliente"],
-        "dataentrada": request.form["dataentrada"],
-        "datasaida": request.form["datasaida"],
-        "numadultos": request.form["numadultos"],
-        "numcriancas": request.form["numcriancas"],
-        "numbebes": request.form["numbebes"],
-        "observacoes": request.form["observacoes"],
-        "tipologiacontratada": request.form["tipologiacontratada"],
-        "Agencia_has_MetodoReserva_Agencia_idAgencia": request.form["Agencia_has_MetodoReserva_Agencia_idAgencia"],
-        "Agencia_has_MetodoReserva_MetodoReserva_idMetodo": request.form["Agencia_has_MetodoReserva_MetodoReserva_idMetodo"],
+        "idCliente": request.form["idCliente"],
+        "dataEntrada": request.form["dataEntrada"],
+        "dataSaida": request.form["dataSaida"],
+        "numAdultos": request.form["numAdultos"],
+        "numCriancas": request.form["numCriancas"],
+        "numBebes": request.form["numBebes"],
+        "Observacoes": request.form["Observacoes"],
+        "tipologiaContratada": request.form["tipologiaContratada"],
+        "idAgencia": request.form["idAgencia"],
+        "idMetodo": request.form["idMetodo"],
         
     }
-    conn.update_data("reserva", dados, idreserva)
+    conn.update_data("reserva", dados, idReserva)
     return redirect(url_for('rotas_reserva.listar_reservas'))
 
 
 
 @rotas_reserva.route('/apagar-reserva', methods=['GET', 'POST'])
 def apagar_reserva():
-    idreserva = {"idreserva": request.form["idreserva"]}
-    conn.delete_data("reserva", idreserva)
+    idReserva = {"idReserva": request.form["idReserva"]}
+    conn.delete_data("reserva", idReserva)
     return redirect(url_for('rotas_reserva.listar_reservas'))
 
 
