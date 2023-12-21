@@ -1,7 +1,7 @@
 from Z_funcoes import *
 from AT_menu import Menu
 from AS_agencia import Agencia
-from HP_Cliente import Cliente
+from programa.HP_functions import Cliente
 
 class Reserva(Menu):
     def __init__ (self, idReserva, idCliente, dataEntrada, dataSaida, numAdultos, numCriancas, numBebes, observacoes, tipologiaContratada, idAgencia, placeidClienteer ):

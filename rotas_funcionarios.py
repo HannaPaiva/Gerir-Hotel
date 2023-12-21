@@ -1,24 +1,34 @@
+# ok
+
+from rotas_funcionarios import *
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
 from programa.z_database_manager import DatabaseManager
-conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
+
+
+conn = DatabaseManager(host="127.0.0.1", user="root",
+                       password="", database="hotel", port=3306)
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
+
 rotas_funcionario = Blueprint("rotas_funcionario", __name__)
 
 
 @rotas_funcionario.route('/funcionarios')
 def listar_funcionarios():
     dados = conn.select_data("funcionario")
+
+
+    departamento = conn.select_data("departamento")
     action = "pesquisar-funcionario"
     if dados is not None:
-        return render_template('funcionarios.html', dados=dados, action = action)
+        return render_template('funcionarios.html', dados=dados, action=action, departamento = departamento)
     else:
         return render_template('funcionarios.html')
-    
 
-    
 
 @rotas_funcionario.route('/criar-funcionario', methods=['GET', 'POST'])
 def criar_funcionario():
+
+
     dados = {
         "primeiroNome": request.form["primeiroNome"],
         "nomeDoMeio": request.form["nomeDoMeio"],
@@ -30,9 +40,11 @@ def criar_funcionario():
         "dataNascimento": request.form["dataNascimento"],
         "status": request.form["status"],
         "genero": request.form["genero"],
+        "iddepartamento": request.form["iddepartamento"],
     }
     conn.insert_data("funcionario", dados)
     return redirect(url_for('rotas_funcionario.listar_funcionarios'))
+
 
 @rotas_funcionario.route('/editar-funcionario', methods=['GET', 'POST'])
 def editar_funcionario():
@@ -48,10 +60,11 @@ def editar_funcionario():
         "dataNascimento": request.form["dataNascimento"],
         "ativo": request.form["ativo"],
         "genero": request.form["genero"],
+        "iddepartamento": request.form["iddepartamento"],
+        "nomedepartamento": request.form["nomedepartamento"]
     }
     conn.update_data("funcionario", dados, idfuncionario)
     return redirect(url_for('rotas_funcionario.listar_funcionarios'))
-
 
 
 @rotas_funcionario.route('/apagar-funcionario', methods=['GET', 'POST'])
@@ -61,34 +74,28 @@ def apagar_funcionario():
     return redirect(url_for('rotas_funcionario.listar_funcionarios'))
 
 
-
 @rotas_funcionario.route('/pesquisar-funcionario', methods=['GET', 'POST'])
 def pesquisar_funcionario():
     param = request.form["param"]
 
-    dados = conn.select_data(table="funcionario", search= param)
+    dados = conn.select_data(table="funcionario", search=param)
 
     if dados:
-         return render_template('pesquisa.html', dados = dados)
+        return render_template('pesquisa.html', dados=dados)
     else:
-        return render_template('pesquisa.html', dados = [{"response":"Não encontrado" }])
-
+        return render_template('pesquisa.html', dados=[{"response": "Não encontrado"}])
 
 
 @rotas_funcionario.route('/teste')
 def teste():
-   
-    dados =  conn.select_data(table="funcionario", search= "hanna")
 
-    print("dados") 
+    dados = conn.select_data(table="funcionario", search="hanna")
+
+    print("dados")
     if dados:
-     return render_template('pesquisa.html', dados = dados)
+        return render_template('pesquisa.html', dados=dados)
     else:
-     return render_template('pesquisa.html', dados = [{"response":"Não encontrado" }])
-
-
-
-
+        return render_template('pesquisa.html', dados=[{"response": "Não encontrado"}])
 
 
 app.register_blueprint(rotas_funcionario)

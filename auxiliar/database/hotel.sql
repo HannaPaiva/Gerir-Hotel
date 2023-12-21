@@ -2,7 +2,7 @@
 -- Anfitrião:                    127.0.0.1
 -- Versão do servidor:           10.4.28-MariaDB - mariadb.org binary distribution
 -- SO do servidor:               Win64
--- HeidiSQL Versão:              12.6.0.6765
+-- HeidiSQL Versão:              12.5.0.6677
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `agencia` (
   PRIMARY KEY (`idAgencia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.agencia: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.agenciametodo
 CREATE TABLE IF NOT EXISTS `agenciametodo` (
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `agenciametodo` (
   CONSTRAINT `fk_Agencia_has_MetodoReserva_MetodoReserva1` FOREIGN KEY (`idMetodo`) REFERENCES `metodoreserva` (`idMetodo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.agenciametodo: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.cliente
 CREATE TABLE IF NOT EXISTS `cliente` (
@@ -59,22 +59,20 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `ativo` tinyint(4) DEFAULT NULL,
   `genero` enum('m','f') DEFAULT NULL,
   PRIMARY KEY (`idCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.cliente: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.departamento
 CREATE TABLE IF NOT EXISTS `departamento` (
-  `idDepartamento` int(11) NOT NULL AUTO_INCREMENT,
-  `idChefe` int(11) NOT NULL,
+  `idDepartamento` int(11) NOT NULL,
+  `idChefe` int(11) DEFAULT NULL,
   `nomeDepartamento` varchar(45) DEFAULT NULL,
   `descricao` text DEFAULT NULL,
-  PRIMARY KEY (`idDepartamento`),
-  KEY `idFuncionario_idx` (`idChefe`),
-  CONSTRAINT `idFuncionario` FOREIGN KEY (`idChefe`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`idDepartamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.departamento: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.diaria
 CREATE TABLE IF NOT EXISTS `diaria` (
@@ -87,12 +85,11 @@ CREATE TABLE IF NOT EXISTS `diaria` (
   CONSTRAINT `fk_Tarifa_has_Reserva_Tarifa1` FOREIGN KEY (`idTarifa`) REFERENCES `tarifa` (`idTarifa`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.diaria: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.funcionario
 CREATE TABLE IF NOT EXISTS `funcionario` (
   `idFuncionario` int(11) NOT NULL AUTO_INCREMENT,
-  `idDepartamento` int(11) NOT NULL,
   `primeiroNome` varchar(60) NOT NULL,
   `nomeDoMeio` varchar(60) DEFAULT NULL,
   `UltimoNome` varchar(45) NOT NULL,
@@ -106,12 +103,14 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
   `dataEntrada` timestamp NULL DEFAULT NULL,
   `dataSaida` timestamp NULL DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
+  `idDepartamento` int(11) NOT NULL,
+  `genero` enum('m','f','o') DEFAULT NULL,
   PRIMARY KEY (`idFuncionario`),
   KEY `fk_Funcionario_Departamento1_idx` (`idDepartamento`),
-  CONSTRAINT `idDepartamento` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  CONSTRAINT `fk_Funcionario_Departamento1` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.funcionario: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.hospede
 CREATE TABLE IF NOT EXISTS `hospede` (
@@ -127,33 +126,33 @@ CREATE TABLE IF NOT EXISTS `hospede` (
   PRIMARY KEY (`idHospede`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.hospede: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.metodoreserva
 CREATE TABLE IF NOT EXISTS `metodoreserva` (
-  `idMetodo` int(11) NOT NULL AUTO_INCREMENT,
+  `idMetodo` int(11) NOT NULL,
   `nomeMetodo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idMetodo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.metodoreserva: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.pagamento
 CREATE TABLE IF NOT EXISTS `pagamento` (
-  `idPagamento` int(11) NOT NULL AUTO_INCREMENT,
-  `idReserva` int(11) NOT NULL,
+  `idPagamento` int(11) NOT NULL,
   `valorTotal` double DEFAULT NULL,
   `metodoPagamento` varchar(45) DEFAULT NULL,
   `tarifaReembolsavel` tinyint(4) DEFAULT NULL,
   `dataPagamento` timestamp NULL DEFAULT NULL,
   `observacoes` text DEFAULT NULL,
   `status` enum('pago','não pago') DEFAULT NULL,
+  `idReserva` int(11) NOT NULL,
   PRIMARY KEY (`idPagamento`),
   KEY `fk_Pagamento_Reserva1_idx` (`idReserva`),
   CONSTRAINT `fk_Pagamento_Reserva1` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.pagamento: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.quarto
 CREATE TABLE IF NOT EXISTS `quarto` (
@@ -166,18 +165,14 @@ CREATE TABLE IF NOT EXISTS `quarto` (
   `ativo` tinyint(4) DEFAULT NULL,
   `estaDisponivel` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`numQuarto`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.quarto: ~1 rows (aproximadamente)
-INSERT INTO `quarto` (`numQuarto`, `descricao`, `andar`, `tipologia`, `qtdCamaCasal`, `qtdCamaSolteiro`, `ativo`, `estaDisponivel`) VALUES
-	(1, 'quarto', 1, 'T2', '1', '2', 0, 1);
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.reserva
 CREATE TABLE IF NOT EXISTS `reserva` (
   `idReserva` int(11) NOT NULL AUTO_INCREMENT,
   `idCliente` int(11) NOT NULL,
-  `idAgencia` int(11) NOT NULL,
-  `idMetodo` int(11) NOT NULL,
   `dataEntrada` date DEFAULT NULL,
   `dataSaida` date DEFAULT NULL,
   `numAdultos` tinyint(4) DEFAULT NULL,
@@ -185,6 +180,8 @@ CREATE TABLE IF NOT EXISTS `reserva` (
   `numBebes` tinyint(4) DEFAULT NULL,
   `observacoes` text DEFAULT NULL,
   `tipologiaContratada` varchar(45) DEFAULT NULL,
+  `idAgencia` int(11) NOT NULL,
+  `idMetodo` int(11) NOT NULL,
   PRIMARY KEY (`idReserva`),
   KEY `fk_Reserva_Cliente1_idx` (`idCliente`),
   KEY `fk_Reserva_Agencia_has_MetodoReserva1_idx` (`idAgencia`,`idMetodo`),
@@ -192,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `reserva` (
   CONSTRAINT `fk_Reserva_Cliente1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.reserva: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.reservahospede
 CREATE TABLE IF NOT EXISTS `reservahospede` (
@@ -200,77 +197,71 @@ CREATE TABLE IF NOT EXISTS `reservahospede` (
   `idReserva` int(11) NOT NULL,
   `idHospede` int(11) NOT NULL,
   PRIMARY KEY (`numQuarto`,`idReserva`,`idHospede`),
-  KEY `fk_reservaHospede_reserva1_idx` (`idReserva`),
-  KEY `fk_reservaHospede_hospede1_idx` (`idHospede`),
-  CONSTRAINT `fk_reservaHospede_hospede1` FOREIGN KEY (`idHospede`) REFERENCES `hospede` (`idHospede`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_reservaHospede_quarto1` FOREIGN KEY (`numQuarto`) REFERENCES `quarto` (`numQuarto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_reservaHospede_reserva1` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_ReservaQuarto_has_Hospede_Hospede1_idx` (`idHospede`),
+  KEY `fk_ReservaQuarto_has_Hospede_ReservaQuarto1_idx` (`numQuarto`,`idReserva`),
+  CONSTRAINT `fk_ReservaQuarto_has_Hospede_Hospede1` FOREIGN KEY (`idHospede`) REFERENCES `hospede` (`idHospede`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ReservaQuarto_has_Hospede_ReservaQuarto1` FOREIGN KEY (`numQuarto`, `idReserva`) REFERENCES `reservaquarto` (`numQuarto`, `idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.reservahospede: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.reservaquarto
 CREATE TABLE IF NOT EXISTS `reservaquarto` (
-  `idReservaQuarto` int(11) NOT NULL AUTO_INCREMENT,
   `numQuarto` int(11) NOT NULL,
   `idReserva` int(11) NOT NULL,
   `observacoes` text DEFAULT NULL,
-  PRIMARY KEY (`idReservaQuarto`),
+  PRIMARY KEY (`numQuarto`,`idReserva`),
   KEY `fk_Quarto_has_Reserva_Reserva1_idx` (`idReserva`),
   KEY `fk_Quarto_has_Reserva_Quarto_idx` (`numQuarto`),
   CONSTRAINT `fk_Quarto_has_Reserva_Quarto` FOREIGN KEY (`numQuarto`) REFERENCES `quarto` (`numQuarto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Quarto_has_Reserva_Reserva1` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.reservaquarto: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.servico
 CREATE TABLE IF NOT EXISTS `servico` (
-  `idServico` int(11) NOT NULL,
-  `idDepartamento` int(11) NOT NULL,
+  `idServico` int(11) NOT NULL AUTO_INCREMENT,
   `nomeServico` varchar(45) DEFAULT NULL,
   `preco` double DEFAULT NULL,
   `descricao` text DEFAULT NULL,
+  `idDepartamento` int(11) NOT NULL,
   PRIMARY KEY (`idServico`),
   KEY `fk_Servico_Departamento1_idx` (`idDepartamento`),
   CONSTRAINT `fk_Servico_Departamento1` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.servico: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.servicoprestado
 CREATE TABLE IF NOT EXISTS `servicoprestado` (
-  `idservicoPrestado` int(11) NOT NULL AUTO_INCREMENT,
   `idServico` int(11) NOT NULL,
-  `idReservaQuarto` int(11) NOT NULL,
-  `idFuncionario` int(11) NOT NULL,
   `detalhes` text DEFAULT NULL,
-  `datahora` datetime DEFAULT NULL,
-  PRIMARY KEY (`idservicoPrestado`),
-  KEY `fk_servicoPrestado_servico1_idx` (`idServico`),
-  KEY `fk_servicoPrestado_reservaquarto1_idx` (`idReservaQuarto`),
-  KEY `fk_servicoPrestado_funcionario1_idx` (`idFuncionario`),
-  CONSTRAINT `fk_servicoPrestado_funcionario1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_servicoPrestado_reservaquarto1` FOREIGN KEY (`idReservaQuarto`) REFERENCES `reservaquarto` (`idReservaQuarto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_servicoPrestado_servico1` FOREIGN KEY (`idServico`) REFERENCES `servico` (`idServico`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `dataHora` datetime DEFAULT NULL,
+  `idFuncionario` int(11) NOT NULL,
+  `idDepartamento` int(11) NOT NULL,
+  PRIMARY KEY (`idServico`),
+  KEY `fk_Reserva_has_Servico_Servico1_idx` (`idServico`),
+  KEY `fk_ServicoPrestado_Funcionario1_idx` (`idFuncionario`,`idDepartamento`),
+  CONSTRAINT `fk_Reserva_has_Servico_Servico1` FOREIGN KEY (`idServico`) REFERENCES `servico` (`idServico`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ServicoPrestado_Funcionario1` FOREIGN KEY (`idFuncionario`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.servicoprestado: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 -- A despejar estrutura para tabela hotel.tarifa
 CREATE TABLE IF NOT EXISTS `tarifa` (
   `idTarifa` int(11) NOT NULL AUTO_INCREMENT,
-  `numQuarto` int(11) NOT NULL,
-  `dataInicio` date DEFAULT NULL,
-  `dataFim` date DEFAULT NULL,
+  `data` date DEFAULT NULL,
   `precoNoiteAdulto` double DEFAULT NULL,
   `precoNoiteCrianca` double DEFAULT NULL,
+  `numQuarto` int(11) NOT NULL,
   PRIMARY KEY (`idTarifa`),
   KEY `fk_Tarifa_Quarto1_idx` (`numQuarto`),
   CONSTRAINT `fk_Tarifa_Quarto1` FOREIGN KEY (`numQuarto`) REFERENCES `quarto` (`numQuarto`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.tarifa: ~0 rows (aproximadamente)
+-- Exportação de dados não seleccionada.
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

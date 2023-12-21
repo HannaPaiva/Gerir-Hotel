@@ -2,17 +2,19 @@
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
+
+
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tabela de tarifas</h4>
+                        <h4 class="card-title">Tabela de clientes</h4>
                         {% include 'components/barra_pesquisa.html' %}
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
-                                data-target="#modalCriar">+ Adicionar novo tarifa</button>
+                                data-target="#modalCriar">+ Adicionar novo Cliente</button>
                         </div>
                         
                         <div class="table-responsive ">
@@ -20,12 +22,11 @@
                             <table class="table" id="tabelaExemplo">
                                 <thead>
                                     <tr>
-                                        <th>id da Tarifa</th>
-                                        <th>Quarto</th>
-                                        <th>Data</th>
-                                        <th>Preço de Adulto</th>
-                                        <th>Preço de Criança</th>
-                                       
+                                        <th>Nome</th>
+                                        <th>Contribuinte</th>
+                                        <th>Cartão de Cidadão</th>
+                                        <th>data de nascimento</th>
+                                        <th>Ativo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -33,28 +34,27 @@
                                     {% for dado in dados %}
 
                                     <tr>
-                                        <td>{{ dado.idtarifa }}</td>
-                                        <td>{{ dado.numquarto }}</td>
-                                        <td>{{ dado.data }} </td>
-                                        <td>{{ dado.preconoiteadulto }}</td>
-                                        <td>{{ dado.preconoitecrianca }}</td>
-                                        <td>Editar</td>
+                                        <td>{{ dado.primeironome }}</td>
+                                        <td>{{ dado.contribuinte }} </td>
+                                        <td>{{ dado.cc }}</td>
+                                        <td>{{ dado.datanascimento }}</td>
+                                        <td><label class="badge">{{dado.ativo}}</label></td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idtarifa}}">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idcliente}}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
                                             </button>
                                         </td>
                                         <td>
-                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idtarifa}}">
+                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idcliente}}">
                                                 <i class="mdi mdi-delete"></i> Apagar
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="modalEditar-{{dado.idtarifa}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modalEditar-{{dado.idcliente}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalEditarLabel">Editar tarifa</h5>
+                                                    <h5 class="modal-title" id="modalEditarLabel">Editar cliente</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -62,15 +62,32 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h4 class="card-title"></h4>
-                                                    <form class="form-sample" method="post" action="/editar-tarifa" >
+                                                    <form class="form-sample" method="post" action="/editar-cliente" >
                                                       
-                                                    
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="nome do cliente" value="{{dado.primeironome}}" />
+                                                                    </div>
+                        
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 col-form-label">Nomes do meio</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="nomes do meio do cliente" value="{{dado.nomedomeio}}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                         
                                                             <div class="col-md-4">
                                                                 <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Nome do tarifa</label>
+                                                                    <label class="col-sm-3 col-form-label">Apelido</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do tarifa" value="{{dado.ultimonome}}"/>
+                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do cliente" value="{{dado.ultimonome}}"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -82,10 +99,10 @@
                                                                 <div class="form-group ">
                                                                     <label class="col-sm-3 col-form-label">Gênero</label>
                                                                     <div class="col-sm-9">
-                                                                        <select class="form-control" name="genero" value="{{dado.idchefe}}">
-                                                                            {% for chefes in dados.idchefe %}
-                                                                            <option value="{{chefe}}">{{chefe}}</option>
-                                                                            {% endfor %}
+                                                                        <select class="form-control" name="genero" value="{{dado.genero}}">
+                                                                            <option value="m">Male</option>
+                                                                            <option value="f">Female</option>
+                                                                            <option value="o">outro</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -101,8 +118,94 @@
                                                             </div>
                                                         </div>
                         
-                                                        
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">nº Contribuinte</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="contribuinte" value="{{dado.contribuinte}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="CC" value="{{dado.cc}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                        
+                                                        </div>
+                                                        <p class="card-description"> Contactos </p>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label">Número de telefone
+                                                                    </label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="telefone" value="{{dado.telefone}}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">email</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" placeholder="exemplo@gmail.com"
+                                                                            name="email" value="{{dado.email}}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                        
+                                                        <!-- <div class="row">
+                        
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                                                    <div class="col-sm-4">
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label">
+                                                                                <input type="radio" class="form-check-input" name="ativo"
+                                                                                    id="ativo" value="1" checked> Ativo </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
+                                                                    <div class="col-sm-5">
+                                                                        <div class="form-check">
+                                                                            <label class="form-check-label">
+                                                                                <input type="radio" class="form-check-input" name="ativo"
+                                                                                    id="ativo" value="0"> Desativado
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                         -->
 
+                         <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                <div class="col-sm-4">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="1" {{ 'checked' if dado.ativo else '' }}> Ativo
+                                        </label>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
+                                <div class="col-sm-5">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="0" {{ 'checked' if not dado.ativo else '' }}> Desativado
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -117,7 +220,7 @@
                                     </div>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modalApagar-{{dado.idtarifa}}" tabindex="-1"
+                                    <div class="modal fade" id="modalApagar-{{dado.idcliente}}" tabindex="-1"
                                     role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -136,8 +239,8 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
-                                                        <form action="/apagar-tarifa" method="post">
-                                                        <input type="hidden" value="{{dado.idtarifa}}" name="idtarifa">
+                                                        <form action="/apagar-cliente" method="post">
+                                                        <input type="hidden" value="{{dado.idcliente}}" name="idcliente">
                                                         
                                                     <button type="submit" class="btn btn-danger"> <i
                                                             class="mdi mdi-delete"></i>Apagar</button>
@@ -163,14 +266,14 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalCriarLabel">Criar tarifa</h5>
+                            <h5 class="modal-title" id="modalCriarLabel">Criar cliente</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
-                            <form class="form-sample" method="post" action="/criar-tarifa" >
+                            <form class="form-sample" method="post" action="/criar-cliente" >
 
                                 <div class="row">
                                     <div class="col-md-4">
@@ -178,7 +281,7 @@
                                             <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="primeiroNome"
-                                                    name="primeiroNome" placeholder="nome do tarifa" />
+                                                    name="primeiroNome" placeholder="nome do cliente" />
                                             </div>
 
                                         </div>
@@ -188,7 +291,7 @@
                                             <label class="col-sm-5 col-form-label">Nomes do meio</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="nomeDoMeio"
-                                                    name="nomeDoMeio" placeholder="nomes do meio do tarifa" />
+                                                    name="nomeDoMeio" placeholder="nomes do meio do cliente" />
                                             </div>
                                         </div>
                                     </div>
@@ -198,7 +301,7 @@
                                             <label class="col-sm-3 col-form-label">Apelido</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="ultimoNome"
-                                                    name="ultimoNome" placeholder="último nome do tarifa" />
+                                                    name="ultimoNome" placeholder="último nome do cliente" />
                                             </div>
                                         </div>
                                     </div>
@@ -274,7 +377,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">tarifa ativo?</label>
+                                            <label class="col-sm-3 col-form-label">Cliente ativo?</label>
                                             <div class="col-sm-4">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
@@ -305,10 +408,55 @@
                     </div>
                 </div>
             </div>
-   
-        </div>
+            <script>
+//     jQuery(document).ready(function() {
+//   jQuery('#data').DataTable({
+//       "paging": true,
+//       "lengthChange": true,
+//       "searching": true,
+//       "ordering": true,
+//       "info": true,
+//       "autoWidth": false,
+//       "language": {
+//         "lengthMenu": "Exibir _MENU_ registros por página",
+//         "zeroRecords": "Nenhum registro encontrado",
+//         "info": "Mostrando página _PAGE_ de _PAGES_",
+//         "infoEmpty": "Nenhum registro disponível",
+//         "infoFiltered": "(filtrado de _MAX_ registros no total)",
+//         "search": "Pesquisar:",
+//         "paginate": {
+//           "first": "Primeiro",
+//           "last": "Último",
+//           "next": "Próximo",
+//           "previous": "Anterior"
+//         }
+//       }
+//     });
+//   });^
 
-    </div>
+jQuery(document).ready(function () {
+    jQuery('#tabelaExemplo').DataTable({
 
-</div>
+        "columns": [
+            "Nome",  
+            "Contribuinte",  
+            "Cartão de Cidadão",
+            "Data de nascimento",
+            "Ativo",
+            "Apagar",
+
+        ],
+                "paging": true,         // Ativar paginação
+                "lengthMenu": [5, 10, 20],  // Opções de quantidade de registros por página
+                "pageLength": 5,        // Quantidade de registros por página padrão
+                "ordering": true,       // Permitir ordenação
+                "info": true,           // Exibir informações sobre a tabela (por exemplo, "Exibindo 1 a 10 de 20 registros")
+                "searching": true,      // Permitir pesquisa
+                "autoWidth": false,     // Desativar ajuste automático da largura das colunas
+                // Adicione mais opções conforme necessário
+            });
+        });
+    </script>
+         
+
             {% include 'components/footer.html' %}

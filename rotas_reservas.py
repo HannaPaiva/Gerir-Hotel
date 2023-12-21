@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
+
 from programa.z_database_manager import DatabaseManager
 conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 rotas_reserva = Blueprint("rotas_reserva", __name__)
+
 
 
 @rotas_reserva.route('/reservas')
@@ -15,11 +17,11 @@ def listar_reservas():
         return render_template('reservas.html')
     
 
-    
 
 @rotas_reserva.route('/criar-reserva', methods=['GET', 'POST'])
 def criar_reserva():
     dados = {
+<<<<<<< HEAD
         "idCliente": request.form["idCliente"],
         "dataEntrada": request.form["dataEntrada"],
         "dataSaida": request.form["dataSaida"],
@@ -30,6 +32,18 @@ def criar_reserva():
         "tipologiaContratada": request.form["tipologiaContratada"],
         "idAgencia": request.form["idAgencia"],
         "idMetodo": request.form["idMetodo"],
+=======
+        "primeiroNome": request.form["primeiroNome"],
+        "nomeDoMeio": request.form["nomeDoMeio"],
+        "ultimoNome": request.form["ultimoNome"],
+        "contribuinte": request.form["contribuinte"],
+        "CC": request.form["CC"],
+        "email": request.form["email"],
+        "telefone": request.form["telefone"],
+        "dataNascimento": request.form["dataNascimento"],
+        "ativo": request.form["ativo"],
+        "genero": request.form["genero"],
+>>>>>>> 5b02b5190596eccec8feca44a7980465faed6d12
     }
     conn.insert_data("reserva", dados)
     return redirect(url_for('rotas_reserva.listar_reservas'))
@@ -38,6 +52,7 @@ def criar_reserva():
 def editar_reserva():
     idReserva = {"idReserva": request.form["idReserva"]}
     dados = {
+<<<<<<< HEAD
         "idCliente": request.form["idCliente"],
         "dataEntrada": request.form["dataEntrada"],
         "dataSaida": request.form["dataSaida"],
@@ -49,6 +64,18 @@ def editar_reserva():
         "idAgencia": request.form["idAgencia"],
         "idMetodo": request.form["idMetodo"],
         
+=======
+        "primeiroNome": request.form["primeiroNome"],
+        "nomeDoMeio": request.form["nomeDoMeio"],
+        "ultimoNome": request.form["ultimoNome"],
+        "contribuinte": request.form["contribuinte"],
+        "CC": request.form["CC"],
+        "email": request.form["email"],
+        "telefone": request.form["telefone"],
+        "dataNascimento": request.form["dataNascimento"],
+        "ativo": request.form["ativo"],
+        "genero": request.form["genero"],
+>>>>>>> 5b02b5190596eccec8feca44a7980465faed6d12
     }
     conn.update_data("reserva", dados, idReserva)
     return redirect(url_for('rotas_reserva.listar_reservas'))
@@ -69,7 +96,11 @@ def pesquisar_reserva():
     # colls = request.form["colls"]
     dados =  conn.select_data(table="reserva", search= param)
 
-    return render_template('pesquisa.html', dados = dados)
+    print("dados") 
+    if dados:
+     return render_template('pesquisa.html', dados = dados)
+    else:
+     return render_template('pesquisa.html', dados = [{"response":"Não encontrado" }])
 
 
 
