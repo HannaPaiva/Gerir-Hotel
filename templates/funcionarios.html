@@ -36,7 +36,7 @@
                                         <td>{{ dado.contribuinte }} </td>
                                         <td>{{ dado.cc }}</td>
                                         <td>{{ dado.datanascimento }}</td>
-                                        <td><label class="badge">{{dado.ativo}}</label></td>
+                                        <td><label class="badge">{{dado.status}}</label></td>
                                         <td>
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idfuncionario}}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
@@ -52,8 +52,7 @@
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalEditarLabel">Editar funcioná
-                                                        rio</h5>
+                                                    <h5 class="modal-title" id="modalEditarLabel">Editar funcionário</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -103,6 +102,24 @@
                                                                             <option value="f">Female</option>
                                                                             <option value="o">outro</option>
                                                                         </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group ">
+                                                                        <label class="col-sm-3 col-form-label">Departamento</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select class="form-control" name="iddepartamento" required>
+                            
+                                                                          <option value=""></option> 
+                                                                                {% for departamentos in departamento %}
+                            
+                                                                                  <option value="{{ departamentos['iddepartamento'] }}">{{ departamentos['nomedepartamento'] }}</option>
+                            
+                                                                                 {% endfor %}
+                                                        
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -166,7 +183,7 @@
                                                                     <div class="col-sm-4">
                                                                         <div class="form-check">
                                                                             <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
+                                                                                <input type="radio" class="form-check-input" name="status"
                                                                                     value="1" checked> Ativo </label>
                                                                         </div>
                                                                     </div>
@@ -174,7 +191,7 @@
                                                                     <div class="col-sm-5">
                                                                         <div class="form-check">
                                                                             <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
+                                                                                <input type="radio" class="form-check-input" name="status"
                                                                                     value="0"> Desativado
                                                                             </label>
                                                                         </div>
@@ -297,6 +314,27 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group ">
+                                            <label class="col-sm-3 col-form-label">Departamento</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name="iddepartamento" required>
+
+                                                   
+                                                    {% for departamentos in departamento %}
+
+                                                      <option value="{{ departamentos['iddepartamento'] }}">{{ departamentos['nomedepartamento'] }}</option>
+
+                                                     {% endfor %}
+                            
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
                                     <div class="col-md-6">
                                         <div class="form-group ">
                                             <label class="col-sm-3 col-form-label">Data de
@@ -357,14 +395,14 @@
                                             <div class="col-sm-4">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
+                                                        <input type="radio" class="form-check-input" name="status"
                                                             id="ativo1" value="1" checked> Ativo </label>
                                                 </div>
                                             </div>
                                             <div class="col-sm-5">
                                                 <div class="form-check">
                                                     <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
+                                                        <input type="radio" class="form-check-input" name="status"
                                                             id="ativo2" value="0"> Desativado
                                                     </label>
                                                 </div>

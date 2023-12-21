@@ -26,7 +26,7 @@ class DatabaseManager:
             "cliente": ["idcliente", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "ativo", "genero"],
             "departamento": ["iddepartamento", "idchefe", "nomedepartamento", "descricao"],
             "diaria": ["idtarifa", "idreserva"],
-            "funcionario": ["idfuncionario", "iddepartamento", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "endereco", "salario", "dataentrada", "datasaida", "status"],
+            "funcionario": ["idfuncionario", "iddepartamento", "primeironome", "nomedomeio", "ultimonome", "contribuinte", "cc", "email", "telefone", "datanascimento", "endereco", "salario", "dataentrada", "datasaida", "status", "genero"],
             "hospede": ["idhospede", "primeironome", "nomedomeio", "ultimonome", "cc", "email", "telefone", "datanascimento", "ativo"],
             "metodoreserva": ["idmetodo", "nomemetodo"],
             "pagamento": ["idpagamento", "idreserva", "valortotal", "metodopagamento", "tarifareembolsavel", "datapagamento", "observacoes", "status"],
