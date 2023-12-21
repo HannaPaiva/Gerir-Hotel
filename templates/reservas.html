@@ -8,11 +8,11 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tabela de servicos</h4>
+                        <h4 class="card-title">Tabela de Reservas</h4>
                         {% include 'components/barra_pesquisa.html' %}
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
-                                data-target="#modalCriar">+ Adicionar novo servico</button>
+                                data-target="#modalCriar">+ Adicionar novo Reserva</button>
                         </div>
                         
                         <div class="table-responsive ">
@@ -20,10 +20,13 @@
                             <table class="table" id="tabelaExemplo">
                                 <thead>
                                     <tr>
-                                        <th>Nome do Serviço</th>
-                                        <th>Preço</th>
-                                        <th>Descrição</th>
-                                        <th>Ativo</th>
+                                        <th>Id da Reserva</th>
+                                        <th>Data de Entrada</th>
+                                        <th>Data de Saída</th>
+                                        <th>Número de Adultos</th>
+                                        <th>Número de Crianças</th>
+                                        <th>Número de Bebés</th>
+                                        <th>Tipologia Contratada</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -31,27 +34,29 @@
                                     {% for dado in dados %}
 
                                     <tr>
-                                        <td>{{ dado.nomeServico }}</td>
-                                        <td>{{ dado.preco }} </td>
-                                        <td>{{ dado.idDepartamento }} </td>
-                                        <td>{{ dado.descricao }}</td>
-                                        <td><label class="badge">{{dado.ativo}}</label></td>
+                                        <td>{{ dado.idReserva }}</td>
+                                        <td>{{ dado.dataEntrada }} </td>
+                                        <td>{{ dado.dataSaida }} </td>
+                                        <td>{{ dado.numAdultos }}</td>
+                                        <td>{{ dado.numCriancas }}</td>
+                                        <td>{{ dado.numBebes }}</td>
+                                        <td>{{ dado.tipologiaContratada }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idServico}}">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idReserva}}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
                                             </button>
                                         </td>
                                         <td>
-                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idServico}}">
+                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idReserva}}">
                                                 <i class="mdi mdi-delete"></i> Apagar
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="modalEditar-{{dado.idServico}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modalEditar-{{dado.idReserva}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalEditarLabel">Editar servico</h5>
+                                                    <h5 class="modal-title" id="modalEditarLabel">Editar Reserva</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -59,14 +64,14 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <h4 class="card-title"></h4>
-                                                    <form class="form-sample" method="post" action="/editar-servico" >
+                                                    <form class="form-sample" method="post" action="/editar-Reserva" >
                                                       
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label" for="nomeServico">Nome</label>
+                                                                    <label class="col-sm-3 col-form-label" for="idCliente">Id do Cliente</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="nomeServico" name="nomeServico" placeholder="nome do servico" value="{{dado.nomeServico}}" />
+                                                                        <input type="text" class="form-control" id="idCliente" name="idCliente" placeholder="Id do Cliente" value="{{dado.idCliente}}" />
                                                                     </div>
                         
                                                                 </div>
@@ -74,85 +79,91 @@
                                                             
                         
                                                         </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group ">
+                                                                <label class="col-sm-3 col-form-label">Data de
+                                                                    Entrada</label>
+                                                                <div class="col-sm-9">
+                                                                    <input class="form-control" type="date" name="dataEntrada" placeholder="dd/mm/yyyy" value="{{dado.dataEntrada}}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group ">
+                                                                <label class="col-sm-3 col-form-label">Data de
+                                                                    Saída</label>
+                                                                <div class="col-sm-9">
+                                                                    <input class="form-control" type="date" name="dataSaida" placeholder="dd/mm/yyyy" value="{{dado.dataSaida}}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Id do Departamento1</label>
+                                                                    <label class="col-sm-3 col-form-label">Número de Adultos</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="idDepartamento" value="{{dado.idDepartamento}}">
+                                                                        <input type="text" class="form-control" name="numAdultos" value="{{dado.numAdultos}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">Número de Crianças</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="numCriancas" value="{{dado.numCriancas}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">Número de Bebés</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="numBebes" value="{{dado.numBebes}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                        
+
+
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Preço</label>
+                                                                    <label class="col-sm-3 col-form-label">Observações</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="preco" value="{{dado.preco}}">
+                                                                        <input type="text" class="form-control" name="Observações" value="{{dado.Observações}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Descrição</label>
+                                                                    <label class="col-sm-3 col-form-label">Tipologia Contratada</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="descricao" value="{{dado.descricao}}">
+                                                                        <input type="text" class="form-control" name="tipologiaContratada" value="{{dado.tipologiaContratada}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
-                        
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">Id da Agência</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="idAgencia" value="{{dado.idAgencia}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group ">
+                                                                    <label class="col-sm-3 col-form-label">Id do Método</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" name="idMetodo" value="{{dado.idMetodo}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         
-                        
-                                                        <!-- <div class="row">
-                        
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">servico ativo?</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
-                                                                                    id="ativo" value="1" checked> Ativo </label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <input type="hidden" name="idServico" value="{{dado.idServico}}">
-                                                                    <div class="col-sm-5">
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
-                                                                                    id="ativo" value="0"> Desativado
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                         -->
                          
-                         <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Serviço ativo?</label>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="1" {{ 'checked' if dado.ativo else '' }}> Ativo
-                                        </label>
-                                    </div>
-                                </div>
-                                <input type="hidden" name="idservico" value="{{dado.idservico}}">
-                                <div class="col-sm-5">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="0" {{ 'checked' if not dado.ativo else '' }}> Desativado
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -167,7 +178,7 @@
                                     </div>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modalApagar-{{dado.idServico}}" tabindex="-1"
+                                    <div class="modal fade" id="modalApagar-{{dado.idReserva}}" tabindex="-1"
                                     role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -186,8 +197,8 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
-                                                        <form action="/apagar-servico" method="post">
-                                                        <input type="hidden" value="{{dado.idServico}}" name="idServico">
+                                                        <form action="/apagar-Reserva" method="post">
+                                                        <input type="hidden" value="{{dado.idReserva}}" name="idReserva">
                                                         
                                                     <button type="submit" class="btn btn-danger"> <i
                                                             class="mdi mdi-delete"></i>Apagar</button>
@@ -213,22 +224,22 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalCriarLabel">Criar servico</h5>
+                            <h5 class="modal-title" id="modalCriarLabel">Criar Reserva</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
-                            <form class="form-sample" method="post" action="/criar-servico" >
+                            <form class="form-sample" method="post" action="/criar-Reserva" >
 
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-3 col-form-label" for="nomeServico">Nome</label>
+                                            <label class="col-sm-3 col-form-label" for="idCliente">Id do Cliente</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="nomeServico"
-                                                    name="nomeServico" placeholder="nome do servico" />
+                                                <input type="text" class="form-control" id="idCliente"
+                                                    name="idCliente" placeholder="Id do Cliente" />
                                             </div>
 
                                         </div>
@@ -240,37 +251,86 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Id do Departamento2</label>
+                                            <label class="col-sm-3 col-form-label">Data de
+                                                Entrada</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="idDepartamento">
+                                                <input class="form-control" type="date" name="dataEntrada" placeholder="dd/mm/yyyy" value="{{dado.dataEntrada}}" />
                                             </div>
                                         </div>
                                     </div>
-                                
-                                </div>
 
-                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Preço</label>
+                                            <label class="col-sm-3 col-form-label">Data de
+                                                Saída</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="preco">
+                                                <input class="form-control" type="date" name="dataSaida" placeholder="dd/mm/yyyy" value="{{dado.dataSaida}}" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Descrição</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="descricao">
+                                
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <label class="col-sm-3 col-form-label">Número de Adultos</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" name="numAdultos" value="{{dado.numAdultos}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <label class="col-sm-3 col-form-label">Número de Crianças</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" name="numCriancas" value="{{dado.numCriancas}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <label class="col-sm-3 col-form-label">Número de Bebés</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" name="numBebes" value="{{dado.numBebes}}">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                </div>
-                                
 
-                                
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <label class="col-sm-3 col-form-label">Observações</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" name="Observações" value="{{dado.Observações}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <label class="col-sm-3 col-form-label">Tipologia Contratada</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" name="tipologiaContratada" value="{{dado.tipologiaContratada}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <label class="col-sm-3 col-form-label">Id da Agência</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" name="idAgencia" value="{{dado.idAgencia}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <label class="col-sm-3 col-form-label">Id do Método</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" name="idMetodo" value="{{dado.idMetodo}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                         </div>
 
@@ -313,10 +373,16 @@ jQuery(document).ready(function () {
     jQuery('#tabelaExemplo').DataTable({
 
         "columns": [
-            "Nome do Serviço",  
-            "Preço",  
-            "Descrição",
-            "idDepartamento",
+            "Id do Cliente",  
+            "Data de Entrada",  
+            "Data de Saída",
+            "Número de Adultos",
+            "Número de Crianças",
+            "Número de Bebés",
+            "Observações",
+            "Tipologia Contratada",
+            "Id da Agência",
+            "Id do Método",
             "Apagar",
 
         ],

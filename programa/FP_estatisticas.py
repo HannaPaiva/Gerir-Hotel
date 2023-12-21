@@ -21,75 +21,57 @@ def conectar():
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
 
-
-
-
-
-def listar_total_rooms():
+def receita(data_inicio, data_fim):
     conexao = conectar()
     if conexao:
         try:
             cursor = conexao.cursor()
 
-            custom_query = "SELECT COUNT(*) FROM quarto"
+            custom_query = f"SELECT SUM(p.valorTotal) AS receitaGerada From pagamento p WHERE p.dataPagamento BETWEEN '{data_inicio}' AND '{data_fim}'"
             cursor.execute(custom_query)
 
-            total_rooms = cursor.fetchone()[0]
-
-            return total_rooms
+            receita = cursor.fetchone()
+            return receita
         except Exception as e:
-            print(f"Erro ao executar a consulta: {e}")
+            print (f"Erro ao executar a consulta: {e}")
         finally:
             if conexao.is_connected():
                 cursor.close()
                 conexao.close()
 
-def quartos_ocupados():
+
+def contagem_servicos():
     conexao = conectar()
     if conexao:
         try:
             cursor = conexao.cursor()
 
-            custom_query = "SELECT COUNT(*) FROM quarto WHERE estaDisponivel = 0"
+            custom_query = "SELECT s.idServico, s.nomeServico, COUNT(sp.idServicoPrestado) AS vezesRealizado FROM servico s LEFT JOIN servicoprestado sp ON s.idServico = sp.idServico GROUP BY s.idServico, s.nomeServico"
             cursor.execute(custom_query)
 
-            occupied_rooms = cursor.fetchone()[0]
-
-            return occupied_rooms
+            servicos_prestados = cursor.fetchall()
+            return servicos_prestados
         except Exception as e:
-            print(f"Erro ao executar a consulta: {e}")
+            print (f"Erro ao executar a consulta: {e}")
         finally:
             if conexao.is_connected():
                 cursor.close()
                 conexao.close()
 
-def quartos_disponiveis():
+def lealdadecliente():
     conexao = conectar()
     if conexao:
         try:
             cursor = conexao.cursor()
 
-            custom_query = "SELECT COUNT(*) FROM quarto WHERE estaDisponivel = 1"
+            custom_query = ""
             cursor.execute(custom_query)
 
-            occupied_rooms = cursor.fetchone()[0]
-
-            return occupied_rooms
+            lealdade = cursor.fetchall()
+            return lealdade
         except Exception as e:
-            print(f"Erro ao executar a consulta: {e}")
+            print (f"Erro ao executar a consulta: {e}")
         finally:
             if conexao.is_connected():
                 cursor.close()
                 conexao.close()
-
-def main():
-    total_rooms = listar_total_rooms()
-    occupied_rooms = quartos_ocupados()
-    available_rooms = quartos_disponiveis()
-
-    print(f"Total number of rooms: {total_rooms}")
-    print(f"Number of occupied rooms: {occupied_rooms}")
-    print(f"Total number of rooms: {available_rooms}")
-
-if __name__ == "__main__":
-    main()

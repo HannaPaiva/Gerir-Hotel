@@ -3,17 +3,25 @@ from flask import Flask, render_template
 from rotas_clientes import rotas_cliente
 from rotas_funcionarios import rotas_funcionario
 from rotas_departamentos import rotas_departamento
+<<<<<<< HEAD
+from rotas_servicos import rotas_servico
+=======
 
 from rotas_quartos import rotas_quarto
 from rotas_servico import rotas_servico
+>>>>>>> 5b02b5190596eccec8feca44a7980465faed6d12
 from rotas_tarifas import rotas_tarifa
 
 from rotas_agencias import rotas_agencia
+<<<<<<< HEAD
+from rotas_reservas import rotas_reserva
+=======
 from rotas_pagamentos import rotas_pagamento
 
 from rotas_reservas import rotas_reserva
 
 
+>>>>>>> 5b02b5190596eccec8feca44a7980465faed6d12
 from programa.Z_funcoes import *
 from programa.z_database_manager import DatabaseManager
 
@@ -31,8 +39,12 @@ app.register_blueprint(rotas_agencia)
 
 app.register_blueprint(rotas_reserva)
 app.register_blueprint(rotas_tarifa)
+<<<<<<< HEAD
+app.register_blueprint(rotas_reserva)
+=======
 app.register_blueprint(rotas_pagamento)
 
+>>>>>>> 5b02b5190596eccec8feca44a7980465faed6d12
 
 @app.route('/')
 def index():
