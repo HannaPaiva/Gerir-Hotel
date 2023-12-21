@@ -70,9 +70,10 @@ def free_select(query):
             if conexao.is_connected():
                 cursor.close()
                 conexao.close()
-        
-        
-        
+    
+
+
+    
 def atualizar(tabela, campos, dados, primarykey, id):
     conexao = conectar()
     if conexao:

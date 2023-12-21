@@ -105,24 +105,26 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-8">
                                                                     <div class="form-group ">
                                                                         <label class="col-sm-3 col-form-label">Departamento</label>
                                                                         <div class="col-sm-9">
                                                                             <select class="form-control" name="iddepartamento" required>
-                            
-                                                                          <option value=""></option> 
-                                                                          <option value="{{iddepartamento}}"></option>
-                                                                                {% for departamentos in departamento %}
-                            
-                                                                                  <option value="{{ departamentos['iddepartamento'] }}">{{ departamentos['nomedepartamento'] }}</option>
-                            
-                                                                                 {% endfor %}
-                                                        
+                                                                                {% for departamento in departamentos %}
+                                                                                    {% if departamento.iddepartamento == dado.iddepartamento %}
+                                                                                        <option selected value="{{ departamento.iddepartamento }}">{{ departamento.nomedepartamento }}</option>
+                                                                                    {% else %}
+                                                                                        <option value="{{ departamento.iddepartamento }}">{{ departamento.nomedepartamento }}</option>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
                                                                             </select>
+                                                                            
+                                                                                                                                                                                                            
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                
+                                                    
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group ">
@@ -323,9 +325,9 @@
                                                 <select class="form-control" name="iddepartamento" required>
 
                                                    
-                                                    {% for departamentos in departamento %}
+                                                    {% for departamento in departamentos %}
 
-                                                      <option value="{{ departamentos['iddepartamento'] }}">{{ departamentos['nomedepartamento'] }}</option>
+                                                      <option value="{{ departamento.iddepartamento}}">{{ departamento.nomedepartamento }}</option>
 
                                                      {% endfor %}
                             
