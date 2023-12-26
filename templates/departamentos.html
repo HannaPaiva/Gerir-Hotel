@@ -58,46 +58,57 @@
                                                     <h4 class="card-title"></h4>
                                                     <form class="form-sample" method="post" action="/editar-departamento" >
                                                       
-                                                    
-                        
+                                                        <div class="row">
                                                             <div class="col-md-4">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Nome do Departamento</label>
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label" for="iddepartamento">ID Departamento: {{dado.iddepartamento}}</label>
+                                                                  
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 col-form-label" for="nomedepartamento">Nome do Departamento</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do departamento" value="{{dado.ultimonome}}"/>
+                                                                        <input type="text" class="form-control" id="nomedepartamento" name="nomedepartamento" placeholder="Nome do departamento" value="{{ dado.nomedepartamento }}" >
                                                                     </div>
                                                                 </div>
                                                             </div>
-                        
-                        
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Gênero</label>
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 col-form-label" for="nomedepartamento">Descrição</label>
                                                                     <div class="col-sm-9">
-                                                                        <select class="form-control" name="genero" value="{{dado.idchefe}}">
-                                                                            {% for chefes in dados.idchefe %}
-                                                                            <option value="{{chefe}}">{{chefe}}</option>
+                                                                        <textarea class="form-control" id="descricao" name="descricao" placeholder="Descrição sobre o departamento">{{ dado.descricao }}</textarea>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 col-form-label" for="idchefe">Chefe</label>
+                                                                    <div class="col-sm-8">
+
+                                                                        <select class="form-control" id="idchefe" name="idchefe">
+                                                                            {% for funcionario in funcionarios %}
+                                                                                {% if funcionario.idfuncionario == dado.idchefe %}
+                                                                                    <option selected value="{{ funcionario.idfuncionario }}">{{ funcionario.nomefuncionario}}</option>
+                                                                                {% else %}
+                                                                                    <option value="{{ funcionario.idfuncionario }}">{{ funcionario.nomefuncionario }}</option>
+                                                                                {% endif %}
+
+                                                                               
                                                                             {% endfor %}
                                                                         </select>
-                                                                    </div>
+                                                                
+                                                                    </p> 
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Data de
-                                                                        nascimento</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" value="{{dado.datanascimento}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                        
-                                                        
-
-                        
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                                     <button type="submit" class="btn btn-success">Atualizar registo</button>
@@ -165,135 +176,54 @@
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
                             <form class="form-sample" method="post" action="/criar-departamento" >
-
+                                                      
                                 <div class="row">
+                                   
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
+                                            <label class="col-sm-5 col-form-label" for="nomedepartamento">Nome do Departamento</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="primeiroNome"
-                                                    name="primeiroNome" placeholder="nome do departamento" />
+                                                <input type="text" class="form-control" id="nomedepartamento" name="nomedepartamento" placeholder="Nome do departamento"  >
                                             </div>
-
                                         </div>
                                     </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-5 col-form-label">Nomes do meio</label>
+                                            <label class="col-sm-5 col-form-label" for="nomedepartamento">Descrição</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="nomeDoMeio"
-                                                    name="nomeDoMeio" placeholder="nomes do meio do departamento" />
+                                                <textarea class="form-control" id="descricao" name="descricao" placeholder="Descrição sobre o departamento"></textarea>
+
                                             </div>
                                         </div>
                                     </div>
+
+
 
                                     <div class="col-md-4">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Apelido</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="ultimoNome"
-                                                    name="ultimoNome" placeholder="último nome do departamento" />
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 col-form-label" for="idchefe">Chefe</label>
+                                            <div class="col-sm-8">
 
+                                                <select class="form-control" id="idchefe" name="idchefe">
+                                                    {% for funcionario in funcionarios %}
 
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Gênero</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control" name="genero">
-                                                    <option value="m">Male</option>
-                                                    <option value="f">Female</option>
-                                                    <option value="o">outro</option>
+                                                            <option value="{{ funcionario.idfuncionario }}">{{ funcionario.nomefuncionario }}</option>
+
+                                            
+                                                       
+                                                    {% endfor %}
                                                 </select>
-                                            </div>
+                                        
+                                            </p> 
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Data de
-                                                nascimento</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" type="date" name="dataNascimento"
-                                                    placeholder="dd/mm/yyyy" value="{{dataNascimento}}" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nº Contribuinte</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="contribuinte">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="CC">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <p class="card-description"> Contactos </p>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Número de telefone
-                                            </label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="telefone" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">email</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="exemplo@gmail.com"
-                                                    name="email" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">departamento ativo?</label>
-                                            <div class="col-sm-4">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
-                                                            id="ativo1" value="1" checked> Ativo </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
-                                                            id="ativo2" value="0"> Desativado
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                        </div>
-
-
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Criar</button>
+                            <button type="submit" class="btn btn-success">Criar Departamento</button>
                         </div>
                         </form>
                     </div>

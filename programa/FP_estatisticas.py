@@ -46,7 +46,7 @@ def contagem_servicos():
         try:
             cursor = conexao.cursor()
 
-            custom_query = "SELECT s.idServico, s.nomeServico, COUNT(sp.idServicoPrestado) AS vezesRealizado FROM servico s LEFT JOIN servicoprestado sp ON s.idServico = sp.idServico GROUP BY s.idServico, s.nomeServico"
+            custom_query = "SELECT s.idServico, s.nomeServico, COUNT(sp.idServico) AS vezesRealizado FROM servico s LEFT JOIN servicoprestado sp ON s.idServico = sp.idServico GROUP BY s.idServico, s.nomeServico"
             cursor.execute(custom_query)
 
             servicos_prestados = cursor.fetchall()

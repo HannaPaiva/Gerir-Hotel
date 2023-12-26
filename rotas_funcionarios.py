@@ -92,6 +92,7 @@ def editar_funcionario():
         "iddepartamento": request.form["iddepartamento"],
        
     }
+    print(dados)
 
     conn.update_data("funcionario", dados, idfuncionario)
     return redirect(url_for('rotas_funcionario.listar_funcionarios'))

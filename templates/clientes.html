@@ -98,13 +98,12 @@
                                                             <div class="col-md-6">
                                                                 <div class="form-group ">
                                                                     <label class="col-sm-3 col-form-label">Gênero</label>
-                                                                    <div class="col-sm-9">
-                                                                        <select class="form-control" name="genero" value="{{dado.genero}}">
-                                                                            <option value="m">Male</option>
-                                                                            <option value="f">Female</option>
-                                                                            <option value="o">outro</option>
+                                                                    
+                                                                        <select class="form-control" name="genero">
+                                                                            <option value="m" {% if dado.genero == 'm' %}selected{% endif %}>Male</option>
+                                                                            <option value="f" {% if dado.genero == 'f' %}selected{% endif %}>Female</option>
+                                                                            <option value="o" {% if dado.genero == 'o' %}selected{% endif %}>Outro</option>
                                                                         </select>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
