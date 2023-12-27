@@ -117,17 +117,6 @@ def pesquisar_funcionario():
         return render_template('pesquisa.html', dados=[{"response": "Não encontrado"}])
 
 
-@rotas_funcionario.route('/teste')
-def teste():
-
-    dados = conn.select_data(table="funcionario", search="hanna")
-
-    print("dados")
-    if dados:
-        return render_template('pesquisa.html', dados=dados)
-    else:
-        return render_template('pesquisa.html', dados=[{"response": "Não encontrado"}])
-
 
 app.register_blueprint(rotas_funcionario)
 if __name__ == '__main__':

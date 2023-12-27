@@ -64,147 +64,103 @@
                                                     <h4 class="card-title"></h4>
                                                     <form class="form-sample" method="post" action="/editar-cliente" >
                                                       
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="nome do cliente" value="{{dado.primeironome}}" />
-                                                                    </div>
-                        
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label class="col-sm-5 col-form-label">Nomes do meio</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="nomes do meio do cliente" value="{{dado.nomedomeio}}" />
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="primeiroNome">Nome</label>
+                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="Nome do cliente" value="{{dado.primeironome}}" />
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                        
-                                                            <div class="col-md-4">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Apelido</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do cliente" value="{{dado.ultimonome}}"/>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="nomeDoMeio">Nomes do meio</label>
+                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="Nomes do meio do cliente" value="{{dado.nomedomeio}}" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="ultimoNome">Apelido</label>
+                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="Último nome do cliente" value="{{dado.ultimonome}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
-                        
-                        
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Gênero</label>
-                                                                    
+                                                        
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="genero">Gênero</label>
                                                                         <select class="form-control" name="genero">
                                                                             <option value="m" {% if dado.genero == 'm' %}selected{% endif %}>Male</option>
                                                                             <option value="f" {% if dado.genero == 'f' %}selected{% endif %}>Female</option>
                                                                             <option value="o" {% if dado.genero == 'o' %}selected{% endif %}>Outro</option>
                                                                         </select>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Data de
-                                                                        nascimento</label>
-                                                                    <div class="col-sm-9">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="dataNascimento">Data de nascimento</label>
                                                                         <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" value="{{dado.datanascimento}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                        
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">nº Contribuinte</label>
-                                                                    <div class="col-sm-9">
+                                                        
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="contribuinte">nº Contribuinte</label>
                                                                         <input type="text" class="form-control" name="contribuinte" value="{{dado.contribuinte}}">
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
-                                                                    <div class="col-sm-9">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="CC">nº Cartão de cidadão</label>
                                                                         <input type="text" class="form-control" name="CC" value="{{dado.cc}}">
                                                                     </div>
                                                                 </div>
                                                             </div>
-                        
-                                                        </div>
-                                                        <p class="card-description"> Contactos </p>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label">Número de telefone
-                                                                    </label>
-                                                                    <div class="col-sm-9">
+                                                        
+                                                            <p class="card-description"> Contactos </p>
+                                                        
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="telefone">Número de telefone</label>
                                                                         <input type="text" class="form-control" name="telefone" value="{{dado.telefone}}" />
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">email</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" placeholder="exemplo@gmail.com"
-                                                                            name="email" value="{{dado.email}}" />
+                                                                <div class="col-md-6 mb-3">
+                                                                    <div class="form-group">
+                                                                        <label for="email">Email</label>
+                                                                        <input type="text" class="form-control" placeholder="exemplo@gmail.com" name="email" value="{{dado.email}}" />
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                        
-                                                        <!-- <div class="row">
-                        
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Cliente ativo?</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
-                                                                                    id="ativo" value="1" checked> Ativo </label>
+                                                        
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <div class="form-group row">
+                                                                        <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                                                        <div class="col-sm-4">
+                                                                            <div class="form-check">
+                                                                                <label class="form-check-label">
+                                                                                    <input type="radio" class="form-check-input" name="ativo" id="ativo" value="1" {{ 'checked' if dado.ativo else '' }}> Ativo
+                                                                                </label>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
-                                                                    <div class="col-sm-5">
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
-                                                                                    id="ativo" value="0"> Desativado
-                                                                            </label>
+                                                                        <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
+                                                                        <div class="col-sm-5">
+                                                                            <div class="form-check">
+                                                                                <label class="form-check-label">
+                                                                                    <input type="radio" class="form-check-input" name="ativo" id="ativo" value="0" {{ 'checked' if not dado.ativo else '' }}> Desativado
+                                                                                </label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                </div>
-                         -->
-
-                         <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Cliente ativo?</label>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="1" {{ 'checked' if dado.ativo else '' }}> Ativo
-                                        </label>
-                                    </div>
-                                </div>
-                                <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
-                                <div class="col-sm-5">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="0" {{ 'checked' if not dado.ativo else '' }}> Desativado
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                                        
                         
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -273,129 +229,102 @@
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
                             <form class="form-sample" method="post" action="/criar-cliente" >
-
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="primeiroNome"
-                                                    name="primeiroNome" placeholder="nome do cliente" />
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="col-sm-5 col-form-label">Nomes do meio</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="nomeDoMeio"
-                                                    name="nomeDoMeio" placeholder="nomes do meio do cliente" />
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="primeiroNome">Nome</label>
+                                                <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="Nome do cliente" />
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Apelido</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="ultimoNome"
-                                                    name="ultimoNome" placeholder="último nome do cliente" />
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="nomeDoMeio">Nomes do meio</label>
+                                                <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="Nomes do meio do cliente" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="ultimoNome">Apelido</label>
+                                                <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="Último nome do cliente" />
                                             </div>
                                         </div>
                                     </div>
-
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Gênero</label>
-                                            <div class="col-sm-9">
+                                
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="genero">Gênero</label>
                                                 <select class="form-control" name="genero">
                                                     <option value="m">Male</option>
                                                     <option value="f">Female</option>
-                                                    <option value="o">outro</option>
+                                                    <option value="o">Outro</option>
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Data de
-                                                nascimento</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" type="date" name="dataNascimento"
-                                                    placeholder="dd/mm/yyyy" value="{{dataNascimento}}" />
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="dataNascimento">Data de nascimento</label>
+                                                <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" />
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nº Contribuinte</label>
-                                            <div class="col-sm-9">
+                                
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="contribuinte">nº Contribuinte</label>
                                                 <input type="text" class="form-control" name="contribuinte">
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
-                                            <div class="col-sm-9">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="CC">nº Cartão de cidadão</label>
                                                 <input type="text" class="form-control" name="CC">
                                             </div>
                                         </div>
                                     </div>
-
-                                </div>
-                                <p class="card-description"> Contactos </p>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Número de telefone
-                                            </label>
-                                            <div class="col-sm-9">
+                                
+                                    <p class="card-description"> Contactos </p>
+                                
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="telefone">Número de telefone</label>
                                                 <input type="text" class="form-control" name="telefone" />
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">email</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="exemplo@gmail.com"
-                                                    name="email" />
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input type="text" class="form-control" placeholder="exemplo@gmail.com" name="email" />
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Cliente ativo?</label>
-                                            <div class="col-sm-4">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
-                                                            id="ativo1" value="1" checked> Ativo </label>
+                                
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Cliente ativo?</label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input" name="ativo" id="ativo1" value="1" checked> Ativo
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
-                                                            id="ativo2" value="0"> Desativado
-                                                    </label>
+                                                <div class="col-sm-5">
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input" name="ativo" id="ativo2" value="0"> Desativado
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
+                                
                         </div>
 
 
