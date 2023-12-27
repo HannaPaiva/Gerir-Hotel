@@ -72,7 +72,7 @@ INSERT INTO `cliente` (`idCliente`, `primeiroNome`, `nomeDoMeio`, `UltimoNome`, 
 
 -- A despejar estrutura para tabela hotel.departamento
 CREATE TABLE IF NOT EXISTS `departamento` (
-  `idDepartamento` int(11) NOT NULL,
+  `idDepartamento` int(11) NOT NULL AUTO_INCREMENT,
   `idChefe` int(11) DEFAULT NULL,
   `nomeDepartamento` varchar(45) DEFAULT NULL,
   `descricao` text DEFAULT NULL,
