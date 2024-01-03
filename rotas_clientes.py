@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
 from programa.z_database_manager import DatabaseManager
+from programa.HP_functions import *
 conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 rotas_cliente = Blueprint("rotas_cliente", __name__)
@@ -56,10 +57,9 @@ def editar_cliente():
 
 @rotas_cliente.route('/apagar-cliente', methods=['GET', 'POST'])
 def apagar_cliente():
-    idcliente = {"idcliente": request.form["idcliente"]}
-    conn.delete_data("cliente", idcliente)
+    idcliente =  request.form["idcliente"]
+    apagar("cliente", "idcliente", idcliente)
     return redirect(url_for('rotas_cliente.listar_clientes'))
-
 
 
 @rotas_cliente.route('/pesquisar-cliente', methods=['GET', 'POST'])

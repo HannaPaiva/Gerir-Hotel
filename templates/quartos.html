@@ -2,19 +2,17 @@
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
-
-
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tabela de quartos</h4>
+                        <h4 class="card-title">Tabela de Quartos</h4>
                         {% include 'components/barra_pesquisa.html' %}
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
-                                data-target="#modalCriar">+ Adicionar novo Quarto</button>
+                                data-target="#modalCriar">+ Adicionar novo quarto</button>
                         </div>
                         
                         <div class="table-responsive ">
@@ -22,14 +20,12 @@
                             <table class="table" id="tabelaExemplo">
                                 <thead>
                                     <tr>
-                                        <th>Número</th>
+                                        <th>Número do Quarto</th>
                                         <th>Descrição</th>
                                         <th>Andar</th>
                                         <th>Tipologia</th>
-                                        <th>Camas de Casal</th>
-                                        <th>Camas de Solteiro</th>
-                                        <th>Ativo</th>
-                                        <th>Disponível</th>
+                                        <th>Quantidade de Camas de Casal</th>
+                                        <th>Quantidade de Camas de Solteiro</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,14 +34,11 @@
 
                                     <tr>
                                         <td>{{ dado.numquarto }}</td>
-                                        <td>{{ dado.descricao }}</td>
-                                        <td>{{ dado.andar }} </td>
-                                        <td>{{ dado.tipologia }} </td>
-                                        <td>{{ dado.andar }} </td>
+                                        <td>{{ dado.descricao }} </td>
+                                        <td>{{ dado.andar }}</td>
+                                        <td>{{ dado.tipologia }}</td>
                                         <td>{{ dado.qtdcamacasal }}</td>
                                         <td>{{ dado.qtdcamasolteiro }}</td>
-                                        <td><label class="badge">{{dado.ativo}}</label></td>
-                                        <td><label class="badge">{{dado.estadisponivel}}</label></td>
                                         <td>
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.numquarto}}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
@@ -61,7 +54,7 @@
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalEditarLabel">Editar Quarto</h5>
+                                                    <h5 class="modal-title" id="modalEditarLabel">Editar quarto</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -72,157 +65,100 @@
                                                     <form class="form-sample" method="post" action="/editar-quarto" >
                                                       
                                                         <div class="row">
+
+
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label" for="numquarto">Número</label>
+                                                                    <label class="col-sm-5 col-form-label" for="descricao">Número do quarto</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="numquarto" name="numquarto" placeholder="número do quarto" value="{{dado.numquarto}}" />
+                                                                        <input type="text" class="form-control" id="numQuarto" name="numQuarto" placeholder="Número do Quarto" value="{{ dado.numquarto }}" >
                                                                     </div>
-                        
                                                                 </div>
                                                             </div>
+
+
+
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label class="col-sm-5 col-form-label">Descrição</label>
+                                                                    <label class="col-sm-5 col-form-label" for="descricao">Descrição</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="descricao" name="descricao" placeholder="descrição" value="{{dado.descricao}}" />
+                                                                        <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição do quarto" value="{{ dado.descricao }}" >
                                                                     </div>
                                                                 </div>
                                                             </div>
-                        
+
                                                             <div class="col-md-4">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Andar</label>
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-5 col-form-label" for="andar">Andar</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="andar" name="andar" placeholder="andar do quarto" value="{{dado.andar}}"/>
+                                                                        <input type="text" class="form-control" id="andar" name="andar" placeholder="Andar do quarto" value="{{ dado.andar }}" >
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        
-                                                        <div class="row">
-                                                            <div class="row">
 
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label class="col-sm-3 col-form-label" for="tipologia">Tipologia</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="tipologia" name="tipologia" placeholder="tipologia " value="{{dado.tipologia}}" />
-                                                                        </div>
-                            
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label class="col-sm-5 col-form-label">Camas Casal</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="qtdcamacasal" name="qtdcamacasal" placeholder="quantidade de camas de casal" value="{{dado.qtdcamacasal}}" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label class="col-sm-5 col-form-label">Camas Solteiro</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="qtdcamasolteiro" name="qtdcamasolteiro" placeholder="quantidade de camas de solteiro" value="{{dado.qtdcamasolteiro}}" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                        </div>
-                        
-                                                        <div class="row">
                                                             <div class="col-md-4">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Ativo</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="ativo" value="{{dado.ativo}}">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 col-form-label" for="tipologia">Tipologia</label>
+                                                                    <div class="col-sm-8">
+                                                                        <select class="form-control" id="tipologia" name="tipologia">
+                                                                            <option value="t0" {% if dado.tipologia == 't0' %} selected {% endif %}>t0</option>
+                                                                            <option value="t1" {% if dado.tipologia == 't1' %} selected {% endif %}>t1</option>
+                                                                            <option value="t2" {% if dado.tipologia == 't2' %} selected {% endif %}>t2</option>
+                                                                            <option value="t3" {% if dado.tipologia == 't3' %} selected {% endif %}>t3</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Está disponível</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="estadisponivel" value="{{dado.estadisponivel}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                        
-                                                        </div>
-                        
-                                                        <!-- <div class="row">
-                        
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Cliente ativo?</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
-                                                                                    id="ativo" value="1" checked> Ativo </label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <input type="hidden" name="idcliente" value="{{dado.idcliente}}">
-                                                                    <div class="col-sm-5">
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
-                                                                                    id="ativo" value="0"> Desativado
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                         -->
 
-                         <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Quarto ativo?</label>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="1" {{ 'checked' if dado.ativo else '' }}> Ativo
-                                        </label>
-                                    </div>
-                                </div>
-                                <input type="hidden" name="idcliente" value="{{dado.numquarto}}">
-                                <div class="col-sm-5">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="ativo" id="ativo" value="0" {{ 'checked' if not dado.ativo else '' }}> Desativado
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Está disponível?</label>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="estadisponivel" id="estadisponivel" value="1" {{ 'checked' if dado.estadisponivel else '' }}> Disponível
-                                        </label>
-                                    </div>
-                                </div>
-                                <input type="hidden" name="idcliente" value="{{dado.numquarto}}">
-                                <div class="col-sm-5">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="estadisponivel" id="estadisponivel" value="0" {{ 'checked' if not dado.estadisponivel else '' }}> Indisponível
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 col-form-label" for="ativo">Ativo?</label>
+                                                                    <div class="col-sm-8">
+                                                                        <select class="form-control" id="ativo" name="ativo">
+                                                                            <option value="1" {% if dado.ativo == '1' %} selected {% endif %}>Sim</option>
+                                                                            <option value="0" {% if dado.ativo == '0' %} selected {% endif %}>Não</option>
+                                                                         
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                              <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 col-form-label" for="estadisponivel">Está Disponível?</label>
+                                                                    <div class="col-sm-8">
+                                                                        <select class="form-control" id="estadisponivel" name="estadisponivel">
+                                                                            <option value="1" {% if dado.estadisponivel == '1' %} selected {% endif %}>Sim</option>
+                                                                            <option value="0" {% if dado.estadisponivel == '0' %} selected {% endif %}>Não</option>
+                                                                         
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 col-form-label" for="qtdcamacasal">Camas de Casal</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" class="form-control" id="qtdcamacasal" name="qtdcamacasal" placeholder="Quantidade de camas de casal" value="{{ dado.qtdcamacasal }}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 col-form-label" for="qtdcamasolteiro">Camas de Solteiro</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" class="form-control" id="qtdcamasolteiro" name="qtdcamasolteiro" placeholder="Quantidade de camas de solteiro" value="{{ dado.qtdcamasolteiro }}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <input type="hidden" value="{{dado.numquarto}}" name="numquarto">
+                                                        </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                    <button type="submit" class="btn btn-success">Atualizar registo</button>
+                                                    <button type="submit" class="btn btn-success">Atualizar registro</button>
                                                 </div>
                                                 </form>
                                                 </div>
@@ -233,7 +169,7 @@
                                     </div>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modalApagar-{{dado.idcliente}}" tabindex="-1"
+                                    <div class="modal fade" id="modalApagar-{{dado.numquarto}}" tabindex="-1"
                                     role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -252,8 +188,8 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
-                                                        <form action="/apagar-cliente" method="post">
-                                                        <input type="hidden" value="{{dado.idcliente}}" name="idcliente">
+                                                        <form action="/apagar-quarto" method="post">
+                                                        <input type="hidden" value="{{dado.numquarto}}" name="numquarto">
                                                         
                                                     <button type="submit" class="btn btn-danger"> <i
                                                             class="mdi mdi-delete"></i>Apagar</button>
@@ -279,197 +215,92 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalCriarLabel">Criar cliente</h5>
+                            <h5 class="modal-title" id="modalCriarLabel">Criar quarto</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
-                            <form class="form-sample" method="post" action="/criar-cliente" >
-
+                            <form class="form-sample" method="post" action="/criar-quarto" >
+                                                      
                                 <div class="row">
+                                   
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
+                                            <label class="col-sm-5 col-form-label" for="numquarto">Número do Quarto</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="primeiroNome"
-                                                    name="primeiroNome" placeholder="nome do cliente" />
+                                                <input type="text" class="form-control" id="numquarto" name="numquarto" placeholder="Número do quarto"  >
                                             </div>
-
                                         </div>
                                     </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-5 col-form-label">Nomes do meio</label>
+                                            <label class="col-sm-5 col-form-label" for="descricao">Descrição</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="nomeDoMeio"
-                                                    name="nomeDoMeio" placeholder="nomes do meio do cliente" />
+                                                <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição do quarto">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Apelido</label>
+                                        <div class="form-group">
+                                            <label class="col-sm-5 col-form-label" for="andar">Andar</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="ultimoNome"
-                                                    name="ultimoNome" placeholder="último nome do cliente" />
+                                                <input type="text" class="form-control" id="andar" name="andar" placeholder="Andar do quarto">
                                             </div>
                                         </div>
                                     </div>
 
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Gênero</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control" name="genero">
-                                                    <option value="m">Male</option>
-                                                    <option value="f">Female</option>
-                                                    <option value="o">outro</option>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 col-form-label" for="tipologia">Tipologia</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="tipologia" name="tipologia">
+                                                    <option value="t0">t0</option>
+                                                    <option value="t1">t1</option>
+                                                    <option value="t2">t2</option>
+                                                    <option value="t3">t3</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Data de
-                                                nascimento</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" type="date" name="dataNascimento"
-                                                    placeholder="dd/mm/yyyy" value="{{dataNascimento}}" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nº Contribuinte</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="contribuinte">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="CC">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 col-form-label" for="qtdcamacasal">Quantidade de Camas de Casal</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="qtdcamacasal" name="qtdcamacasal" placeholder="Quantidade de camas de casal">
                                             </div>
                                         </div>
                                     </div>
 
-                                </div>
-                                <p class="card-description"> Contactos </p>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Número de telefone
-                                            </label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="telefone" />
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 col-form-label" for="qtdcamasolteiro">Quantidade de Camas de Solteiro</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="qtdcamasolteiro" name="qtdcamasolteiro" placeholder="Quantidade de camas de solteiro">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">email</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="exemplo@gmail.com"
-                                                    name="email" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Cliente ativo?</label>
-                                            <div class="col-sm-4">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
-                                                            id="ativo1" value="1" checked> Ativo </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
-                                                            id="ativo2" value="0"> Desativado
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <input type="hidden" value="1" name="ativo">
+                                    <input type="hidden" value="1" name="estadisponivel">
                                 </div>
-
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Criar Quarto</button>
+                                </div>
+                            </form>
                         </div>
-
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Criar</button>
-                        </div>
-                        </form>
                     </div>
                 </div>
             </div>
-            <script>
-//     jQuery(document).ready(function() {
-//   jQuery('#data').DataTable({
-//       "paging": true,
-//       "lengthChange": true,
-//       "searching": true,
-//       "ordering": true,
-//       "info": true,
-//       "autoWidth": false,
-//       "language": {
-//         "lengthMenu": "Exibir _MENU_ registros por página",
-//         "zeroRecords": "Nenhum registro encontrado",
-//         "info": "Mostrando página _PAGE_ de _PAGES_",
-//         "infoEmpty": "Nenhum registro disponível",
-//         "infoFiltered": "(filtrado de _MAX_ registros no total)",
-//         "search": "Pesquisar:",
-//         "paginate": {
-//           "first": "Primeiro",
-//           "last": "Último",
-//           "next": "Próximo",
-//           "previous": "Anterior"
-//         }
-//       }
-//     });
-//   });^
+   
+        </div>
 
-jQuery(document).ready(function () {
-    jQuery('#tabelaExemplo').DataTable({
+    </div>
 
-        "columns": [
-            "Nome",  
-            "Contribuinte",  
-            "Cartão de Cidadão",
-            "Data de nascimento",
-            "Ativo",
-            "Apagar",
-
-        ],
-                "paging": true,         // Ativar paginação
-                "lengthMenu": [5, 10, 20],  // Opções de quantidade de registros por página
-                "pageLength": 5,        // Quantidade de registros por página padrão
-                "ordering": true,       // Permitir ordenação
-                "info": true,           // Exibir informações sobre a tabela (por exemplo, "Exibindo 1 a 10 de 20 registros")
-                "searching": true,      // Permitir pesquisa
-                "autoWidth": false,     // Desativar ajuste automático da largura das colunas
-                // Adicione mais opções conforme necessário
-            });
-        });
-    </script>
-         
-
-            {% include 'components/footer.html' %}
+</div>
+{% include 'components/footer.html' %}

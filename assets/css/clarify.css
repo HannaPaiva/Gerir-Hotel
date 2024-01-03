@@ -68,3 +68,29 @@ input:focus {
   background-color: aliceblue !important;
   
 }
+
+
+.select2-container--default{
+  background-color: aliceblue !important;
+  color: black;
+}
+
+.select2-container--default:focus{
+  background-color: aliceblue ;
+  color: black;
+}
+
+.select2-selection--single{
+  background-color: aliceblue;
+}
+
+.select2-results__option--selectable {
+  cursor: pointer;
+  background-color: aliceblue;
+}
+
+
+.form-control:focus, .asColorPicker-input:focus, .dataTables_wrapper select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=text], .jsgrid .jsgrid-table .jsgrid-filter-row select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=number], .select2-container--default .select2-selection--single:focus, .select2-container--default .select2-selection--single .select2-search__field:focus, .typeahead:focus, .tt-query:focus, .tt-hint:focus {
+
+  background-color: aliceblue;
+}

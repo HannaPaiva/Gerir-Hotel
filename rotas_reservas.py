@@ -1,19 +1,53 @@
-from flask import Flask, render_template, request, redirect, url_for, Blueprint
+from flask import Flask, render_template, request, redirect, url_for, Blueprint, jsonify
 
 from programa.z_database_manager import DatabaseManager
 conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 rotas_reserva = Blueprint("rotas_reserva", __name__)
+from programa.HP_functions import *
 
 
 
 @rotas_reserva.route('/reservas')
 def listar_reservas():
-    dados = conn.select_data("reserva")
+    dados = free_select('''SELECT 
+
+r.*,
+c.*,
+a.*,
+m.*,
+
+CONCAT (c.primeiroNome, " ", c.nomeDoMeio, " ", c.ultimoNome) AS nomeCompleto
+
+
+FROM reserva r
+
+LEFT JOIN cliente c
+ON r.idcliente = c.idcliente
+
+LEFT JOIN agencia a
+ON r.idagencia = a.idagencia
+
+
+LEFT JOIN metodoreserva m
+ON r.idmetodo = m.idmetodo
+
+''')
+    clientes = free_select('''SELECT 
+
+CONCAT("id: ", idcliente, " -| nome: ",  primeiroNome, ' ', nomeDoMeio, ' ', ultimoNome) as nomecliente,
+
+idcliente
+
+
+from cliente''') 
     action = "pesquisar-reserva"
+
+    quartos = free_select("Select * from quarto")
     if dados is not None:
-        return render_template('reservas.html', dados=dados, action = action)
+        return render_template('reservas.html', dados=dados, action = action, clientes = clientes, quartos = quartos)
     else:
+    
         return render_template('reservas.html')
     
 
@@ -28,13 +62,35 @@ def criar_reserva():
         "numAdultos": request.form["numAdultos"],
         "numCriancas": request.form["numCriancas"],
         "numBebes": request.form["numBebes"],
-        "Observacoes": request.form["Observacoes"],
+        "observacoes": request.form["observacoes"],
         "tipologiaContratada": request.form["tipologiaContratada"],
-        "idAgencia": request.form["idAgencia"],
-        "idMetodo": request.form["idMetodo"],
-
+        "idAgencia": 1,
+        "idMetodo": 1,
+    
     }
+
+  
     conn.insert_data("reserva", dados)
+
+    last_inserted_id = free_select("SELECT MAX(idreserva) AS idreserva FROM reserva")
+    
+    idreserva = last_inserted_id[0]["idreserva"]
+    print(idreserva)
+
+ 
+    print(request.form["numQuarto"])
+
+    if request.form["numQuarto"] != " " :
+          
+        dados2 = {
+            "numQuarto": request.form["numQuarto"], 
+            "idReserva": idreserva,
+            "observacoes": request.form["observacoes"],
+        }
+        inserir("reservaquarto", dados2)
+
+
+
     return redirect(url_for('rotas_reserva.listar_reservas'))
 
 @rotas_reserva.route('/editar-reserva', methods=['GET', 'POST'])
@@ -48,10 +104,10 @@ def editar_reserva():
         "numAdultos": request.form["numAdultos"],
         "numCriancas": request.form["numCriancas"],
         "numBebes": request.form["numBebes"],
-        "Observacoes": request.form["Observacoes"],
+        "observacoes": request.form["observacoes"],
         "tipologiaContratada": request.form["tipologiaContratada"],
-        "idAgencia": request.form["idAgencia"],
-        "idMetodo": request.form["idMetodo"],
+        "idAgencia": 1,
+        "idMetodo": 1,
     
     }
     conn.update_data("reserva", dados, idReserva)
@@ -80,9 +136,20 @@ def pesquisar_reserva():
      return render_template('pesquisa.html', dados = [{"response":"Não encontrado" }])
 
 
+@rotas_reserva.route('/quartos-tipologia', methods=['POST'])
+def get_quartos():
+    tipologia = request.form['tipologia']
+
+   
+    sql_query = f"SELECT numQuarto, CONCAT('Quarto ', numQuarto) AS label FROM quarto WHERE tipologia = '{tipologia}' AND estaDisponivel = 1 AND ativo = 1"
 
 
+    quartos_tipologia = free_select(sql_query)
 
+    options = [{'numQuarto': str(quarto['numQuarto']), 'label': quarto['label']} for quarto in quartos_tipologia]
+
+    # Retornar as opções em formato JSON
+    return jsonify(options)
 
 
 app.register_blueprint(rotas_reserva)

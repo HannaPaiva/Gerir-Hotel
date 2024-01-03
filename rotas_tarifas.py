@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, Blueprint
 from programa.z_database_manager import DatabaseManager
+from programa.HP_functions import *
 conn = DatabaseManager(host="127.0.0.1", user="root", password="", database="hotel", port=3306)
 app = Flask(__name__, static_folder='assets', static_url_path='/assets')
 rotas_tarifa = Blueprint("rotas_tarifa", __name__)
@@ -19,40 +20,29 @@ def listar_tarifas():
 
 @rotas_tarifa.route('/criar-tarifa', methods=['GET', 'POST'])
 def criar_tarifa():
-    dados = {
-        "data": request.form["data"],
-        "preconoiteadulto": request.form["preconoiteadulto"],
-        "preonoitecrianca": request.form["preonoitecrianca"],
-        "tipologia": request.form["tipologia"],
+   
+    data_inicio = request.form["data_inicio"]
+    data_fim = request.form["data_fim"]
+    preconoiteadulto = request.form["preconoiteadulto"]
+    preconoitecrianca = request.form["preconoitecrianca"]
+    numQuarto = request.form["numQuarto"]
       
-    }
-    conn.insert_data("tarifa", dados)
-    return redirect(url_for('rotas_tarifa.listar_tarifas'))
+    
 
-@rotas_tarifa.route('/editar-tarifa', methods=['GET', 'POST'])
-def editar_tarifa():
-    idtarifa = {"idtarifa": request.form["idtarifa"]}
-    dados = {
-        "primeiroNome": request.form["primeiroNome"],
-        "nomeDoMeio": request.form["nomeDoMeio"],
-        "ultimoNome": request.form["ultimoNome"],
-        "contribuinte": request.form["contribuinte"],
-        "CC": request.form["CC"],
-        "email": request.form["email"],
-        "telefone": request.form["telefone"],
-        "dataNascimento": request.form["dataNascimento"],
-        "ativo": request.form["ativo"],
-        "genero": request.form["genero"],
-    }
-    conn.update_data("tarifa", dados, idtarifa)
+    chamar_procedimento(data_inicio, data_fim, preconoiteadulto, preconoitecrianca, numQuarto)
+   
     return redirect(url_for('rotas_tarifa.listar_tarifas'))
 
 
 
 @rotas_tarifa.route('/apagar-tarifa', methods=['GET', 'POST'])
 def apagar_tarifa():
-    idtarifa = {"idtarifa": request.form["idtarifa"]}
-    conn.delete_data("tarifa", idtarifa)
+    de =  request.form["de"]
+    ate =  request.form["ate"]
+    numQuarto =  request.form["numQuarto"]
+   
+    apagar_tarifas(de, ate, numQuarto)
+
     return redirect(url_for('rotas_tarifa.listar_tarifas'))
 
 

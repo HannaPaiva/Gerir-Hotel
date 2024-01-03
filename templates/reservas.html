@@ -2,31 +2,34 @@
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
+
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tabela de Reservas</h4>
+                        <h4 class="card-title">Tabela de Reserva</h4>
                         {% include 'components/barra_pesquisa.html' %}
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
-                                data-target="#modalCriar">+ Adicionar novo Reserva</button>
+                                data-target="#modalCriar">+ Adicionar nova Reserva</button>
                         </div>
-                        
-                        <div class="table-responsive ">
+                        <div class="table-responsive">
 
-                            <table class="table" id="tabelaExemplo">
+                            <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Id da Reserva</th>
+                                        <th>ID da reserva</th>
+                                        <th>Cliente</th>
                                         <th>Data de Entrada</th>
                                         <th>Data de Saída</th>
                                         <th>Número de Adultos</th>
                                         <th>Número de Crianças</th>
-                                        <th>Número de Bebés</th>
+                                        <th>Número de bebés</th>
+                                        <th>Observações</th>
                                         <th>Tipologia Contratada</th>
+                                     
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -35,12 +38,16 @@
 
                                     <tr>
                                         <td>{{ dado.idReserva }}</td>
-                                        <td>{{ dado.dataEntrada }} </td>
-                                        <td>{{ dado.dataSaida }} </td>
+                                        <td>{{ dado.nomeCompleto }} </td>
+                                        <td>{{ dado.dataEntrada }}</td>
+                                        <td>{{ dado.dataSaida }}</td>
                                         <td>{{ dado.numAdultos }}</td>
                                         <td>{{ dado.numCriancas }}</td>
                                         <td>{{ dado.numBebes }}</td>
+                                        <td>{{ dado.observacoes }}</td>
                                         <td>{{ dado.tipologiaContratada }}</td>
+
+                                    
                                         <td>
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idReserva}}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
@@ -62,108 +69,121 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
+                                                
                                                 <div class="modal-body">
                                                     <h4 class="card-title"></h4>
-                                                    <form class="form-sample" method="post" action="/editar-Reserva" >
+                                                    <form class="form-sample" method="post" action="/editar-reserva" >
                                                       
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label" for="idCliente">Id do Cliente</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="idCliente" name="idCliente" placeholder="Id do Cliente" value="{{dado.idCliente}}" />
-                                                                    </div>
-                        
-                                                                </div>
-                                                            </div>
-                                                            
-                        
-                                                        </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group ">
-                                                                <label class="col-sm-3 col-form-label">Data de
-                                                                    Entrada</label>
-                                                                <div class="col-sm-9">
-                                                                    <input class="form-control" type="date" name="dataEntrada" placeholder="dd/mm/yyyy" value="{{dado.dataEntrada}}" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="col-md-6">
-                                                            <div class="form-group ">
-                                                                <label class="col-sm-3 col-form-label">Data de
-                                                                    Saída</label>
-                                                                <div class="col-sm-9">
-                                                                    <input class="form-control" type="date" name="dataSaida" placeholder="dd/mm/yyyy" value="{{dado.dataSaida}}" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="primeiroNome">Selecione o cliente</label>
+                                                <div class="form-group">
+                                        
+                                                    <select class="js-example-basic" style="width:100%; height: 40px;" name ="idCliente">
+                                                        {% for cliente in clientes %}
+                                                        <option value="{{cliente.idcliente}}">{{cliente.nomecliente}}</option>
                                                     
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Número de Adultos</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="numAdultos" value="{{dado.numAdultos}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Número de Crianças</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="numCriancas" value="{{dado.numCriancas}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Número de Bebés</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="numBebes" value="{{dado.numBebes}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        {% endfor %}
+                                                      </select>
+                                                  </div>
+                                                  
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="dataEntrada">Data de entrada</label>
+                                                <input type="date" class="form-control" id="dataEntrada" name="dataEntrada"  />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="dataEntrada">Data de saida</label>
+                                                <input type="date" class="form-control" id="dataSaida" name="dataSaida"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="genero">Número de Adultos</label>
+                                                <input type="number" class="form-control" id="numAdultos" name="numAdultos" min="0">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="genero">Número de crianças</label>
+                                                <input type="number" class="form-control" id="numCriancas" name="numCriancas" min="0">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="genero">Número de bebés</label>
+                                                <input type="number" class="form-control" id="numBebes" name="numBebes" min="0">
+                                            </div>
+                                        </div>
+                                        
+
+                                    </div>
+                                
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="observacoes">Observações</label>
+                                                <textarea class="form-control" id="observacoes" rows="4" name="observacoes"></textarea>
+                                              </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="contribuinte">Tipologia contratada</label>
+                                                <select  style="width:100%; height: 40px;" id="tipologias" name="tipologiaContratada">
+                                                    <option value="t0">T0</option>
+                                                    <option value="t1">T1</option>
+                                                    <option value="t2">T2</option>
+                                                    <option value="t3">T3</option>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    
+                                    <div class="row">
 
 
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Observações</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="Observações" value="{{dado.Observações}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Tipologia Contratada</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="tipologiaContratada" value="{{dado.tipologiaContratada}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Id da Agência</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="idAgencia" value="{{dado.idAgencia}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Id do Método</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="idMetodo" value="{{dado.idMetodo}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="contribuinte">Atribuir Quarto? </label>
+                                                <select  style="width:100%; height: 40px;" id="quartos_disponiveis" name="numQuarto">
+                                                    {% for quarto in quartos %}
+                                                    <option value="{{numQuarto}}">Quarto {{quarto.numQuarto}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-6 mb-3">
+                                          <label for="Tarifa">Preço Manual?</label>
+                                          <input type="text" class="form-control" name="tarifa" id="tarifa">
+                                        </div>
+                                    </div>
+
+
+
+
+              
+                                                          
                                                         </div>
                                                         
-                         
+                                                </div>
                         
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -192,12 +212,11 @@
                                                 <div class="modal-body">
                                                     <h5>Tem certeza que deseja apagar? Essa ação não pode ser cancelada.
                                                     </h5>
-                                                
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
-                                                        <form action="/apagar-Reserva" method="post">
+                                                        <form action="/apagar-reserva" method="post">
                                                         <input type="hidden" value="{{dado.idReserva}}" name="idReserva">
                                                         
                                                     <button type="submit" class="btn btn-danger"> <i
@@ -224,114 +243,125 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalCriarLabel">Criar Reserva</h5>
+                            <h5 class="modal-title" id="modalCriarLabel">Criar reserva</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
-                            <form class="form-sample" method="post" action="/criar-Reserva" >
+                            <form class="form-sample" method="post" action="/criar-reserva" >
 
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 col-form-label" for="idCliente">Id do Cliente</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="idCliente"
-                                                    name="idCliente" placeholder="Id do Cliente" />
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    
+                           
 
 
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Data de
-                                                Entrada</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" type="date" name="dataEntrada" placeholder="dd/mm/yyyy" value="{{dado.dataEntrada}}" />
+
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="primeiroNome">Selecione o cliente</label>
+                                                <div class="form-group">
+                                        
+                                                    <select class="js-example-basic" style="width:100%; height: 40px;" name ="idCliente">
+                                                        {% for cliente in clientes %}
+                                                        <option value="{{cliente.idcliente}}">{{cliente.nomecliente}}</option>
+                                                    
+                                                        {% endfor %}
+                                                      </select>
+                                                  </div>
+                                                  
+                                                
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Data de
-                                                Saída</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" type="date" name="dataSaida" placeholder="dd/mm/yyyy" value="{{dado.dataSaida}}" />
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="dataEntrada">Data de entrada</label>
+                                                <input type="date" class="form-control" id="dataEntrada" name="dataEntrada"  />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="dataEntrada">Data de saida</label>
+                                                <input type="date" class="form-control" id="dataSaida" name="dataSaida"  />
                                             </div>
                                         </div>
                                     </div>
                                 
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-                                                <label class="col-sm-3 col-form-label">Número de Adultos</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="numAdultos" value="{{dado.numAdultos}}">
-                                                </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="genero">Número de Adultos</label>
+                                                <input type="number" class="form-control" id="numAdultos" name="numAdultos" min="0">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-                                                <label class="col-sm-3 col-form-label">Número de Crianças</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="numCriancas" value="{{dado.numCriancas}}">
-                                                </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="genero">Número de crianças</label>
+                                                <input type="number" class="form-control" id="numCriancas" name="numCriancas" min="0">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-                                                <label class="col-sm-3 col-form-label">Número de Bebés</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="numBebes" value="{{dado.numBebes}}">
-                                                </div>
+                                        
+                                        <div class="col-md-4 mb-3">
+                                            <div class="form-group">
+                                                <label for="genero">Número de bebés</label>
+                                                <input type="number" class="form-control" id="numBebes" name="numBebes" min="0">
                                             </div>
                                         </div>
+                                        
+
                                     </div>
-
-
+                                
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-                                                <label class="col-sm-3 col-form-label">Observações</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="Observações" value="{{dado.Observações}}">
-                                                </div>
-                                            </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="observacoes">Observações</label>
+                                                <textarea class="form-control" id="observacoes" rows="4" name="observacoes"></textarea>
+                                              </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-                                                <label class="col-sm-3 col-form-label">Tipologia Contratada</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="tipologiaContratada" value="{{dado.tipologiaContratada}}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-                                                <label class="col-sm-3 col-form-label">Id da Agência</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="idAgencia" value="{{dado.idAgencia}}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group ">
-                                                <label class="col-sm-3 col-form-label">Id do Método</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" name="idMetodo" value="{{dado.idMetodo}}">
-                                                </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="contribuinte">Tipologia contratada</label>
+                                                <select  style="width:100%; height: 40px;" id="tipologias" name="tipologiaContratada">
+                                                    <option value="t0">T0</option>
+                                                    <option value="t1">T1</option>
+                                                    <option value="t2">T2</option>
+                                                    <option value="t3">T3</option>
+                                                  </select>
                                             </div>
                                         </div>
                                     </div>
+                                
+                                    
+                                    <div class="row">
 
+
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="contribuinte">Atribuir Quarto? </label>
+                                                <select  style="width:100%; height: 40px;" id="quartos_disponiveis"  name="numQuarto">
+                                                    {% for quarto in quartos %}
+                                                    <option value="{{numQuarto}}">Quarto {{quarto.numQuarto}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-6 mb-3">
+                                          <label for="Tarifa">Preço Manual?</label>
+                                          <input type="text" class="form-control" name="tarifa" id="tarifa">
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                </div>
+                                
                         </div>
 
 
@@ -343,60 +373,74 @@
                     </div>
                 </div>
             </div>
-            <script>
-//     jQuery(document).ready(function() {
-//   jQuery('#data').DataTable({
-//       "paging": true,
-//       "lengthChange": true,
-//       "searching": true,
-//       "ordering": true,
-//       "info": true,
-//       "autoWidth": false,
-//       "language": {
-//         "lengthMenu": "Exibir _MENU_ registros por página",
-//         "zeroRecords": "Nenhum registro encontrado",
-//         "info": "Mostrando página _PAGE_ de _PAGES_",
-//         "infoEmpty": "Nenhum registro disponível",
-//         "infoFiltered": "(filtrado de _MAX_ registros no total)",
-//         "search": "Pesquisar:",
-//         "paginate": {
-//           "first": "Primeiro",
-//           "last": "Último",
-//           "next": "Próximo",
-//           "previous": "Anterior"
-//         }
-//       }
-//     });
-//   });^
 
-jQuery(document).ready(function () {
-    jQuery('#tabelaExemplo').DataTable({
-
-        "columns": [
-            "Id do Cliente",  
-            "Data de Entrada",  
-            "Data de Saída",
-            "Número de Adultos",
-            "Número de Crianças",
-            "Número de Bebés",
-            "Observações",
-            "Tipologia Contratada",
-            "Id da Agência",
-            "Id do Método",
-            "Apagar",
-
-        ],
-                "paging": true,         // Ativar paginação
-                "lengthMenu": [5, 10, 20],  // Opções de quantidade de registros por página
-                "pageLength": 5,        // Quantidade de registros por página padrão
-                "ordering": true,       // Permitir ordenação
-                "info": true,           // Exibir informações sobre a tabela (por exemplo, "Exibindo 1 a 10 de 20 registros")
-                "searching": true,      // Permitir pesquisa
-                "autoWidth": false,     // Desativar ajuste automático da largura das colunas
-                // Adicione mais opções conforme necessário
-            });
-        });
-    </script>
-         
 
             {% include 'components/footer.html' %}
+
+
+            <script>
+                $(document).ready(function() {
+                $('.js-example-basic').select2();
+            });
+
+   
+const dataEntrada = document.getElementById("dataEntrada");
+const dataSaida = document.getElementById("dataSaida");
+
+
+const currentDate = new Date();
+
+
+dataEntrada.min = currentDate.toISOString().split("T")[0];
+
+
+dataEntrada.addEventListener("input", function () {
+
+    const dataEntradaDate = new Date(dataEntrada.value);
+
+
+    dataSaida.min = dataEntradaDate.toISOString().split("T")[0];
+
+  
+    if (dataSaida.value < dataEntrada.value) {
+        dataSaida.value = dataEntrada.value;
+    }
+});
+
+const maxDate = new Date(currentDate);
+maxDate.setFullYear(currentDate.getFullYear() + 2);
+dataSaida.max = maxDate.toISOString().split("T")[0];
+
+
+
+
+
+$('#tipologias').change(function () {
+        var selectedTipologia = $(this).val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/quartos-tipologia',
+            data: {'tipologia': selectedTipologia},
+            success: function (options) {
+                // Limpe as opções existentes
+                console.log('Resposta do servidor:', options);
+                $('#quartos_disponiveis').empty();
+
+                // Adicione as novas opções ao segundo select
+                options.forEach(function (option) {
+                    $('#quartos_disponiveis').append('<option value="' + option.numQuarto + '">' + option.label + '</option>');
+                });
+            },
+            error: function (error) {
+                console.error('Erro na requisição AJAX:', error);
+            }
+        });
+    });
+
+
+
+
+
+
+            </script>

@@ -12,7 +12,11 @@
                         {% include 'components/barra_pesquisa.html' %}
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
-                                data-target="#modalCriar">+ Adicionar novo tarifa</button>
+                                data-target="#modalCriar">+ Adicionar ou Editar tarifas </button>
+                                &nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar">
+                                    <i class="mdi mdi-delete"></i> Apagar Tarifas
+                                </button>
                         </div>
                         
                         <div class="table-responsive ">
@@ -38,17 +42,9 @@
                                         <td>{{ dado.data }} </td>
                                         <td>{{ dado.preconoiteadulto }}</td>
                                         <td>{{ dado.preconoitecrianca }}</td>
-                                        <td>Editar</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idtarifa}}">
-                                                <i class="mdi mdi-grease-pencil"></i> Editar
-                                            </button>
-                                        </td>
-                                        <td>
-                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idtarifa}}">
-                                                <i class="mdi mdi-delete"></i> Apagar
-                                            </button>
-                                        </td>
+                                     
+                                       
+                                        
                                     </tr>
                                     <div class="modal fade" id="modalEditar-{{dado.idtarifa}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
@@ -64,45 +60,54 @@
                                                     <h4 class="card-title"></h4>
                                                     <form class="form-sample" method="post" action="/editar-tarifa" >
                                                       
-                                                    
-                        
-                                                            <div class="col-md-4">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Nome do tarifa</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do tarifa" value="{{dado.ultimonome}}"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                        
-                        
-                                                        </div>
                                                         <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Gênero</label>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label">Data de Início:</label>
                                                                     <div class="col-sm-9">
-                                                                        <select class="form-control" name="genero" value="{{dado.idchefe}}">
-                                                                            {% for chefes in dados.idchefe %}
-                                                                            <option value="{{chefe}}">{{chefe}}</option>
-                                                                            {% endfor %}
-                                                                        </select>
+                                                                        <input type="date" class="form-control" id="data_inicio" name="data_inicio" required>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Data de
-                                                                        nascimento</label>
+                                                
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label">Data de Fim:</label>
                                                                     <div class="col-sm-9">
-                                                                        <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" value="{{dado.datanascimento}}" />
+                                                                        <input type="date" class="form-control" id="data_fim" name="data_fim" required>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                        
-                                                        
-
+                                                
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label">Preço (Adulto):</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="number" class="form-control" id="preco_noite_adulto" name="preco_noite_adulto" step="any" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label">Preço (Criança):</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="number" class="form-control" id="preco_noite_crianca" name="preco_noite_crianca" step="any" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label">Número do Quarto:</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="number" class="form-control" id="num_quarto" name="num_quarto" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                         
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -117,35 +122,60 @@
                                     </div>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modalApagar-{{dado.idtarifa}}" tabindex="-1"
-                                    role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
+                                    <div class="modal fade" id="modalApagar" tabindex="-1" role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="ModalApagarLabel">Apagar Dados</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <h5>Tem certeza que deseja apagar? Essa ação não pode ser cancelada.
-                                                    </h5>
-                                                
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Cancelar</button>
-                                                        <form action="/apagar-tarifa" method="post">
-                                                        <input type="hidden" value="{{dado.idtarifa}}" name="idtarifa">
-                                                        
-                                                    <button type="submit" class="btn btn-danger"> <i
-                                                            class="mdi mdi-delete"></i>Apagar</button>
-                                                        </form>
-                                                </div>
+                                                <form action="/apagar-tarifa" method="post">
+                                                    <div class="modal-body">
+                                                        <h5>Digite de quando até quando deseja apagar a tarifa, bem como o número do quarto</h5>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label">Data de Início:</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="date" class="form-control" id="de" name="de" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label">Data de Fim:</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="date" class="form-control" id="ate" name="ate" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-3 col-form-label">Número do quarto</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="number" class="form-control" id="numQuarto" name="numQuarto" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-danger"><i class="mdi mdi-delete"></i>Apagar</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
+                                    
 
 
                                     {% endfor %}
@@ -172,127 +202,60 @@
                             <h4 class="card-title"></h4>
                             <form class="form-sample" method="post" action="/criar-tarifa" >
 
+                              
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
+                                            <label class="col-sm-3 col-form-label">Data de Início:</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="primeiroNome"
-                                                    name="primeiroNome" placeholder="nome do tarifa" />
+                                                <input type="date" class="form-control" id="data_inicio" name="data_inicio" required>
                                             </div>
-
                                         </div>
                                     </div>
+                        
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-5 col-form-label">Nomes do meio</label>
+                                            <label class="col-sm-3 col-form-label">Data de Fim:</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="nomeDoMeio"
-                                                    name="nomeDoMeio" placeholder="nomes do meio do tarifa" />
+                                                <input type="date" class="form-control" id="data_fim" name="data_fim" required>
                                             </div>
                                         </div>
                                     </div>
-
+                                </div>
+                        
+                                <div class="row">
                                     <div class="col-md-4">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Apelido</label>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 col-form-label">Preço (Adulto):</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="ultimoNome"
-                                                    name="ultimoNome" placeholder="último nome do tarifa" />
+                                                <input type="number" class="form-control" id="preconoiteadulto" name="preconoiteadulto" step="any" required>
                                             </div>
                                         </div>
                                     </div>
-
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Gênero</label>
+                        
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 col-form-label">Preço (Criança):</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" name="genero">
-                                                    <option value="m">Male</option>
-                                                    <option value="f">Female</option>
-                                                    <option value="o">outro</option>
-                                                </select>
+                                                <input type="number" class="form-control" id="preconoitecrianca" name="preconoitecrianca" step="any" required>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Data de
-                                                nascimento</label>
+                        
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 col-form-label">Número do Quarto:</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" type="date" name="dataNascimento"
-                                                    placeholder="dd/mm/yyyy" value="{{dataNascimento}}" />
+                                                <input type="number" class="form-control" id="numQuarto" name="numQuarto" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nº Contribuinte</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="contribuinte">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="CC">
-                                            </div>
-                                        </div>
-                                    </div>
+                             
+                          
 
-                                </div>
-                                <p class="card-description"> Contactos </p>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Número de telefone
-                                            </label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="telefone" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">email</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="exemplo@gmail.com"
-                                                    name="email" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">tarifa ativo?</label>
-                                            <div class="col-sm-4">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
-                                                            id="ativo1" value="1" checked> Ativo </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
-                                                            id="ativo2" value="0"> Desativado
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            
 
                         </div>
 

@@ -23,6 +23,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
+                                        <th>Apelido</th>
                                         <th>Contribuinte</th>
                                         <th>Cartão de Cidadão</th>
                                         <th>data de nascimento</th>
@@ -35,6 +36,7 @@
 
                                     <tr>
                                         <td>{{ dado.primeironome }}</td>
+                                        <td>{{ dado.ultimonome }}</td>
                                         <td>{{ dado.contribuinte }} </td>
                                         <td>{{ dado.cc }}</td>
                                         <td>{{ dado.datanascimento }}</td>
@@ -185,6 +187,7 @@
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
+
                                                 </div>
                                                 <div class="modal-body">
                                                     <h5>Tem certeza que deseja apagar? Essa ação não pode ser cancelada.
@@ -337,30 +340,7 @@
                 </div>
             </div>
             <script>
-//     jQuery(document).ready(function() {
-//   jQuery('#data').DataTable({
-//       "paging": true,
-//       "lengthChange": true,
-//       "searching": true,
-//       "ordering": true,
-//       "info": true,
-//       "autoWidth": false,
-//       "language": {
-//         "lengthMenu": "Exibir _MENU_ registros por página",
-//         "zeroRecords": "Nenhum registro encontrado",
-//         "info": "Mostrando página _PAGE_ de _PAGES_",
-//         "infoEmpty": "Nenhum registro disponível",
-//         "infoFiltered": "(filtrado de _MAX_ registros no total)",
-//         "search": "Pesquisar:",
-//         "paginate": {
-//           "first": "Primeiro",
-//           "last": "Último",
-//           "next": "Próximo",
-//           "previous": "Anterior"
-//         }
-//       }
-//     });
-//   });^
+
 
 jQuery(document).ready(function () {
     jQuery('#tabelaExemplo').DataTable({

@@ -21,13 +21,13 @@ def conectar():
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
 
-def inserir(tabela, campos, dados):
+def inserir(tabela, dados):
     conexao = conectar()
     if conexao:
         try:
             cursor = conexao.cursor()
-            campos_str = ', '.join(campos)
-            valores_str = ', '.join(['%s' for _ in campos])
+            campos_str = ', '.join(dados.keys())
+            valores_str = ', '.join(['%s' for _ in dados.keys()])
             sql = f"INSERT INTO {tabela} ({campos_str}) VALUES ({valores_str})"
             cursor.execute(sql, tuple(dados.values()))
             conexao.commit()
@@ -37,7 +37,6 @@ def inserir(tabela, campos, dados):
             if conexao.is_connected():
                 cursor.close()
                 conexao.close()
-           
 
 def listar(tabela):
     conexao = conectar()
@@ -71,6 +70,16 @@ def free_select(query):
                 cursor.close()
                 conexao.close()
     
+
+
+def last_insert_id(cursor):
+    try:
+        cursor.execute("SELECT LAST_INSERT_ID()")
+        result = cursor.fetchone()
+        return result[0] if result else None
+    except Exception as e:
+        print(f"Erro ao obter o último ID inserido: {e}")
+        return None
 
 
     
@@ -119,11 +128,65 @@ def apagar(tabela, primarykey, id):
                 conexao.close()
 
 
+def chamar_procedimento(data_inicio, data_fim, preco_noite_adulto, preco_noite_crianca, num_quarto):
+    conexao = conectar()
+    if conexao:
+        try:
+            cursor = conexao.cursor()
+            cursor.callproc('inserir_tarifas', (data_inicio, data_fim, preco_noite_adulto, preco_noite_crianca, num_quarto))
+            conexao.commit()
+        except Exception as e:
+            print(f"Erro ao chamar o procedimento: {e}")
+        finally:
+            if conexao.is_connected():
+                cursor.close()
+                conexao.close()
+
+
+
+def apagar_tarifas(data_inicio, data_fim, num_quarto):
+    conexao = conectar()
+    if conexao:
+        try:
+            cursor = conexao.cursor()
+            cursor.callproc('apagar_tarifas', (data_inicio, data_fim, num_quarto))
+            conexao.commit()
+        except Exception as e:
+            print(f"Erro ao chamar o procedimento: {e}")
+        finally:
+            if conexao.is_connected():
+                cursor.close()
+                conexao.close()
+
+
 
 
 def main():
-    a = listar("funcionario")
-    print(a)
+ 
+    conexao = conectar()
+
+    # Criando um dicionário com dados para inserção
+    dados = {
+        "numQuarto": "1",
+        "idReserva": "2",
+        "observacoes": "2dfdfdf"
+    }
+
+    # Chamando a função inserir com os dados do dicionário
+    inserir("reservaquarto",  dados)
+
+    # Criando um cursor
+    cursor = conexao.cursor(dictionary=True)
+
+    # Obtendo o último ID inserido usando a função last_insert_id
+    last_inserted_id = last_insert_id(cursor)
+
+    # Imprimir o último ID inserido
+    print("Último ID Inserido:", last_inserted_id)
+
+    # Comprometa as alterações no banco de dados
+    conexao.commit()
+
 
 if __name__ == "__main__":
     main()

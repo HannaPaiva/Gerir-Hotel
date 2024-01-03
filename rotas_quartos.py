@@ -22,7 +22,7 @@ def criar_quarto():
         "andar": request.form["andar"],
         "tipologia": request.form["tipologia"],
         "qtdcamacasal": request.form["qtdcamacasal"],
-        "qtdcamasolteiro": request.form["solteiro"],
+        "qtdcamasolteiro": request.form["qtdcamasolteiro"],
         "ativo": request.form["ativo"],
         "estadisponivel": request.form["estadisponivel"]
     }
@@ -38,7 +38,7 @@ def editar_quarto():
         "andar": request.form["andar"],
         "tipologia": request.form["tipologia"],
         "qtdcamacasal": request.form["qtdcamacasal"],
-        "qtdcamasolteiro": request.form["solteiro"],
+        "qtdcamasolteiro": request.form["qtdcamasolteiro"],
         "ativo": request.form["ativo"],
         "estadisponivel": request.form["estadisponivel"]
     }
