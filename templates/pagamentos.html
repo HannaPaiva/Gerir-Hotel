@@ -2,28 +2,32 @@
 {% include 'components/sidebar.html' %}
 {% include 'components/navbar.html' %}
 
-
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Tabela de pagamentos</h4>
+                        <h4 class="card-title">Tabela de Pagamentos</h4>
+                        {% include 'components/barra_pesquisa.html' %}
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success create-new-button" data-toggle="modal"
-                                data-target="#modalCriar">+ Adicionar novo pagamentos</button>
+                                data-target="#modalCriar">+ Adicionar novo pagamento</button>
                         </div>
-                        <div class="table-responsive">
+                        
+                        <div class="table-responsive ">
 
-                            <table class="table">
+                            <table class="table" id="tabelaExemplo">
                                 <thead>
                                     <tr>
-                                        <th>Nome</th>
-                                        <th>Contribuinte</th>
-                                        <th>Cartão de Cidadão</th>
-                                        <th>data de nascimento</th>
-                                        <th>Ativo</th>
+                                        <th>ID do Pagamento</th>
+                                        <th>Valor Total</th>
+                                        <th>Método de Pagamento</th>
+                                        <th>Tarifa Reembolsável</th>
+                                        <th>Data do Pagamento</th>
+                                        <th>Observações</th>
+                                        <th>Status</th>
+                                        <th>ID da Reserva</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -31,28 +35,30 @@
                                     {% for dado in dados %}
 
                                     <tr>
-                                        <td>{{ dado.valorTotal }}</td>
-                                        <td>{{ dado.contribuinte }} </td>
-                                        <td>{{ dado.CC }}</td>
-                                        <td>{{ dado.dataNascimento }}</td>
-                                        <td><label class="badge">{{dado.ativo}}</label></td>
+                                        <td>{{ dado.idPagamento }}</td>
+                                        <td>{{ dado.valorTotal }} </td>
+                                        <td>{{ dado.metodoPagamento }}</td>
+                                        <td>{{ dado.tarifaReembolsavel }}</td>
+                                        <td>{{ dado.dataPagamento }}</td>
+                                        <td>{{ dado.observacoes }}</td>
+                                        <td>{{ dado.status }}</td>
+                                        <td>{{ dado.idReserva }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idpagamento}}">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditar-{{dado.idPagamento}}">
                                                 <i class="mdi mdi-grease-pencil"></i> Editar
                                             </button>
                                         </td>
                                         <td>
-                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idpagamento}}">
+                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalApagar-{{dado.idPagamento}}">
                                                 <i class="mdi mdi-delete"></i> Apagar
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade" id="modalEditar-{{dado.idpagamento}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+                                    <div class="modal fade" id="modalEditar-{{dado.idPagamento}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalEditarLabel">Editar funcioná
-                                                        rio</h5>
+                                                    <h5 class="modal-title" id="modalEditarLabel">Editar pagamento</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -63,129 +69,75 @@
                                                     <form class="form-sample" method="post" action="/editar-pagamento" >
                                                       
                                                         <div class="row">
+                                                            
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
+                                                                    <label class="col-sm-5 col-form-label" for="valorTotal">Valor Total</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="primeiroNome" name="primeiroNome" placeholder="nome do pagamento" value="{{dado.primeiroNome}}" />
+                                                                        <input type="text" class="form-control" id="valorTotal" name="valorTotal" placeholder="Valor Total" value="{{ dado.valorTotal }}" >
                                                                     </div>
-                        
                                                                 </div>
                                                             </div>
+
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <label class="col-sm-5 col-form-label">Nomes do meio</label>
+                                                                    <label class="col-sm-5 col-form-label" for="metodoPagamento">Método de Pagamento</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="nomeDoMeio" name="nomeDoMeio" placeholder="nomes do meio do pagamento" value="{{dado.nomeDoMeio}}" />
+                                                                        <input type="text" class="form-control" id="metodoPagamento" name="metodoPagamento" placeholder="Método de Pagamento" value="{{ dado.metodoPagamento }}" >
                                                                     </div>
                                                                 </div>
                                                             </div>
-                        
+
                                                             <div class="col-md-4">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Apelido</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" id="ultimoNome" name="ultimoNome" placeholder="último nome do pagamento" value="{{dado.ultimoNome}}"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                        
-                        
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Gênero</label>
-                                                                    <div class="col-sm-9">
-                                                                        <select class="form-control" name="genero" value="{{dado.genero}}">
-                                                                            <option value="m">Male</option>
-                                                                            <option value="f">Female</option>
-                                                                            <option value="o">outro</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">Data de
-                                                                        nascimento</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input class="form-control" type="date" name="dataNascimento" placeholder="dd/mm/yyyy" value="{{dado.dataNascimento}}" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                        
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">nº Contribuinte</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="contribuinte" value="{{dado.contribuinte}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="CC" value="{{dado.CC}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                        
-                                                        </div>
-                                                        <p class="card-description"> Contactos </p>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label class="col-sm-3 col-form-label">Número de telefone
-                                                                    </label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" name="telefone" value="{{dado.telefone}}" />
+                                                                    <label class="col-sm-4 col-form-label" for="tarifaReembolsavel">Tarifa Reembolsável</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" class="form-control" id="tarifaReembolsavel" name="tarifaReembolsavel" placeholder="Tarifa Reembolsável" value="{{ dado.tarifaReembolsavel }}" >
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group ">
-                                                                    <label class="col-sm-3 col-form-label">email</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control" placeholder="exemplo@gmail.com"
-                                                                            name="email" value="{{dado.email}}" />
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 col-form-label" for="dataPagamento">Data do Pagamento</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" class="form-control" id="dataPagamento" name="dataPagamento" placeholder="Data do Pagamento" value="{{ dado.dataPagamento }}" >
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 col-form-label" for="observacoes">Observações</label>
+                                                                    <div class="col-sm-8">
+                                                                        <textarea class="form-control" id="observacoes" name="observacoes" placeholder="Observações">{{ dado.observacoes }}</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 col-form-label" for="status">Status</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{ dado.status }}" >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-4 col-form-label" for="idReserva">ID da Reserva</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" class="form-control" id="idReserva" name="idReserva" placeholder="ID da Reserva" value="{{ dado.idReserva }}" >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <input type="hidden" value="{{dado.idPagamento}}" name="idPagamento">
                                                         </div>
-                        
-                                                        <div class="row">
-                        
-                                                            <div class="col-md-6">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">pagamento ativo?</label>
-                                                                    <div class="col-sm-4">
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
-                                                                                    id="ativo" value="1" checked> Ativo </label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <input type="hidden" name="idpagamento" value="{{dado.idpagamento}}">
-                                                                    <div class="col-sm-5">
-                                                                        <div class="form-check">
-                                                                            <label class="form-check-label">
-                                                                                <input type="radio" class="form-check-input" name="ativo"
-                                                                                    id="ativo" value="0"> Desativado
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                        
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                    <button type="submit" class="btn btn-success">Atualizar registo</button>
+                                                    <button type="submit" class="btn btn-success">Atualizar registro</button>
                                                 </div>
                                                 </form>
                                                 </div>
@@ -196,7 +148,7 @@
                                     </div>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="modalApagar-{{dado.idpagamento}}" tabindex="-1"
+                                    <div class="modal fade" id="modalApagar-{{dado.idPagamento}}" tabindex="-1"
                                     role="dialog" aria-labelledby="modalApagarLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -210,12 +162,13 @@
                                                 <div class="modal-body">
                                                     <h5>Tem certeza que deseja apagar? Essa ação não pode ser cancelada.
                                                     </h5>
+                                                
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">Cancelar</button>
                                                         <form action="/apagar-pagamento" method="post">
-                                                        <input type="hidden" value="{{dado.idpagamento}}" name="idpagamento">
+                                                        <input type="hidden" value="{{dado.idPagamento}}" name="idPagamento">
                                                         
                                                     <button type="submit" class="btn btn-danger"> <i
                                                             class="mdi mdi-delete"></i>Apagar</button>
@@ -249,140 +202,87 @@
                         <div class="modal-body">
                             <h4 class="card-title"></h4>
                             <form class="form-sample" method="post" action="/criar-pagamento" >
-
+                                                      
                                 <div class="row">
+                                   
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-3 col-form-label" for="primeiroNome">Nome</label>
+                                            <label class="col-sm-5 col-form-label" for="valorTotal">Valor Total</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="primeiroNome"
-                                                    name="primeiroNome" placeholder="nome do pagamento" />
+                                                <input type="text" class="form-control" id="valorTotal" name="valorTotal" placeholder="Valor Total"  >
                                             </div>
-
                                         </div>
                                     </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 col-form-label" for="metodoPagamento">Método de Pagamento</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="metodoPagamento" name="metodoPagamento" placeholder="Método de Pagamento">
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="col-sm-5 col-form-label">Nomes do meio</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="nomeDoMeio"
-                                                    name="nomeDoMeio" placeholder="nomes do meio do pagamento" />
+                                            <label class="col-sm-4 col-form-label" for="tarifaReembolsavel">Tarifa Reembolsável</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="tarifaReembolsavel" name="tarifaReembolsavel" placeholder="Tarifa Reembolsável">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Apelido</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="ultimoNome"
-                                                    name="ultimoNome" placeholder="último nome do pagamento" />
+                                        <div class="form-group">
+                                            <label class="col-sm-4 col-form-label" for="dataPagamento">Data do Pagamento</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="dataPagamento" name="dataPagamento" placeholder="Data do Pagamento">
                                             </div>
                                         </div>
                                     </div>
 
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 col-form-label" for="observacoes">Observações</label>
+                                            <div class="col-sm-8">
+                                                <textarea class="form-control" id="observacoes" name="observacoes" placeholder="Observações"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 col-form-label" for="status">Status</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="status" name="status" placeholder="Status">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 col-form-label" for="idReserva">ID da Reserva</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="idReserva" name="idReserva" placeholder="ID da Reserva">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" value="1" name="ativo">
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Gênero</label>
-                                            <div class="col-sm-9">
-                                                <select class="form-control" name="genero">
-                                                    <option value="m">Male</option>
-                                                    <option value="f">Female</option>
-                                                    <option value="o">outro</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Data de
-                                                nascimento</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" type="date" name="dataNascimento"
-                                                    placeholder="dd/mm/yyyy" />
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success">Criar Pagamento</button>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nº Contribuinte</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="contribuinte">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">nº Cartão de cidadão</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="CC">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <p class="card-description"> Contactos </p>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">Número de telefone
-                                            </label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="telefone" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <label class="col-sm-3 col-form-label">email</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="exemplo@gmail.com"
-                                                    name="email" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">pagamento ativo?</label>
-                                            <div class="col-sm-4">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
-                                                            id="ativo1" value="1" checked> Ativo </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input type="radio" class="form-check-input" name="ativo"
-                                                            id="ativo2" value="0"> Desativado
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                            </form>
                         </div>
-
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-success">Criar</button>
-                        </div>
-                        </form>
                     </div>
                 </div>
             </div>
+   
+        </div>
 
+    </div>
 
-            {% include 'components/footer.html' %}
+</div>
+{% include 'components/footer.html' %}

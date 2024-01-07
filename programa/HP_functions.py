@@ -144,6 +144,31 @@ def chamar_procedimento(data_inicio, data_fim, preco_noite_adulto, preco_noite_c
 
 
 
+def stored_procedure(procedimento, dados):
+    conexao = conectar()
+    
+    if conexao:
+        try:
+            cursor = conexao.cursor()
+            # Certifique-se de que a stored procedure tenha o mesmo número de parâmetros
+            cursor.callproc(procedimento, dados)
+            conexao.commit()
+            
+            # Captura o resultado da stored procedure
+            result = list(cursor.stored_results())[0].fetchall()
+            
+            print("Stored procedure chamada com sucesso!")
+            return {"status": result}
+        except Exception as e:
+            print(f"Erro ao chamar a stored procedure: {e}")
+            return {"status": str(e)}
+        finally:
+            if conexao.is_connected():
+                cursor.close()
+                conexao.close()
+
+
+
 def apagar_tarifas(data_inicio, data_fim, num_quarto):
     conexao = conectar()
     if conexao:
@@ -159,33 +184,25 @@ def apagar_tarifas(data_inicio, data_fim, num_quarto):
                 conexao.close()
 
 
+def dicionario(output):
+    result = {}
 
+    for key, valores in output.items():
+        result[key] = valores[0][0] if valores else None
+
+    return result
+
+# Exemplo de uso:
 
 def main():
- 
-    conexao = conectar()
+    inserir_reserva = stored_procedure("InserirReserva", (1, '2024-12-23', '2024-12-26', 2, 1, 0, 'Reserva paAAAA', 't2', 1, 1, 1))
+    
 
-    # Criando um dicionário com dados para inserção
-    dados = {
-        "numQuarto": "1",
-        "idReserva": "2",
-        "observacoes": "2dfdfdf"
-    }
+    status = dicionario({"status": inserir_reserva["status"]})
 
-    # Chamando a função inserir com os dados do dicionário
-    inserir("reservaquarto",  dados)
+    print(status)
 
-    # Criando um cursor
-    cursor = conexao.cursor(dictionary=True)
-
-    # Obtendo o último ID inserido usando a função last_insert_id
-    last_inserted_id = last_insert_id(cursor)
-
-    # Imprimir o último ID inserido
-    print("Último ID Inserido:", last_inserted_id)
-
-    # Comprometa as alterações no banco de dados
-    conexao.commit()
+        
 
 
 if __name__ == "__main__":

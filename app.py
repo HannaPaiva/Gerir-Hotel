@@ -14,6 +14,7 @@ from rotas_pagamentos import rotas_pagamento
 
 from rotas_reservas import rotas_reserva
 
+from programa.HP_functions import *
 
 from programa.Z_funcoes import *
 from programa.z_database_manager import DatabaseManager
@@ -57,11 +58,68 @@ FROM
 
 ''')
  
+    mediaestadia = selecionar("SELECT AVG(DATEDIFF(dataSaida, dataEntrada)) AS mediaestadia FROM reserva;")
+
+    reservasagencia = selecionar("SELECT a.nomeAgencia as nomeagencia, COUNT(*) AS reservasagencia FROM agencia a JOIN reserva r ON a.idAgencia = r.idAgencia GROUP BY a.nomeAgencia;")
+
+    receitamedia = selecionar("SELECT AVG(valorTotal) AS receitamedia FROM pagamento;")
+
+    mediatarifas = selecionar("SELECT AVG(precoNoiteAdulto) AS mediaadultos, AVG(preconoitecrianca) AS mediacriancas FROM tarifa")
+
+    disponiveishoje = free_select('''SET @p_dataAtual = CURRENT_DATE();
+SELECT COUNT(*) AS quartos_disponiveis
+FROM quarto q
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM reservaquarto rq
+    INNER JOIN reserva r ON rq.idReserva = r.idReserva
+    WHERE rq.numQuarto = q.numQuarto
+        AND (
+            (@p_dataAtual BETWEEN r.dataEntrada AND r.dataSaida)
+            OR (@p_dataAtual BETWEEN r.dataEntrada AND r.dataSaida)
+            OR (r.dataEntrada <= @p_dataAtual AND r.dataSaida >= @p_dataAtual)
+        )
+);''')
+    
+    
+    quaisdisponiveis = free_select('''
+SET @p_dataAtual = CURRENT_DATE();
+
+
+SELECT CONCAT('Quarto ', q.numQuarto, ', ', q.tipologia, ', no ', q.andar, "º andar") AS descricao_quarto
+FROM quarto q
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM reservaquarto rq
+    INNER JOIN reserva r ON rq.idReserva = r.idReserva
+    WHERE rq.numQuarto = q.numQuarto
+        AND (
+            (@p_dataAtual BETWEEN r.dataEntrada AND r.dataSaida)
+            OR (@p_dataAtual BETWEEN r.dataEntrada AND r.dataSaida)
+            OR (r.dataEntrada <= @p_dataAtual AND r.dataSaida >= @p_dataAtual)
+        )
+);
+
+  ''')
+    
+
+
+
     dados = {
         "totalClientes": totalClientes[0]["totalClientes"],
         "mediaIdades": mediaIdades[0]["mediaIdades"],
         "totalQuartos": totalQuartos[0]["totalQuartos"],
-        "ocupacao":round(ocupacao[0]["ocupacao"], 2) if ocupacao and ocupacao[0] and ocupacao[0].get("ocupacao") is not None else "Sem dados"
+        "ocupacao":round(ocupacao[0]["ocupacao"], 2) if ocupacao and ocupacao[0] and ocupacao[0].get("ocupacao") is not None else "Sem dados",
+        "mediaEstadia": mediaestadia[0]["mediaestadia"],
+        "reservasAgencia": reservasagencia[0]["reservasagencia"],
+        "nomeAgencia": reservasagencia[0]["nomeagencia"],
+        "receitaMedia": receitamedia[0]["receitamedia"],
+        "mediaCriancas": mediatarifas[0]["mediacriancas"],
+        "mediaAdultos": mediatarifas[0]["mediaadultos"],
+
+        "quartosDisponiveis": disponiveishoje,
+        "quaisDisponiveis": quaisdisponiveis,
+
     }
 
     return render_template('index.html', dados=dados)

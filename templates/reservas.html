@@ -24,10 +24,11 @@
                                         <th>Cliente</th>
                                         <th>Data de Entrada</th>
                                         <th>Data de Saída</th>
+                                        <th>Número do Quarto</th>
                                         <th>Número de Adultos</th>
                                         <th>Número de Crianças</th>
                                         <th>Número de bebés</th>
-                                        <th>Observações</th>
+                                       
                                         <th>Tipologia Contratada</th>
                                      
                                     </tr>
@@ -41,10 +42,11 @@
                                         <td>{{ dado.nomeCompleto }} </td>
                                         <td>{{ dado.dataEntrada }}</td>
                                         <td>{{ dado.dataSaida }}</td>
+                                        <td>{{ dado.numQuarto }}</td>
                                         <td>{{ dado.numAdultos }}</td>
                                         <td>{{ dado.numCriancas }}</td>
                                         <td>{{ dado.numBebes }}</td>
-                                        <td>{{ dado.observacoes }}</td>
+                                  
                                         <td>{{ dado.tipologiaContratada }}</td>
 
                                     
@@ -69,12 +71,12 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                
+                                            
                                                 <div class="modal-body">
                                                     <h4 class="card-title"></h4>
                                                     <form class="form-sample" method="post" action="/editar-reserva" >
                                                       
-
+                                                        <input type="hidden" name="idReserva" value="{{dado.idReserva}}">
 
                                 <div class="container">
                                     <div class="row">

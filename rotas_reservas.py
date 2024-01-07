@@ -10,12 +10,15 @@ from programa.HP_functions import *
 
 @rotas_reserva.route('/reservas')
 def listar_reservas():
-    dados = free_select('''SELECT 
+    dados = free_select('''
+
+SELECT 
 
 r.*,
 c.*,
 a.*,
 m.*,
+q.numQuarto,
 
 CONCAT (c.primeiroNome, " ", c.nomeDoMeio, " ", c.ultimoNome) AS nomeCompleto
 
@@ -32,6 +35,9 @@ ON r.idagencia = a.idagencia
 LEFT JOIN metodoreserva m
 ON r.idmetodo = m.idmetodo
 
+LEFT JOIN reservaquarto q 
+
+ON r.idReserva = q.idReserva
 ''')
     clientes = free_select('''SELECT 
 
@@ -66,32 +72,21 @@ def criar_reserva():
         "tipologiaContratada": request.form["tipologiaContratada"],
         "idAgencia": 1,
         "idMetodo": 1,
+        "numQuarto": request.form["numQuarto"]
     
     }
 
+
+    inserir_reserva = stored_procedure("InserirReserva", (dados["idCliente"], dados["dataEntrada"], dados["dataSaida"], dados["numAdultos"], dados["numCriancas"], dados["numBebes"], dados["observacoes"], dados["tipologiaContratada"], dados["idAgencia"], dados["idMetodo"], dados["numQuarto"]))
   
-    conn.insert_data("reserva", dados)
+    status = dicionario({"status": inserir_reserva["status"]})
 
-    last_inserted_id = free_select("SELECT MAX(idreserva) AS idreserva FROM reserva")
-    
-    idreserva = last_inserted_id[0]["idreserva"]
-    print(idreserva)
-
- 
-    print(request.form["numQuarto"])
-
-    if request.form["numQuarto"] != " " :
-          
-        dados2 = {
-            "numQuarto": request.form["numQuarto"], 
-            "idReserva": idreserva,
-            "observacoes": request.form["observacoes"],
-        }
-        inserir("reservaquarto", dados2)
+    print(status)
+  
+    return render_template('reserva_sucesso.html', status = status)
 
 
 
-    return redirect(url_for('rotas_reserva.listar_reservas'))
 
 @rotas_reserva.route('/editar-reserva', methods=['GET', 'POST'])
 def editar_reserva():
@@ -110,7 +105,15 @@ def editar_reserva():
         "idMetodo": 1,
     
     }
+
     conn.update_data("reserva", dados, idReserva)
+
+    dados2 = {
+            "numQuarto": request.form["numQuarto"], 
+            "idReserva":request.form["idReserva"] ,
+            "observacoes": request.form["observacoes"],
+    }
+    inserir("reservaquarto", dados2)
     return redirect(url_for('rotas_reserva.listar_reservas'))
 
 
