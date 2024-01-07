@@ -11,10 +11,10 @@
                     <div class="card-body">
                         <h2>Status da criação: {{ status.status }} </h2>
 
-                        {% if status.status == "200" %}
+                        {% if status.status == "200" or status.status == 1  %}
                             <p>Reserva criada com sucesso</p>
                         {% else %}
-                            <p>falha ao criar reserva. Data já ocupada</p>
+                            <p>...</p>
                         {% endif %}
 
         <div class="table-responsive">

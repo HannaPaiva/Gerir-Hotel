@@ -49,14 +49,23 @@ WHERE dataNascimento IS NOT NULL;
     totalQuartos = selecionar("SELECT COUNT(numQuarto) as totalQuartos from Quarto")
 
     ocupacao = selecionar('''SELECT
-  COUNT(*) AS total_quartos,
-  SUM(estaDisponivel) AS quartos_disponiveis,
-  (COUNT(*) - SUM(estaDisponivel)) AS quartos_ocupados,
-  (SUM(estaDisponivel) / COUNT(*)) * 100 AS ocupacao
-FROM
-  quarto;
+ 
+    IFNULL((SUM(CASE WHEN EXISTS (
+        SELECT 1
+        FROM reservaquarto rq
+        INNER JOIN reserva r ON rq.idReserva = r.idReserva
+        WHERE rq.numQuarto = q.numQuarto
+            AND (
+                (CURRENT_DATE() BETWEEN r.dataEntrada AND r.dataSaida)
+                OR (CURRENT_DATE() BETWEEN r.dataEntrada AND r.dataSaida)
+                OR (r.dataEntrada <= CURRENT_DATE() AND r.dataSaida >= CURRENT_DATE())
+            )
+    ) THEN 1 ELSE 0 END) / COUNT(*)) * 100, 0) AS ocupacao
+FROM quarto q;
+
 
 ''')
+    pagamentos= free_select("SELECT SUM(valortotal) AS lucro FROM pagamento")
  
     mediaestadia = selecionar("SELECT AVG(DATEDIFF(dataSaida, dataEntrada)) AS mediaestadia FROM reserva;")
 
@@ -66,27 +75,27 @@ FROM
 
     mediatarifas = selecionar("SELECT AVG(precoNoiteAdulto) AS mediaadultos, AVG(preconoitecrianca) AS mediacriancas FROM tarifa")
 
-    disponiveishoje = free_select('''SET @p_dataAtual = CURRENT_DATE();
-SELECT COUNT(*) AS quartos_disponiveis
-FROM quarto q
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM reservaquarto rq
-    INNER JOIN reserva r ON rq.idReserva = r.idReserva
-    WHERE rq.numQuarto = q.numQuarto
-        AND (
-            (@p_dataAtual BETWEEN r.dataEntrada AND r.dataSaida)
-            OR (@p_dataAtual BETWEEN r.dataEntrada AND r.dataSaida)
-            OR (r.dataEntrada <= @p_dataAtual AND r.dataSaida >= @p_dataAtual)
-        )
-);''')
+    disponiveishoje = free_select('''SELECT
+ 
+    IFNULL(SUM(CASE WHEN NOT EXISTS (
+        SELECT 1
+        FROM reservaquarto rq
+        INNER JOIN reserva r ON rq.idReserva = r.idReserva
+        WHERE rq.numQuarto = q.numQuarto
+            AND (
+                (CURRENT_DATE() BETWEEN r.dataEntrada AND r.dataSaida)
+                OR (CURRENT_DATE() BETWEEN r.dataEntrada AND r.dataSaida)
+                OR (r.dataEntrada <= CURRENT_DATE() AND r.dataSaida >= CURRENT_DATE())
+            )
+    ) THEN 1 ELSE 0 END), 0) AS quartos_disponiveis
+FROM quarto q;
+
+''')
     
     
     quaisdisponiveis = free_select('''
-SET @p_dataAtual = CURRENT_DATE();
-
-
-SELECT CONCAT('Quarto ', q.numQuarto, ', ', q.tipologia, ', no ', q.andar, "º andar") AS descricao_quarto
+SELECT
+    CONCAT('Quarto ', q.numQuarto, ', ', q.tipologia, ', no ', q.andar, 'º andar') AS descricao_quarto
 FROM quarto q
 WHERE NOT EXISTS (
     SELECT 1
@@ -94,14 +103,33 @@ WHERE NOT EXISTS (
     INNER JOIN reserva r ON rq.idReserva = r.idReserva
     WHERE rq.numQuarto = q.numQuarto
         AND (
-            (@p_dataAtual BETWEEN r.dataEntrada AND r.dataSaida)
-            OR (@p_dataAtual BETWEEN r.dataEntrada AND r.dataSaida)
-            OR (r.dataEntrada <= @p_dataAtual AND r.dataSaida >= @p_dataAtual)
+            (CURRENT_DATE() BETWEEN r.dataEntrada AND r.dataSaida)
+            OR (CURRENT_DATE() BETWEEN r.dataEntrada AND r.dataSaida)
+            OR (r.dataEntrada <= CURRENT_DATE() AND r.dataSaida >= CURRENT_DATE())
         )
 );
 
   ''')
     
+
+    dataprocurada = free_select('''
+SELECT data, COUNT(*) AS quantas_vezes
+FROM (
+    SELECT DISTINCT rq.idReserva, r.dataEntrada AS data
+    FROM reservaquarto rq
+    INNER JOIN reserva r ON rq.idReserva = r.idReserva
+) AS datas_reservas
+GROUP BY data
+ORDER BY quantas_vezes DESC
+LIMIT 1;
+
+
+
+  ''')
+    
+
+
+
 
 
 
@@ -109,19 +137,23 @@ WHERE NOT EXISTS (
         "totalClientes": totalClientes[0]["totalClientes"],
         "mediaIdades": mediaIdades[0]["mediaIdades"],
         "totalQuartos": totalQuartos[0]["totalQuartos"],
-        "ocupacao":round(ocupacao[0]["ocupacao"], 2) if ocupacao and ocupacao[0] and ocupacao[0].get("ocupacao") is not None else "Sem dados",
+        "ocupacao":round(ocupacao[0]["ocupacao"], 2) if ocupacao and ocupacao[0] and ocupacao[0].get("ocupacao") is not None else "Sem dados: 0",
         "mediaEstadia": mediaestadia[0]["mediaestadia"],
         "reservasAgencia": reservasagencia[0]["reservasagencia"],
         "nomeAgencia": reservasagencia[0]["nomeagencia"],
         "receitaMedia": receitamedia[0]["receitamedia"],
         "mediaCriancas": mediatarifas[0]["mediacriancas"],
         "mediaAdultos": mediatarifas[0]["mediaadultos"],
-
-        "quartosDisponiveis": disponiveishoje,
+        "quartosDisponiveis": disponiveishoje[0],
         "quaisDisponiveis": quaisdisponiveis,
+        "pagamentos": pagamentos[0],
+        "dataprocurada": dataprocurada[0],
+        
+
 
     }
 
+    print(disponiveishoje)
     return render_template('index.html', dados=dados)
 
 

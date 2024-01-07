@@ -62,10 +62,19 @@
       });
     }
     if ($("#transaction-history").length) {
+      totalquartos = document.getElementById("totalquartos").value;
+      quartosdisponiveis = document.getElementById("quartosdisponiveis").value;
+      ocupacao = document.getElementById("ocupacao").value;
+
+      ocupados = totalquartos - quartosdisponiveis;
+
+      console.log(totalquartos)
+    
+
       var areaData = {
         labels: ["Quartos totais", "Quartos ocupados","Quartos vagos"],
         datasets: [{
-            data: [55, 35, 20],
+            data: [totalquartos, ocupados, quartosdisponiveis],
             backgroundColor: [
               "#111111","#00d25b","#ffab00"
             ]
@@ -131,76 +140,7 @@
         plugins: transactionhistoryChartPlugins
       });
     }
-    if ($("#transaction-history-arabic").length) {
-      var areaData = {
-        labels: ["Paypal", "Stripe","Cash"],
-        datasets: [{
-            data: [55, 25, 20],
-            backgroundColor: [
-              "#111111","#00d25b","#ffab00"
-            ]
-          }
-        ]
-      };
-      var areaOptions = {
-        responsive: true,
-        maintainAspectRatio: true,
-        segmentShowStroke: false,
-        cutoutPercentage: 70,
-        elements: {
-          arc: {
-              borderWidth: 0
-          }
-        },      
-        legend: {
-          display: false
-        },
-        tooltips: {
-          enabled: true
-        }
-      }
-      var transactionhistoryChartPlugins = {
-        beforeDraw: function(chart) {
-          var width = chart.chart.width,
-              height = chart.chart.height,
-              ctx = chart.chart.ctx;
-      
-          ctx.restore();
-          var fontSize = 1;
-          ctx.font = fontSize + "rem sans-serif";
-          ctx.textAlign = 'left';
-          ctx.textBaseline = "middle";
-          ctx.fillStyle = "#ffffff";
-      
-          var text = "$1200", 
-              textX = Math.round((width - ctx.measureText(text).width) / 2),
-              textY = height / 2.4;
-      
-          ctx.fillText(text, textX, textY);
-
-          ctx.restore();
-          var fontSize = 0.75;
-          ctx.font = fontSize + "rem sans-serif";
-          ctx.textAlign = 'left';
-          ctx.textBaseline = "middle";
-          ctx.fillStyle = "#6c7293";
-
-          var texts = "مجموع", 
-              textsX = Math.round((width - ctx.measureText(text).width) / 1.93),
-              textsY = height / 1.7;
-      
-          ctx.fillText(texts, textsX, textsY);
-          ctx.save();
-        }
-      }
-      var transactionhistoryChartCanvas = $("#transaction-history-arabic").get(0).getContext("2d");
-      var transactionhistoryChart = new Chart(transactionhistoryChartCanvas, {
-        type: 'doughnut',
-        data: areaData,
-        options: areaOptions,
-        plugins: transactionhistoryChartPlugins
-      });
-    }
+   
     if ($('#owl-carousel-basic').length) {
       $('#owl-carousel-basic').owlCarousel({
         loop: true,

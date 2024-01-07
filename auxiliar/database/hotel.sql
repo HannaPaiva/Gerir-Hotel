@@ -28,9 +28,11 @@ CREATE TABLE IF NOT EXISTS `agencia` (
   `telefoneRepresentante` varchar(45) DEFAULT NULL,
   `comissaoAgencia` double DEFAULT NULL,
   PRIMARY KEY (`idAgencia`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- A despejar dados para tabela hotel.agencia: ~0 rows (aproximadamente)
+INSERT INTO `agencia` (`idAgencia`, `nomeAgencia`, `contatoGeral`, `nomeRepresentante`, `telefoneRepresentante`, `comissaoAgencia`) VALUES
+	(1, 'Hotel', '15213454', 'Pedro Cardoso', '124312312', 100);
 
 -- A despejar estrutura para tabela hotel.agenciametodo
 CREATE TABLE IF NOT EXISTS `agenciametodo` (
@@ -43,7 +45,10 @@ CREATE TABLE IF NOT EXISTS `agenciametodo` (
   CONSTRAINT `fk_Agencia_has_MetodoReserva_MetodoReserva1` FOREIGN KEY (`idMetodo`) REFERENCES `metodoreserva` (`idMetodo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.agenciametodo: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.agenciametodo: ~2 rows (aproximadamente)
+INSERT INTO `agenciametodo` (`idAgencia`, `idMetodo`) VALUES
+	(1, 1),
+	(1, 2);
 
 -- A despejar estrutura para procedimento hotel.apagar_tarifas
 DELIMITER //
@@ -71,11 +76,17 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `telefone` varchar(45) DEFAULT NULL,
   `dataNascimento` date DEFAULT NULL,
   `ativo` tinyint(4) DEFAULT NULL,
-   `genero` ENUM('m', 'f', 'o') DEFAULT NULL,
+  `genero` enum('m','f','o') DEFAULT NULL,
   PRIMARY KEY (`idCliente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.cliente: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.cliente: ~5 rows (aproximadamente)
+INSERT INTO `cliente` (`idCliente`, `primeiroNome`, `nomeDoMeio`, `UltimoNome`, `contribuinte`, `CC`, `email`, `telefone`, `dataNascimento`, `ativo`, `genero`) VALUES
+	(1, 'Jurema', 'Maia', 'IZURA', '123123123', '123123123', '12131213', '12312131213', '2003-08-05', 1, NULL),
+	(2, 'Francisco', '', 'Picoito', '1231213123', '123121123', '12121213', '1231213', '2004-04-08', 1, 'm'),
+	(3, 'Luciana', '', 'Gimenez', '123', '123', '123', '123', '2003-01-07', 1, 'f'),
+	(4, 'potato', 'batata', 'patata', '234567', '345678', 'dfg@rth', '23489', '2024-01-16', 1, 'm'),
+	(5, 'DUMMY', '', 'DUMMY', '123', '123', '123', '123', '2003-11-11', 1, 'm');
 
 -- A despejar estrutura para tabela hotel.departamento
 CREATE TABLE IF NOT EXISTS `departamento` (
@@ -84,9 +95,12 @@ CREATE TABLE IF NOT EXISTS `departamento` (
   `nomeDepartamento` varchar(45) DEFAULT NULL,
   `descricao` text DEFAULT NULL,
   PRIMARY KEY (`idDepartamento`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.departamento: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.departamento: ~2 rows (aproximadamente)
+INSERT INTO `departamento` (`idDepartamento`, `idChefe`, `nomeDepartamento`, `descricao`) VALUES
+	(1, 1, 'restauracao', '123'),
+	(2, 3, 'Batata', '123');
 
 -- A despejar estrutura para tabela hotel.diaria
 CREATE TABLE IF NOT EXISTS `diaria` (
@@ -118,13 +132,17 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
   `dataSaida` timestamp NULL DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
   `idDepartamento` int(11) NOT NULL,
-  `genero` ENUM('m', 'f', 'o') DEFAULT NULL,
+  `genero` enum('m','f','o') DEFAULT NULL,
   PRIMARY KEY (`idFuncionario`),
   KEY `fk_Funcionario_Departamento1_idx` (`idDepartamento`),
   CONSTRAINT `fk_Funcionario_Departamento1` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.funcionario: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.funcionario: ~3 rows (aproximadamente)
+INSERT INTO `funcionario` (`idFuncionario`, `primeiroNome`, `nomeDoMeio`, `UltimoNome`, `contribuinte`, `CC`, `email`, `telefone`, `dataNascimento`, `endereco`, `salario`, `dataEntrada`, `dataSaida`, `status`, `idDepartamento`, `genero`) VALUES
+	(1, 'PEDRO ', 'ALL MIGHTY', 'CARDOSO', '123123', '123123123', '123123123@123.PT', '123123132', '0000-00-00', NULL, NULL, NULL, NULL, 1, 1, 'm'),
+	(2, '', '', '', '', '', '', '', '0000-00-00', NULL, NULL, NULL, NULL, 1, 2, 'm'),
+	(3, 'batata', 'mister', 'patata', '12321', '123213', '', '1233', '2024-01-10', NULL, NULL, NULL, NULL, 1, 2, 'o');
 
 -- A despejar estrutura para tabela hotel.hospede
 CREATE TABLE IF NOT EXISTS `hospede` (
@@ -141,6 +159,54 @@ CREATE TABLE IF NOT EXISTS `hospede` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- A despejar dados para tabela hotel.hospede: ~0 rows (aproximadamente)
+
+-- A despejar estrutura para procedimento hotel.InserirReserva
+DELIMITER //
+CREATE PROCEDURE `InserirReserva`(
+    IN p_idCliente INT,
+    IN p_dataEntrada DATE,
+    IN p_dataSaida DATE,
+    IN p_numAdultos TINYINT,
+    IN p_numCriancas TINYINT,
+    IN p_numBebes TINYINT,
+    IN p_observacoes TEXT,
+    IN p_tipologiaContratada VARCHAR(45),
+    IN p_idAgencia INT,
+    IN p_idMetodo INT,
+    IN p_numQuarto INT
+)
+BEGIN
+    DECLARE roomOccupied INT;
+
+    -- Verificar se o quarto está ocupado na data especificada
+    SELECT COUNT(*)
+    INTO roomOccupied
+    FROM reservaquarto rq
+    INNER JOIN reserva r ON rq.idReserva = r.idReserva
+    WHERE rq.numQuarto = p_numQuarto
+        AND (
+            (p_dataEntrada BETWEEN r.dataEntrada AND r.dataSaida)
+            OR (p_dataSaida BETWEEN r.dataEntrada AND r.dataSaida)
+            OR (p_dataEntrada <= r.dataEntrada AND p_dataSaida >= r.dataSaida)
+        );
+
+    -- Se o quarto estiver ocupado, retorna 500
+    IF roomOccupied > 0 THEN
+        SELECT 500 AS status;
+    ELSE
+        -- Se o quarto estiver disponível, insere a reserva e retorna 200
+        INSERT INTO reserva (idCliente, dataEntrada, dataSaida, numAdultos, numCriancas, numBebes, observacoes, tipologiaContratada, idAgencia, idMetodo)
+        VALUES (p_idCliente, p_dataEntrada, p_dataSaida, p_numAdultos, p_numCriancas, p_numBebes, p_observacoes, p_tipologiaContratada, p_idAgencia, p_idMetodo);
+
+        SET @lastReservaID = LAST_INSERT_ID();
+
+        INSERT INTO reservaquarto (numQuarto, idReserva, observacoes)
+        VALUES (p_numQuarto, @lastReservaID, p_observacoes);
+
+        SELECT 200 AS status;
+    END IF;
+END//
+DELIMITER ;
 
 -- A despejar estrutura para procedimento hotel.inserir_tarifas
 DELIMITER //
@@ -175,7 +241,10 @@ CREATE TABLE IF NOT EXISTS `metodoreserva` (
   PRIMARY KEY (`idMetodo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.metodoreserva: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.metodoreserva: ~2 rows (aproximadamente)
+INSERT INTO `metodoreserva` (`idMetodo`, `nomeMetodo`) VALUES
+	(1, 'direto'),
+	(2, 'online');
 
 -- A despejar estrutura para tabela hotel.pagamento
 CREATE TABLE IF NOT EXISTS `pagamento` (
@@ -190,9 +259,12 @@ CREATE TABLE IF NOT EXISTS `pagamento` (
   PRIMARY KEY (`idPagamento`),
   KEY `fk_Pagamento_Reserva1_idx` (`idReserva`),
   CONSTRAINT `fk_Pagamento_Reserva1` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.pagamento: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.pagamento: ~2 rows (aproximadamente)
+INSERT INTO `pagamento` (`idPagamento`, `valorTotal`, `metodoPagamento`, `tarifaReembolsavel`, `dataPagamento`, `observacoes`, `status`, `idReserva`) VALUES
+	(1, 124, '123', 123, '2023-09-01 23:00:00', '1123', 'não pago', 48),
+	(3, 123, '123', 123, '2023-09-02 04:00:00', '', 'pago', 55);
 
 -- A despejar estrutura para tabela hotel.quarto
 CREATE TABLE IF NOT EXISTS `quarto` (
@@ -205,12 +277,14 @@ CREATE TABLE IF NOT EXISTS `quarto` (
   `ativo` tinyint(4) DEFAULT NULL,
   `estaDisponivel` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`numQuarto`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- A despejar dados para tabela hotel.quarto: ~2 rows (aproximadamente)
 INSERT INTO `quarto` (`numQuarto`, `descricao`, `andar`, `tipologia`, `qtdCamaCasal`, `qtdCamaSolteiro`, `ativo`, `estaDisponivel`) VALUES
-	(1, '111', 1, 't2', '1', '1', 1, 1),
-	(2, 't2 top', 2, 't2', '1', '1', 1, 1);
+	(1, 't1 top', 1, 't2', '1', '1', 1, 1),
+	(2, 't2 top', 2, 't2', '1', '1', 1, 1),
+	(15, 'Quarto próximo as escadas, ala sul', 1, 't1', '1', '1', 1, 1),
+	(25, 't3, Quarto próximo ao elevador', 2, 't3', '2', '2', 1, 1);
 
 -- A despejar estrutura para tabela hotel.reserva
 CREATE TABLE IF NOT EXISTS `reserva` (
@@ -230,37 +304,48 @@ CREATE TABLE IF NOT EXISTS `reserva` (
   KEY `fk_Reserva_Agencia_has_MetodoReserva1_idx` (`idAgencia`,`idMetodo`),
   CONSTRAINT `fk_Reserva_Agencia_has_MetodoReserva1` FOREIGN KEY (`idAgencia`, `idMetodo`) REFERENCES `agenciametodo` (`idAgencia`, `idMetodo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Reserva_Cliente1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.reserva: ~0 rows (aproximadamente)
-
--- A despejar estrutura para tabela hotel.reservahospede
-CREATE TABLE IF NOT EXISTS `reservahospede` (
-  `numQuarto` int(11) NOT NULL,
-  `idReserva` int(11) NOT NULL,
-  `idHospede` int(11) NOT NULL,
-  PRIMARY KEY (`numQuarto`,`idReserva`,`idHospede`),
-  KEY `fk_ReservaQuarto_has_Hospede_Hospede1_idx` (`idHospede`),
-  KEY `fk_ReservaQuarto_has_Hospede_ReservaQuarto1_idx` (`numQuarto`,`idReserva`),
-  CONSTRAINT `fk_ReservaQuarto_has_Hospede_Hospede1` FOREIGN KEY (`idHospede`) REFERENCES `hospede` (`idHospede`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ReservaQuarto_has_Hospede_ReservaQuarto1` FOREIGN KEY (`numQuarto`, `idReserva`) REFERENCES `reservaquarto` (`numQuarto`, `idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- A despejar dados para tabela hotel.reservahospede: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.reserva: ~10 rows (aproximadamente)
+INSERT INTO `reserva` (`idReserva`, `idCliente`, `dataEntrada`, `dataSaida`, `numAdultos`, `numCriancas`, `numBebes`, `observacoes`, `tipologiaContratada`, `idAgencia`, `idMetodo`) VALUES
+	(36, 2, '2024-01-03', '2024-01-05', 1, 1, 1, 'adsdasd', 't2', 1, 1),
+	(47, 3, '2025-06-04', '2025-06-19', 0, 0, 0, '', 't2', 1, 1),
+	(48, 3, '2024-03-26', '2024-03-26', 1, 1, 1, 'aaaaa', 't2', 1, 1),
+	(49, 3, '2024-02-28', '2024-03-08', 123, 123, 123, 'zzzzz', 't2', 1, 1),
+	(50, 3, '2024-01-12', '2024-01-26', 12, 12, 12, '', 't2', 1, 1),
+	(55, 2, '2024-03-30', '2024-03-30', 123, 0, 0, 'kkk', 't3', 1, 1),
+	(56, 1, '2024-12-23', '2024-12-26', 2, 1, 0, 'Reserva paAAAA', 't2', 1, 1),
+	(62, 5, '2024-02-12', '2024-02-12', 123, 123, 123, '123123123', 't2', 1, 1),
+	(63, 5, '2024-01-07', '2024-01-07', 1, 1, 0, 'reserva de emergencia do ThreeGroup', 't1', 1, 1),
+	(64, 5, '2024-01-07', '2024-01-07', 0, 0, 0, '', 't3', 1, 1),
+	(65, 1, '2024-01-07', '2024-01-07', 1, 0, 1, '', 't2', 1, 1);
 
 -- A despejar estrutura para tabela hotel.reservaquarto
 CREATE TABLE IF NOT EXISTS `reservaquarto` (
-  `numQuarto` int(11) NOT NULL,
-  `idReserva` int(11) NOT NULL,
   `observacoes` text DEFAULT NULL,
-  PRIMARY KEY (`numQuarto`,`idReserva`),
-  KEY `fk_Quarto_has_Reserva_Reserva1_idx` (`idReserva`),
-  KEY `fk_Quarto_has_Reserva_Quarto_idx` (`numQuarto`),
-  CONSTRAINT `fk_Quarto_has_Reserva_Quarto` FOREIGN KEY (`numQuarto`) REFERENCES `quarto` (`numQuarto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Quarto_has_Reserva_Reserva1` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `idreservaquarto` int(11) NOT NULL AUTO_INCREMENT,
+  `numQuarto` int(11) DEFAULT NULL,
+  `idReserva` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idreservaquarto`),
+  KEY `numQuarto_1` (`numQuarto`),
+  KEY `idReserva_1` (`idReserva`),
+  CONSTRAINT `idReserva_1` FOREIGN KEY (`idReserva`) REFERENCES `reserva` (`idReserva`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `numQuarto_1` FOREIGN KEY (`numQuarto`) REFERENCES `quarto` (`numQuarto`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.reservaquarto: ~0 rows (aproximadamente)
+-- A despejar dados para tabela hotel.reservaquarto: ~8 rows (aproximadamente)
+INSERT INTO `reservaquarto` (`observacoes`, `idreservaquarto`, `numQuarto`, `idReserva`) VALUES
+	('adsdasd', 12, 2, 36),
+	('', 23, 1, 47),
+	('aaaaa', 24, 1, 48),
+	('zzzzz', 25, 2, 49),
+	('', 26, 1, 50),
+	('kkk', 31, 25, 55),
+	('Reserva paAAAA', 32, 1, 56),
+	('123123123', 38, 2, 62),
+	('reserva de emergencia do ThreeGroup', 39, 15, 63),
+	('', 40, 25, 64),
+	('', 41, 1, 65);
 
 -- A despejar estrutura para tabela hotel.servico
 CREATE TABLE IF NOT EXISTS `servico` (
@@ -272,7 +357,7 @@ CREATE TABLE IF NOT EXISTS `servico` (
   PRIMARY KEY (`idServico`),
   KEY `fk_Servico_Departamento1_idx` (`idDepartamento`),
   CONSTRAINT `fk_Servico_Departamento1` FOREIGN KEY (`idDepartamento`) REFERENCES `departamento` (`idDepartamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- A despejar dados para tabela hotel.servico: ~0 rows (aproximadamente)
 
@@ -302,28 +387,45 @@ CREATE TABLE IF NOT EXISTS `tarifa` (
   PRIMARY KEY (`idTarifa`),
   KEY `fk_Tarifa_Quarto1_idx` (`numQuarto`),
   CONSTRAINT `fk_Tarifa_Quarto1` FOREIGN KEY (`numQuarto`) REFERENCES `quarto` (`numQuarto`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- A despejar dados para tabela hotel.tarifa: ~18 rows (aproximadamente)
+-- A despejar dados para tabela hotel.tarifa: ~35 rows (aproximadamente)
 INSERT INTO `tarifa` (`idTarifa`, `data`, `precoNoiteAdulto`, `precoNoiteCrianca`, `numQuarto`) VALUES
-	(12, '2024-01-11', 1000, 500, 1),
-	(13, '2024-01-02', 160, 70, 2),
-	(14, '2024-01-03', 160, 70, 2),
-	(15, '2024-01-04', 160, 70, 2),
-	(16, '2024-01-05', 160, 70, 2),
-	(17, '2024-01-06', 160, 70, 2),
-	(18, '2024-01-07', 160, 70, 2),
-	(19, '2024-01-08', 160, 70, 2),
-	(20, '2024-01-09', 160, 70, 2),
-	(21, '2024-01-10', 160, 70, 2),
-	(22, '2024-01-11', 160, 70, 2),
-	(23, '2024-01-12', 15, 12, 1),
-	(24, '2024-01-13', 15, 12, 1),
-	(25, '2024-01-14', 15, 12, 1),
-	(26, '2024-01-15', 15, 12, 1),
-	(27, '2024-01-16', 15, 12, 1),
-	(28, '2024-01-17', 15, 12, 1),
-	(29, '2024-01-18', 15, 12, 1);
+	(30, '2024-01-10', 134, 123, 1),
+	(31, '2024-01-11', 134, 123, 1),
+	(32, '2024-01-12', 134, 123, 1),
+	(33, '2024-01-13', 134, 123, 1),
+	(34, '2024-01-14', 134, 123, 1),
+	(35, '2024-01-15', 134, 123, 1),
+	(36, '2024-01-16', 134, 123, 1),
+	(37, '2024-01-17', 123, 123, 1),
+	(38, '2024-01-18', 123, 123, 1),
+	(39, '2024-01-19', 123, 123, 1),
+	(40, '2024-01-20', 123, 123, 1),
+	(41, '2024-01-21', 123, 123, 1),
+	(42, '2024-01-22', 123, 123, 1),
+	(43, '2024-01-23', 123, 123, 1),
+	(44, '2024-01-24', 123, 123, 1),
+	(45, '2024-01-25', 123, 123, 1),
+	(46, '2024-01-26', 123, 123, 1),
+	(47, '2024-01-27', 123, 123, 1),
+	(48, '2024-01-28', 123, 123, 1),
+	(49, '2024-01-29', 123, 123, 1),
+	(50, '2024-01-30', 123, 123, 1),
+	(51, '2024-01-31', 123, 123, 1),
+	(52, '2024-02-01', 123, 123, 1),
+	(53, '2024-02-02', 123, 123, 1),
+	(54, '2024-02-03', 123, 123, 1),
+	(55, '2024-02-04', 123, 123, 1),
+	(56, '2024-02-05', 123, 123, 1),
+	(57, '2024-02-06', 123, 123, 1),
+	(58, '2024-02-07', 123, 123, 1),
+	(59, '2024-02-08', 123, 123, 1),
+	(60, '2024-02-09', 123, 123, 1),
+	(61, '2024-02-10', 123, 123, 1),
+	(62, '2024-02-11', 123, 123, 1),
+	(63, '2024-02-12', 123, 123, 1),
+	(64, '2024-02-13', 123, 123, 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
