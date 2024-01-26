@@ -159,9 +159,11 @@ def stored_procedure(procedimento, dados):
             
             print("Stored procedure chamada com sucesso!")
             return {"status": result}
+        
         except Exception as e:
             print(f"Erro ao chamar a stored procedure: {e}")
             return {"status": str(e)}
+        
         finally:
             if conexao.is_connected():
                 cursor.close()
@@ -195,14 +197,17 @@ def dicionario(output):
 # Exemplo de uso:
 
 def main():
-    inserir_reserva = stored_procedure("InserirReserva", (1, '2024-12-23', '2024-12-26', 2, 1, 0, 'Reserva paAAAA', 't2', 1, 1, 1))
-    
 
-    status = dicionario({"status": inserir_reserva["status"]})
+    data_entrada  = "2024-01-22"
+    data_saida  = "2024-01-28"
+    num_quarto  = 1
+    num_adultos  = 1
+    num_criancas  = 1
+    tarifas = stored_procedure("CalcularValorReserva",(data_entrada, data_saida, num_quarto, num_adultos, num_criancas))
 
-    print(status)
-
-        
+    print(tarifas["status"][0][0])
+    print(tarifas["status"][0][1])   
+    print(tarifas["status"][0][2])     
 
 
 if __name__ == "__main__":

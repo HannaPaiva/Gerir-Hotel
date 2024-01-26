@@ -294,14 +294,14 @@
                                         <div class="col-md-4 mb-3">
                                             <div class="form-group">
                                                 <label for="genero">Número de Adultos</label>
-                                                <input type="number" class="form-control" id="numAdultos" name="numAdultos" min="0">
+                                                <input type="number" class="form-control" id="numAdultosc" name="numAdultos" min="0">
                                             </div>
                                         </div>
 
                                         <div class="col-md-4 mb-3">
                                             <div class="form-group">
                                                 <label for="genero">Número de crianças</label>
-                                                <input type="number" class="form-control" id="numCriancas" name="numCriancas" min="0">
+                                                <input type="number" class="form-control" id="numCriancasc" name="numCriancas" min="0">
                                             </div>
                                         </div>
                                         
@@ -354,11 +354,21 @@
 
                                         <div class="col-md-6 mb-3">
                                           <label for="Tarifa">Preço Manual?</label>
-                                          <input type="text" class="form-control" name="tarifa" id="tarifa">
+                                          <input type="text" class="form-control" name="tarifa" id="tarifac">
                                         </div>
                                     </div>
 
-
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="precoAdulto">Preço Total Adultos:</label>
+                                            <span id="precoAdulto"></span>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="precoCrianca">Preço Total Crianças:</label>
+                                            <span id="precoCrianca"></span>
+                                        </div>
+                                    </div>
+                                    
 
 
 
@@ -479,7 +489,47 @@ $('#tipologias').change(function () {
     });
 
 
+    $(document).ready(function () {
+    
+    $('#dataEntradac, #dataSaidac, #numAdultosc, #numCriancasc, #quartos_disponiveisc, #tipologiasc').change(function () {
+   
+        var dataEntrada = $('#dataEntradac').val();
+        var dataSaida = $('#dataSaidac').val();
+        var numAdultos = parseInt($('#numAdultos').val()) || 0; 
+        var numCriancas = parseInt($('#numCriancas').val()) || 0; 
+        var numQuarto = $('#quartos_disponiveisc').val();
 
+     
+
+        console.log('Data de Entrada:', dataEntrada);
+        console.log('Data de Saída:', dataSaida);
+        console.log('Número de Adultos:', numAdultos);
+        console.log('Número de Crianças:', numCriancas);
+        console.log('Núm:', numQuarto);
+        
+        $.ajax({
+            type: 'POST',
+            url: '/devolver-tarifa',
+            data: {
+                dataEntrada: dataEntrada,
+                dataSaida: dataSaida,
+                numAdultos: numAdultos,
+                numCriancas: numCriancas,
+                numQuarto: numQuarto
+            },
+            success: function (response) {
+                // Preencher os campos com os valores retornados
+                $('#precoAdulto').text(response.ValorTotalAdultos);
+                $('#precoCrianca').text(response.ValorTotalCriancas);
+                $('#tarifac').val(response.ValorTotalReserva);
+                console.log(response)
+            },
+            error: function (error) {
+                console.error('Erro na requisição AJAX:', error);
+            }
+        });
+    });
+});
 
 
 

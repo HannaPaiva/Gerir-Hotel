@@ -48,7 +48,8 @@ WHERE dataNascimento IS NOT NULL;
 
     totalQuartos = selecionar("SELECT COUNT(numQuarto) as totalQuartos from Quarto")
 
-    ocupacao = selecionar('''SELECT
+    ocupacao = selecionar('''
+                          SELECT
  
     IFNULL((SUM(CASE WHEN EXISTS (
         SELECT 1

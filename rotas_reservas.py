@@ -155,6 +155,43 @@ def get_quartos():
     return jsonify(options)
 
 
+@rotas_reserva.route('/devolver-tarifa', methods=['POST'])
+def devolver_tarifa():
+    try:
+        # Obter os parâmetros da requisição
+        data_entrada = request.form['dataEntrada']
+        data_saida = request.form['dataSaida']
+        num_quarto = request.form['numQuarto'] 
+        num_adultos = int(request.form['numAdultos'])
+        num_criancas = int(request.form['numCriancas'])
+        # print(data_entrada, data_saida )
+        # print("quartos ", num_quarto)
+        # print("adultos ",num_adultos)
+        # print("criancas ",num_criancas)
+
+
+        data_entrada  = "2024-01-22"
+        data_saida  = "2024-01-28"
+        num_quarto  = 1
+        num_adultos  = 1
+        num_criancas  = 1
+
+       
+        # Chamar o stored procedure para obter as tarifas
+        tarifas = stored_procedure("CalcularValorReserva",(data_entrada, data_saida, num_quarto, num_adultos, num_criancas))
+
+
+
+        return jsonify({
+            'ValorTotalAdultos': tarifas["status"][0][0],
+            'ValorTotalCriancas': tarifas["status"][0][1],
+            'ValorTotalReserva':  tarifas["status"][0][2]
+        })
+
+    except Exception as e:
+        # Em caso de erro, retornar uma resposta de erro
+        return jsonify({'error': str(e)}), 500
+
 app.register_blueprint(rotas_reserva)
 if __name__ == '__main__':
     app.run(debug=True)
